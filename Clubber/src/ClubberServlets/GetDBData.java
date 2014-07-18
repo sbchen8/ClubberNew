@@ -99,7 +99,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             }
             else if (requestType.equals(Constants.DB_DATA_MAIN_LINES))
             {
-            	data=DAL.getWelcomeScreenEvents(request.getParameter("InDatae"));
+            	data=DAL.getWelcomeScreenEvents(request.getParameter("InDate"));
             	json = gson.toJson(data);
        		}
             else if(requestType.equals(Constants.DB_DATA_USER_PROFILE))
