@@ -1,0 +1,194 @@
+#Lines_Div {
+   	color: white;
+	text-align:center;
+	font-family: sans-serif;
+	text-shadow: 5px 5px 5px #FF0000;
+	width: auto;
+	height: auto;
+	float: right;
+	border-style: dashed;
+	border-color: red;
+
+}
+
+.line_title{
+	border: 2px solid green;
+}
+
+.hebrewDate{
+        background-color: black;
+        font-size: 18px;
+        color: #0BF622;
+        border: 5px inset #597572;
+        height: auto;
+        width: 300px;
+        text-align: center;
+        font-family: Impact, Arial, sans-serif;
+        letter-spacing: 3px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+}
+
+#welcomeLines{
+	width:70%; 
+    margin-left:15%; 
+    margin-right:15%;
+    border: 1px solid green;
+    	
+}
+
+.AgeCell{
+	color: blue;
+}
+
+.DetailsCell{
+	color: green;
+}
+
+.PicCell{
+	color: yellow;
+}
+
+#head {
+	color: blue;
+	height: 3cm; 
+	width: 80%;
+	font-family: sans-serif;
+	text-shadow: 5px 5px 5px #FF0000;
+	text-align:center;
+	float: left;
+	padding:0;
+    margin:0;
+    border-style: solid;
+    border-color: aqua;
+	}
+	
+#logo {
+	
+	width: 20%;
+	height: 3cm;
+	float: left;
+	
+	padding:10;
+    margin:0;
+    background-repeat: no-repeat;
+    border-style: solid;
+    border-color: aqua;
+    
+}
+
+#imgLogo{
+	width: 100%;
+    height: 100%;
+}
+
+#navPanel{
+	color: red;
+	height: 50px; 
+	width: 80%;
+	font-family: serif;
+	text-shadow: 5px 5px 5px #FF0000;
+	text-align:center;
+	float: left;
+	padding:0;
+    margin:0;
+    border-style: solid;
+    border-color: aqua;
+   
+}
+
+#username {
+	width: 20%;
+	height: 50px;
+	color: white;
+	float: left;
+	padding:0;
+    margin:0;
+    align: center;
+    border-style: solid;
+    border-color: aqua;
+}
+
+body{
+	background-image: url("../images/BGstars.jpg");
+	background-repeat: repeat;
+}
+
+#right-frame{
+	color: white;
+	text-align:center;
+	font-family: sans-serif;
+	text-shadow: 5px 5px 5px #FF0000;
+	width: 20%;
+	height: auto;
+	float: right;
+	border-style: dashed;
+	border-color: red;
+}
+
+#main-frame{
+	float: left;
+	width: 100%;
+	color:lime;
+	padding:0;
+    margin:0;
+    background-size: inherit;
+    max-width: 100%;
+    max-height: 100%;
+	border-style: dashed;
+	border-color: red;
+}
+
+#datepicker{	
+	background:url(../images/calendar.png) no-repeat;
+	background-size: cover;
+    cursor:pointer;
+    width: 100px;
+    height: 100px;
+    border: 0;
+	}
+
+.btn_createEvent {
+	-moz-box-shadow:inset 0px 0px 16px -7px #ffffff;
+	-webkit-box-shadow:inset 0px 0px 16px -7px #ffffff;
+	box-shadow:inset 0px 0px 16px -7px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color:#ededed;
+	-webkit-border-top-left-radius:29px;
+	-moz-border-radius-topleft:29px;
+	border-top-left-radius:29px;
+	-webkit-border-top-right-radius:29px;
+	-moz-border-radius-topright:29px;
+	border-top-right-radius:29px;
+	-webkit-border-bottom-right-radius:29px;
+	-moz-border-radius-bottomright:29px;
+	border-bottom-right-radius:29px;
+	-webkit-border-bottom-left-radius:29px;
+	-moz-border-radius-bottomleft:29px;
+	border-bottom-left-radius:29px;
+	text-indent:0;
+	border:2px solid #dcdcdc;
+	display:inline-block;
+	color:#777777;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+	height:53px;
+	line-height:53px;
+	width:143px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #ffffff;
+}
+.btn_createEvent:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	background-color:#dfdfdf;
+}.btn_createEvent:active {
+	position:relative;
+	top:1px;
+}</style>
