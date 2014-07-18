@@ -19,7 +19,7 @@
   			<br>
 
 			<label id="passwordLabel">סיסמה</label>
-			<input type="password" name="password" id="password" required>
+			<input type="password" name="Password" id="Password" required>
   			<br><br>
   			<div class="captcha-area"></div>
   			<button type="submit" >התחבר</button>

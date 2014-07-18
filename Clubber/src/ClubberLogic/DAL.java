@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import Utlis.AuctionManagementData;
+import Utlis.Constants;
 import Utlis.IdWithName;
 import Utlis.NewAuctionData;
 
@@ -342,12 +343,8 @@ public class DAL {
 
 		connectToDBServer();
 
-		//Date birthDate = StringToDate(userData.getBirthDate());
-		DateFormat df = new SimpleDateFormat("dd-MMM-yy HH:mm:ss a");
-		String date= df.format(userData.getBirthDate());
-		Date date2= df.parse(date);
-		java.sql.Date birthDate = new java.sql.Date(date2.getTime());
-		
+		Date birthDate = StringToDate(userData.getBirthDate());
+				
 		String sql= "INSERT INTO USERS(User_Type, First_Name, Last_Name, Gender, Phone_Number, Email, Password, Birth_Date)"
 				+ " VALUES('"+userType+"','"+userData.getFirstName()+"','"+userData.getLastName()+"','"+userData.getGender()+"','"+userData.getPhoneNumber()+"','"+userData.getEmail()+"','"+userData.getPassword()+"','"+birthDate+"')";
 		try {
@@ -365,22 +362,22 @@ public class DAL {
 		return isSucceed;
 	}
 
-	private static Date StringToDate(String stringDate) {
+	private static Date StringToDate(Date userBirthDate) {
 		
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        java.util.Date date = new java.util.Date();
-    	
+        String date= df.format(userBirthDate);
+		Date date2 = new Date();
+		
 		try {
-			
-			date = df.parse(stringDate);
+			date2 = df.parse(date);
 		} catch (ParseException e) {
-			
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		Date sqlDate = new Date(date.getTime());
-    	
-    	return sqlDate;
+		java.sql.Date sqlDate = new java.sql.Date(date2.getTime());
+
+		return sqlDate;
 	}
 
 	/*
@@ -588,7 +585,7 @@ public class DAL {
 				pr.setPhoneNumber(rs.getString("Phone_Number"));
 				pr.setEmail(rs.getString("Email"));
 				pr.setPassword(rs.getString("Password"));
-				pr.setBirthDate(rs.getString("Birth_Date"));
+				pr.setBirthDate(rs.getDate("Birth_Date"));
 			}
 			
 		} 

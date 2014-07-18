@@ -1,6 +1,9 @@
 package ClubberServlets;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,7 +51,17 @@ public class UpdatePrDetails extends HttpServlet {
         pr.setFirstName(request.getParameter(Constants.FIRST_NAME));
         pr.setLastName(request.getParameter(Constants.LAST_NAME));
         pr.setGender(request.getParameter(Constants.GENDER));
-        pr.setBirthDate(request.getParameter(Constants.BIRTHDATE)); // Date.valueOf(request.getParameter(Constants.BIRTHDATE));
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date birthDate = new Date();
+        try {
+			birthDate = sdf.parse(request.getParameter(Constants.BIRTHDATE));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        pr.setBirthDate(birthDate);
+        
         pr.setPhoneNumber(request.getParameter(Constants.PHONE_NUMBER));
         pr.setEmail(request.getParameter(Constants.EMAIL));
         pr.setPassword(request.getParameter(Constants.PASSWORD));

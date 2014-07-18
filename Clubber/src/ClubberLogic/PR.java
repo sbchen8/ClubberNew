@@ -1,5 +1,7 @@
 package ClubberLogic;
 
+import java.util.Date;
+
 
 public class PR extends UserData{
 	
@@ -22,7 +24,7 @@ public class PR extends UserData{
 	 * 			added set to filed password
 	 * 			* type of gender changed 
 	 */	
-	public PR(String lastName, String firstName, String gender, String phoneNumber, String email, String birthDate, String password) 
+	public PR(String lastName, String firstName, String gender, String phoneNumber, String email, Date birthDate, String password) 
     {
         super(lastName, firstName, gender, phoneNumber, email, birthDate, password);
     }

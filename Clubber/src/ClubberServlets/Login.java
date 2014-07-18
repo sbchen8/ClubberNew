@@ -67,7 +67,7 @@ public class Login extends HttpServlet {
         if(isSucceed == true)
         {
         	request.getSession(true).setAttribute(Constants.EMAIL, emailParam);
-        	getServletContext().getRequestDispatcher("/welcomePage.jsp").forward(request, response);
+        	getServletContext().getRequestDispatcher("/WelcomePage.jsp").forward(request, response);
         }
 	}
 

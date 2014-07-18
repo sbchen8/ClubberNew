@@ -1,6 +1,9 @@
 package ClubberServlets;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -52,7 +55,17 @@ public class SignUp extends HttpServlet {
         String firstNameParam = request.getParameter(Constants.FIRST_NAME);
         String lastNameParam = request.getParameter(Constants.LAST_NAME);
         String genderParam = request.getParameter(Constants.GENDER);
-        String birthdateParam = request.getParameter(Constants.BIRTHDATE);
+        
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date birthdateParam = new Date();
+        
+        try {
+			birthdateParam = df.parse(request.getParameter(Constants.BIRTHDATE));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
         String phoneNumberParam = request.getParameter(Constants.PHONE_NUMBER);
         String emailParam = request.getParameter(Constants.EMAIL);
         String passwordParam = PasswordGenarator.create();
