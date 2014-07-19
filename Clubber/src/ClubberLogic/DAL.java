@@ -648,7 +648,7 @@ public class DAL {
 		return reviews;
 	}
 
-	public static UserReviews getCustomerProfileReview(String email) {
+	public static UserReviews getClientProfileReview(String email) {
 		// TODO Auto-generated method stub
 		UserReviews reviews = null;
 		

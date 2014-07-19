@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ClubberLogic.Client;
 import ClubberLogic.DAL;
-import ClubberLogic.PR;
 import Utlis.Constants;
 
 
@@ -20,13 +20,13 @@ import Utlis.Constants;
  * Servlet implementation class UpdateUserDetails
  */
 @WebServlet("/UpdatePrDetails")
-public class UpdatePrDetails extends HttpServlet {
+public class UpdateClientDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdatePrDetails() {
+    public UpdateClientDetails() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,11 +46,11 @@ public class UpdatePrDetails extends HttpServlet {
 		
         response.setContentType("text/html;charset=UTF-8");
         String message = "";
-        PR pr = new PR();
+        Client client = new Client();
         
-        pr.setFirstName(request.getParameter(Constants.FIRST_NAME));
-        pr.setLastName(request.getParameter(Constants.LAST_NAME));
-        pr.setGender(request.getParameter(Constants.GENDER));
+        client.setFirstName(request.getParameter(Constants.FIRST_NAME));
+        client.setLastName(request.getParameter(Constants.LAST_NAME));
+        client.setGender(request.getParameter(Constants.GENDER));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date birthDate = new Date();
@@ -60,13 +60,13 @@ public class UpdatePrDetails extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        pr.setBirthDate(birthDate);
+        client.setBirthDate(birthDate);
         
-        pr.setPhoneNumber(request.getParameter(Constants.PHONE_NUMBER));
-        pr.setEmail(request.getParameter(Constants.EMAIL));
-        pr.setPassword(request.getParameter(Constants.PASSWORD));
+        client.setPhoneNumber(request.getParameter(Constants.PHONE_NUMBER));
+        client.setEmail(request.getParameter(Constants.EMAIL));
+        client.setPassword(request.getParameter(Constants.PASSWORD));
                 
-        boolean isSucceed = DAL.updateUserDetails(pr);
+        boolean isSucceed = DAL.updateUserDetails(client);
         
         if(isSucceed == true)
         {
@@ -78,7 +78,7 @@ public class UpdatePrDetails extends HttpServlet {
         }
         
         request.getSession(true).setAttribute(Constants.MESSAGE_TEXT, message);
-        getServletContext().getRequestDispatcher("/PrProfile.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/ClientProfile.jsp").forward(request, response);
 	}
 
 }

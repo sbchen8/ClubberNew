@@ -8,7 +8,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-		<title>פרופיל</title>
+		<title>פרופיל - לקוח</title>
 	    <link href="CSS/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 	    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -35,7 +35,7 @@
 	</head>
 <body dir="rtl">
 	<div class="user-details">
-		<form class="user-details-form" id="prDetails" name="userDetails" method="post" action="UpdateUserDetails">
+		<form class="user-details-form" id="prDetails" name="userDetails" method="post" action="UpdateClientDetails">
 		  	
 		  	<label id="firstnameLabel">שם פרטי</label>
 		  	<input type="text" name="firstName" id="firstName" required disabled>
@@ -118,8 +118,6 @@
 		</div>
 		<br>
 	</div>
-	<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
-	<script src="http://jquery.bassistance.de/validate/additional-methods.js"></script>		
 	<script>
 	
 		// Set error messages  
@@ -156,7 +154,7 @@
 			$('#email').attr("disabled", false);
 			$('#password').attr("disabled", false);		
 			$('#verifyPassword').attr("disabled", false);
-			$("#updatePrDel").attr("disabled",false);
+			$("#updateUserDel").attr("disabled",false);
 		});
 		
 		$(function(){
@@ -184,7 +182,7 @@
 		        url: "GetDBData",
 		        type: "post",
 		        dataType: 'json',
-		        data:{RequestType: "DBDataCustomerProfileReview"},
+		        data:{RequestType: "DBDataClientProfileReview"},
 		        success: function(data) {
 					
 		        	var i;
