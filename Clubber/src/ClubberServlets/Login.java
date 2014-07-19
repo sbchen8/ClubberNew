@@ -54,13 +54,17 @@ public class Login extends HttpServlet {
         
         if(isSucceed == true)
         {
-        	if(DAL.isPasswordMatchEmail(emailParam, passwordParam) == false)
+        	if(DAL.isPasswordMatcheEmail(emailParam, passwordParam) == false)
         	{
             	isSucceed = false;
             	message = "סיסמה אינה נכונה";
             	
-            	request.setAttribute(Constants.LOGIN_FAILED, message);
-            	getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);            	
+            	DAL.increaseLoginAttemptsDB(emailParam);
+
+            	if (DAL.getUserLoginAttempts(emailParam) > 5)
+            	{
+            		//lock user
+            	}
         	}
         }
 
@@ -68,6 +72,11 @@ public class Login extends HttpServlet {
         {
         	request.getSession(true).setAttribute(Constants.EMAIL, emailParam);
         	getServletContext().getRequestDispatcher("/WelcomePage.jsp").forward(request, response);
+        }
+        else
+        {
+        	request.setAttribute(Constants.LOGIN_FAILED, message);
+        	getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);        	
         }
 	}
 

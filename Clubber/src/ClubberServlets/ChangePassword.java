@@ -43,7 +43,7 @@ public class ChangePassword extends HttpServlet {
 		String newPassword = request.getParameter(Constants.NEW_PASSWORD);
 		String email = request.getParameter(Constants.EMAIL);
 		
-		boolean isValid = DAL.isUserPasswordValid(email, oldPassword);
+		boolean isValid = DAL.isPasswordMatcheEmail(email, oldPassword);
 		
 		if(isValid == true)
 		{

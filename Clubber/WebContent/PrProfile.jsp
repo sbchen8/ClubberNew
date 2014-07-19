@@ -13,6 +13,7 @@
 	    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
 		<style>
 		div.star {
 		   width:26px; 
@@ -130,9 +131,7 @@
 			<div class="star"></div>
 			<div class="star"></div>
 		</div>	
-	</div>
-	<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
-	<script src="http://jquery.bassistance.de/validate/additional-methods.js"></script>		
+	</div>		
 	<script>
 	
 		// Set error messages  

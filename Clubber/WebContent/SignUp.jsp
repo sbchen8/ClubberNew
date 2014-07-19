@@ -13,6 +13,7 @@
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 		<script src="//jqueryui.com/resources/demos/datepicker/jquery.ui.datepicker-he.js"></script>		
+  		<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
 	</head>
 	<body dir="rtl">
 		<div class="explanation-area">
@@ -83,8 +84,8 @@
 			</form>
     	</div>	 
     	
-		<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
-		<script src="http://jquery.bassistance.de/validate/additional-methods.js"></script>	
+		<!--<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
+		<script src="http://jquery.bassistance.de/validate/additional-methods.js"></script>-->	
 	
 		<script>
 	

@@ -15,7 +15,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import Utlis.AuctionManagementData;
-import Utlis.Constants;
 import Utlis.IdWithName;
 import Utlis.NewAuctionData;
 
@@ -382,48 +381,28 @@ public class DAL {
 
 	/*
 	 * Maayan: 	24/4/2014
-	 * 			* add function - isUserPasswordValid
+	 * 			* add function - getUserLoginAttempts
 	 */	
-	public static boolean isUserPasswordValid(String email, String password) {
+	public static int getUserLoginAttempts(String email) {
 	
-		boolean isPassOk = true;
+		int loginAttempts =0;
 		
-		connectToDBServer();
 		
 		try {
-			ResultSet rs = stmt.executeQuery("SELECT Password, Login_Attempts FROM clubber_db.users;");
+			ResultSet rs = stmt.executeQuery("SELECT Login_Attempts FROM clubber_db.users;");
 			while (rs.next())
 			{
-				// Check if the passwords are identical
-				String userPassword = rs.getString("Password");
-				
-				if(userPassword.equals(password) == false)
-				{
-					isPassOk = false;
-				}
-				
-				if(isPassOk == false)
-				{
-					//increase Login_Attempts by 1
-					increaseLoginAttemptsDB(email);
-					
-					if(rs.getInt("Login_Attempts") > 5)
-					{
-						// lock the user for 3 hours
-					}
-				}
-				
+				loginAttempts = rs.getInt("Login_Attempts");
 			}		
 		} catch (SQLException e) {
 			e.printStackTrace();
-			isPassOk = false;
 			
 		}
 		finally{
 			disconnectFromDBServer();
 		}
 				
-		return isPassOk;
+		return loginAttempts;
 		
 	}
 	
@@ -431,7 +410,7 @@ public class DAL {
 	 * Orel & Maayan: 	25/4/2014
 	 * 			* add function - increaseLoginAttemptsDB
 	 */		
-	private static void increaseLoginAttemptsDB(String email) {
+	public static void increaseLoginAttemptsDB(String email) {
 		
 		connectToDBServer();
 		
@@ -513,9 +492,9 @@ public class DAL {
 	
 	/*
 	 * Orel & Maayan: 25/4/2014
-	 * 				  * add function - isPasswordMatchEmail
+	 * 				  * add function - isPasswordMatchesEmail
 	 */
-	public static boolean isPasswordMatchEmail(String email, String password) {
+	public static boolean isPasswordMatcheEmail(String email, String password) {
 		
 		boolean isMatch = true;
 		
