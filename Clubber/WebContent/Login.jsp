@@ -7,7 +7,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Login</title>
-	<link href="CSS/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">	
+	<link href="CSS/bootstrap/css/bootstrap.css" rel="stylesheefdsgsdt" type="text/css">	
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>

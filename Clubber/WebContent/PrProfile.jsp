@@ -23,7 +23,7 @@
 		   float:right;
 		}
 
-		div.yellowStar {
+		div.yellow-Star {
 		   width:26px;
 		   height:31px;
 		   background-image:url('images/yellowStar.jpg');
@@ -74,7 +74,7 @@
   			<br>
 
 			<label id="passwordLabel">סיסמה</label>
-			<input type="password" name="password" id="password" required disabled>
+			<input type="password" name="Password" id="password" required disabled>
   			<br>
 
 			<label id="verifyPasswordLabel">אימות סיסמה</label>
@@ -168,10 +168,10 @@
 			$('#email').attr("disabled", false);
 			$('#password').attr("disabled", false);		
 			$('#verifyPassword').attr("disabled", false);
-			$("#updatePrDel").attr("disabled",false);
+			$("#updateUserDel").attr("disabled",false);
 		});
 		
-		$(function(){
+		function getUserProfile(){
 		    $.ajax({
 		        url: "GetDBData",
 		        type: "post",
@@ -189,9 +189,9 @@
 		        error: function(data){
 		            	console.log("error");}
 		    });
-		});
+		}
 		
-		$(function(){
+		function getPrProfileReview(){
 		    $.ajax({
 		        url: "GetDBData",
 		        type: "post",
@@ -201,22 +201,30 @@
 					
 		        	var i;
 		        	if(data != null){
-			        	for(i=1; i < data.Availability; i++){
-			        		$(".availabilityStars")[i].attr("class", "colored-star");
+			        	for(i=1; i < data.availability; i++){
+			        		var star = $(".availabilityStars").children()[i];
+			        		$(star).removeClass("star");
+			        		$(star).addClass("yellow-star");			        		
 			        	}
 			        	
-			        	for(i=1; i < data.Realiability; i++){
-			        		$(".reliabilityStars")[i].attr("class", "colored-star");
+			        	for(i=1; i < data.realiability; i++){
+			        		var star = $(".reliabilityStars").children()[i];
+			        		$(star).removeClass("star");
+			        		$(star).addClass("yellow-star");			        		
 			        	}
 			        	
-			        	for(i=1; i < data.Treats; i++){
-			        		$(".treatsStars")[i].attr("class", "colored-star");
+			        	for(i=1; i < data.treats; i++){
+			        		var star = $(".treatsStars").children()[i];
+			        		$(star).removeClass("star");
+			        		$(star).addClass("yellow-star");			        		
 			        	}
 			        	
-			        	var generalReview = (data.Availability + data.Realiability + data.Treats) / 3;
+			        	var generalReview = (data.availability + data.realiability + data.treats) / 3;
 			        	
 			        	for(i=1; i < generalReview; i++){
-			        		$(".generalStars")[i].attr("class", "colored-star");
+			        		var star = $(".generalStars").children()[i];
+			        		$(star).removeClass("star");
+			        		$(star).addClass("yellow-star");
 			        	}
 		        	}
 		        	
@@ -224,7 +232,12 @@
 		        error: function(data){
 		            	console.log("error");}
 		    });
-		});		
+		}		
+		
+		$(function(){
+			getUserProfile();
+			getPrProfileReview();
+		});
 		
 	</script>			
 </body>

@@ -1,6 +1,8 @@
 package ClubberServlets;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,6 +53,21 @@ public class Login extends HttpServlet {
         	isSucceed = false;
         	message = "דואר אלקטרוני לא קיים במערכת";
         }
+
+        // in case of time stamp exist (user lock) check if passed 3 hours 
+        long timeStamp = DAL.getLoginAttemptTimeStamp(emailParam);
+        Date currentDate = new Date();
+        long date = currentDate.getTime();
+        
+        if(timeStamp != 0 && timeStamp > currentDate.getTime())
+        {
+        	isSucceed = false;
+        	message = "מאחר והיו ניסיות מרובות למערכת ללא הצלחה, המשתמש ננעל.";        		
+        }
+        else if(timeStamp != 0 && timeStamp <= date)
+        {
+        	DAL.unlockUser(emailParam);
+        }
         
         if(isSucceed == true)
         {
@@ -63,11 +80,11 @@ public class Login extends HttpServlet {
 
             	if (DAL.getUserLoginAttempts(emailParam) > 5)
             	{
-            		//lock user
+					DAL.updateLoginAttemptTimeStamp(emailParam);
             	}
         	}
         }
-
+        
         if(isSucceed == true)
         {
         	request.getSession(true).setAttribute(Constants.EMAIL, emailParam);

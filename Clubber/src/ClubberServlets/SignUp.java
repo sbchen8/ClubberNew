@@ -57,15 +57,17 @@ public class SignUp extends HttpServlet {
         String genderParam = request.getParameter(Constants.GENDER);
         
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        Date birthdateParam = new Date();
-        
-        try {
-			birthdateParam = df.parse(request.getParameter(Constants.BIRTHDATE));
+		Date date = new Date();
+
+		try {
+			String dateParam = request.getParameter(Constants.BIRTHDATE);
+			date = df.parse(dateParam);
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-        
+		Date birthdateParam = date;
+                
         String phoneNumberParam = request.getParameter(Constants.PHONE_NUMBER);
         String emailParam = request.getParameter(Constants.EMAIL);
         String passwordParam = PasswordGenarator.create();
@@ -134,7 +136,7 @@ public class SignUp extends HttpServlet {
         
         if(isSucceed == true)
         {
-        	getServletContext().getRequestDispatcher("/MessagePage.jsp").forward(request, response);
+        	getServletContext().getRequestDispatcher("/WelcomePage.jsp").forward(request, response);
         }
         else
         {

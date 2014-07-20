@@ -22,5 +22,10 @@
     
 	This is Welcome Page 
 	</div>
+	
+	<div>
+	<a href="PrProfile.jsp">עבור לפרופיל</a>
+	</div>
+	
 </body>
 </html>

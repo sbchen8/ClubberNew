@@ -342,10 +342,13 @@ public class DAL {
 
 		connectToDBServer();
 
-		Date birthDate = StringToDate(userData.getBirthDate());
+		DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
+		String date= df.format(userData.getBirthDate());
+		Date date2= df.parse(date);
+		java.sql.Date sqlDate = new java.sql.Date(date2.getTime());
 				
 		String sql= "INSERT INTO USERS(User_Type, First_Name, Last_Name, Gender, Phone_Number, Email, Password, Birth_Date)"
-				+ " VALUES('"+userType+"','"+userData.getFirstName()+"','"+userData.getLastName()+"','"+userData.getGender()+"','"+userData.getPhoneNumber()+"','"+userData.getEmail()+"','"+userData.getPassword()+"','"+birthDate+"')";
+				+ " VALUES('"+userType+"','"+userData.getFirstName()+"','"+userData.getLastName()+"','"+userData.getGender()+"','"+userData.getPhoneNumber()+"','"+userData.getEmail()+"','"+userData.getPassword()+"','"+sqlDate+"')";
 		try {
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -361,32 +364,15 @@ public class DAL {
 		return isSucceed;
 	}
 
-	private static Date StringToDate(Date userBirthDate) {
-		
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String date= df.format(userBirthDate);
-		Date date2 = new Date();
-		
-		try {
-			date2 = df.parse(date);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		java.sql.Date sqlDate = new java.sql.Date(date2.getTime());
-
-		return sqlDate;
-	}
-
 	/*
 	 * Maayan: 	24/4/2014
 	 * 			* add function - getUserLoginAttempts
 	 */	
 	public static int getUserLoginAttempts(String email) {
 	
-		int loginAttempts =0;
+		int loginAttempts = 0;
 		
+		connectToDBServer();
 		
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT Login_Attempts FROM clubber_db.users;");
@@ -403,8 +389,8 @@ public class DAL {
 		}
 				
 		return loginAttempts;
-		
 	}
+
 	
 	/*
 	 * Orel & Maayan: 	25/4/2014
@@ -415,7 +401,7 @@ public class DAL {
 		connectToDBServer();
 		
 		try {
-			stmt.executeQuery("UPDATE clubber_db.users "
+			stmt.executeUpdate("UPDATE clubber_db.users "
 							   + "SET Login_attempts = Login_attempts + 1 "
 							   + "WHERE Email ='" + email + "'");	
 		} 
@@ -426,6 +412,50 @@ public class DAL {
 		finally{
 			disconnectFromDBServer();
 		}
+	}
+	
+	public static void updateLoginAttemptTimeStamp(String email)
+	{
+		connectToDBServer();
+		
+		Date now = new Date();
+		long expiredDate = now.getTime() + (3600 * 3 * 1000); 
+        
+		try {
+			stmt.executeUpdate("UPDATE clubber_db.users "
+							   + "SET LoginAttemptTimeStamp = " + expiredDate
+							   + " WHERE Email ='" + email + "'");	
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		finally{
+			disconnectFromDBServer();
+		}
+	}
+	
+	public static long getLoginAttemptTimeStamp(String email)
+	{
+		long loginAttemptsTimeStamp = 0;
+
+		connectToDBServer();
+		
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT LoginAttemptTimeStamp FROM clubber_db.users");
+			while (rs.next())
+			{
+				loginAttemptsTimeStamp = rs.getLong("LoginAttemptTimeStamp");
+			}		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		finally{
+			disconnectFromDBServer();
+		}
+		
+		return loginAttemptsTimeStamp;		
 	}
 
 	/*
@@ -580,12 +610,17 @@ public class DAL {
 		
 	}
 	
-	public static boolean updateUserDetails(UserData userData) {
+	public static boolean updateUserDetails(UserData userData) throws ParseException {
 		// TODO Auto-generated method stub
 		
 		boolean isSucceed = true;
 		
 		connectToDBServer();
+		
+		DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
+		String date= df.format(userData.getBirthDate());
+		Date date2= df.parse(date);
+		java.sql.Date sqlDate = new java.sql.Date(date2.getTime());
 
 		String sql = "UPDATE clubber_db.users "
 				   + "SET First_Name = '" + userData.getFirstName() + "'"
@@ -593,7 +628,7 @@ public class DAL {
 				   + ", Gender = '" + userData.getGender() + "'"
 				   + ", Phone_Number = '" + userData.getPhoneNumber() + "'"
 				   + ", Password = '" + userData.getPassword() + "'"
-				   + ", Birth_Date = '" + userData.getBirthDate() + "'"
+				   + ", Birth_Date = '" + sqlDate + "'"
 				   + " WHERE Email ='" + userData.getEmail() + "'";
 		
 		try {
@@ -623,7 +658,7 @@ public class DAL {
 			ResultSet rs = stmt.executeQuery("SELECT Availability, Realiability, Treats "
 					   + "FROM clubber_db.pr_review "
 					   + "WHERE PR_id IN "
-					   + "(SELECT id form clubber_db.users "
+					   + "(SELECT id from clubber_db.users "
 					   + "WHERE Email ='" + email + "')");
 			
 			
@@ -658,8 +693,8 @@ public class DAL {
 
 			ResultSet rs = stmt.executeQuery("SELECT Punctuality, Realiability "
 					   + "FROM clubber_db.customer_review "
-					   + "WHERE PR_id IN "
-					   + "(SELECT id form clubber_db.users "
+					   + "WHERE Customer_id IN "
+					   + "(SELECT id from clubber_db.users "
 					   + "WHERE Email ='" + email + "')");
 			
 			
@@ -687,8 +722,6 @@ public class DAL {
 	public static List<LineData> getCustomerRecomendedLines(String email) {
 
 		List<LineData> lines = null;
-		
-		UserReviews reviews = null;
 		
 		connectToDBServer();
 
@@ -773,7 +806,24 @@ public class DAL {
 			}
 			return data;
 		}
+
+	public static void unlockUser(String email) {
 		
-	
+		connectToDBServer();
+		
+		try {
+			stmt.executeUpdate("UPDATE clubber_db.users "
+							   + "SET Login_attempts = 0 , LoginAttemptTimeStamp = 0 "
+							   + "WHERE Email ='" + email + "'");	
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		finally{
+			disconnectFromDBServer();
+		}		
+		
+	}
 	
 }

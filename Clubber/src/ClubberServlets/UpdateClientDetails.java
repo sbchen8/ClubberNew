@@ -65,7 +65,15 @@ public class UpdateClientDetails extends HttpServlet {
         client.setEmail(request.getParameter(Constants.EMAIL));
         client.setPassword(request.getParameter(Constants.PASSWORD));
                 
-        boolean isSucceed = DAL.updateUserDetails(client);
+        boolean isSucceed = true;
+        
+		try {
+			isSucceed = DAL.updateUserDetails(client);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			isSucceed = false;
+		}
         
         if(isSucceed == true)
         {
@@ -76,7 +84,7 @@ public class UpdateClientDetails extends HttpServlet {
         	message = "העדכון נכשל";
         }
         
-        request.getSession(true).setAttribute(Constants.MESSAGE_TEXT, message);
+        request.setAttribute(Constants.MESSAGE_TEXT, message);
         getServletContext().getRequestDispatcher("/ClientProfile.jsp").forward(request, response);
 	}
 

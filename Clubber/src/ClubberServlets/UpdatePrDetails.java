@@ -66,7 +66,14 @@ public class UpdatePrDetails extends HttpServlet {
         pr.setEmail(request.getParameter(Constants.EMAIL));
         pr.setPassword(request.getParameter(Constants.PASSWORD));
                 
-        boolean isSucceed = DAL.updateUserDetails(pr);
+        boolean isSucceed = true;
+		try {
+			isSucceed = DAL.updateUserDetails(pr);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			isSucceed = false;
+		}
         
         if(isSucceed == true)
         {
@@ -77,7 +84,7 @@ public class UpdatePrDetails extends HttpServlet {
         	message = "העדכון נכשל";
         }
         
-        request.getSession(true).setAttribute(Constants.MESSAGE_TEXT, message);
+        request.setAttribute(Constants.MESSAGE_TEXT, message);
         getServletContext().getRequestDispatcher("/PrProfile.jsp").forward(request, response);
 	}
 
