@@ -111,7 +111,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             	json = gson.toJson(reviews);
             }
             else if(requestType.equals(Constants.DB_DATA_CUSTOMER_PROFILE_REVIEW)){
-            	UserReviews reviews = DAL.getClientProfileReview(prEmail);
+            	UserReviews reviews = DAL.getCustomerProfileReview(prEmail);
             	json = gson.toJson(reviews);
             	
             }

@@ -17,7 +17,7 @@ import Utlis.Constants;
 
 
 /**
- * Servlet implementation class UpdateUserDetails
+ * Servlet implementation class SignUp
  */
 @WebServlet("/UpdatePrDetails")
 public class UpdatePrDetails extends HttpServlet {
