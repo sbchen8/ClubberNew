@@ -17,7 +17,7 @@ public class Constants {
 	 public static final String DB_DATA_PR_PROFILE_REVIEW = "DBDataPrProfileReview";
 		 
 	 // CustomerProfile fields
-	 public static final String DB_DATA_CUSTOMER_PROFILE_REVIEW = "DBDataCustomerProfileReview";
+	 public static final String DB_DATA_CLIENT_PROFILE_REVIEW = "DBDataClientProfileReview";
 	 public static final String DB_DATA_RECOMENDED_LINES = "DBDataRecomendedLines";
 		 
 	 //Session data:

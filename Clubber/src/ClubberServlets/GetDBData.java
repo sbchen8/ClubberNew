@@ -110,8 +110,8 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             	UserReviews reviews = DAL.getPrProfileReview(prEmail);
             	json = gson.toJson(reviews);
             }
-            else if(requestType.equals(Constants.DB_DATA_CUSTOMER_PROFILE_REVIEW)){
-            	UserReviews reviews = DAL.getCustomerProfileReview(prEmail);
+            else if(requestType.equals(Constants.DB_DATA_CLIENT_PROFILE_REVIEW)){
+            	UserReviews reviews = DAL.getClientProfileReview(prEmail);
             	json = gson.toJson(reviews);
             	
             }

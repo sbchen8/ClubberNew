@@ -43,7 +43,7 @@
 		<a href="SearchCustomers.jsp">חפש לקוחות</a>
 	</div>
 	<div class="user-details">
-		<form class="user-details-form" id="userDetails" name="userDetails" method="post" action="UpdateUserDetails">
+		<form class="user-details-form" id="userDetails" name="userDetails" method="post" action="UpdatePrDetails">
 		  	
 		  	<label id="firstnameLabel">שם פרטי</label>
 		  	<input type="text" name="firstName" id="firstName" required disabled>
@@ -81,7 +81,7 @@
 			<input type="password" name="verifyPassword" id="verifyPassword" required disabled>
   			<br>
   			  			
-  			<button id="editPrDel" type="button" >ערוך</button>
+  			<button id="editUserDel" type="button" >ערוך</button>
   			<button id="updateUserDel" type="submit" onclick="updateUserDetails()" disabled>שמור</button>
 		</form>		
 		<br>
