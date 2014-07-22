@@ -16,11 +16,11 @@ public class AuctionData {
 	private Date eventDate;
 	private boolean isDateFlexible;
 	private IdWithName area;
-	private IdWithName businessType;
+	private List<IdWithName> businessType;
 	private IdWithName certainBusiness;
 	private String description;
 	private IdWithName detailsToDisplay;
-	private IdWithName sittsType;
+	private List<IdWithName> sittsType;
 	private boolean smoking;
 	private IdWithName auctionStatus;
 	private IdWithName createdBy;
@@ -30,6 +30,8 @@ public class AuctionData {
 	{
 		auctionStatus=new IdWithName(1,null);
 		musicStyle= new LinkedList<IdWithName>();	
+		sittsType= new LinkedList<IdWithName>();	
+		businessType= new LinkedList<IdWithName>();
 		createdBy =null;
 		setOfferNumber(0);
 	}
@@ -112,14 +114,6 @@ public class AuctionData {
 		this.area = area;
 	}
 
-	public IdWithName getBusinessType() {
-		return businessType;
-	}
-
-	public void setBusinessType(IdWithName businessType) {
-		this.businessType = businessType;
-	}
-
 	public IdWithName getCertainBusiness() {
 		return certainBusiness;
 	}
@@ -134,14 +128,6 @@ public class AuctionData {
 
 	public void setDetailsToDisplay(IdWithName detailsToDisplay) {
 		this.detailsToDisplay = detailsToDisplay;
-	}
-
-	public IdWithName getSittsType() {
-		return sittsType;
-	}
-
-	public void setSittsType(IdWithName sittsType) {
-		this.sittsType = sittsType;
 	}
 
 	public String isSmoking() {
@@ -187,6 +173,18 @@ public class AuctionData {
 	}
 	public void setOfferNumber(Integer offerNumber) {
 		this.offerNumber = offerNumber;
+	}
+	public List<IdWithName> getBusinessType() {
+		return businessType;
+	}
+	public void setBusinessType(List<IdWithName> businessType) {
+		this.businessType = businessType;
+	}
+	public List<IdWithName> getSittsType() {
+		return sittsType;
+	}
+	public void setSittsType(List<IdWithName> sittsType) {
+		this.sittsType = sittsType;
 	}
 	 
 

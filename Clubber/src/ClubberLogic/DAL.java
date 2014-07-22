@@ -6,10 +6,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
 import Utlis.AuctionManagementData;
 import Utlis.IdWithName;
 import Utlis.NewAuctionData;
+import Utlis.SessionUtils;
 
 public class DAL {
 	private static Connection conn;
@@ -83,6 +86,53 @@ public class DAL {
 		}
 		return data;	
 	}
+	
+	public static AuctionData getReviewedAuctionData(Integer currAuctionID )
+	{
+		AuctionData auction= new AuctionData();
+		connectToDBServer();
+		
+		try {
+			
+			/*load auction data*/
+			ResultSet rs = stmt.executeQuery("select auc.*, event_type.Name as event_type_name, auction_status.Name,businesses.Name, COALESCE(counter,0) as counter from event_type,"
+					+ " Auction auc left join (Select auction_id, count(id) as counter from  offers) offers1 on offers1.auction_id = auc.id where auc.Event_Type = event_type.id and "
+					+"auction_status.id = auc.Auction_Status and auc.Certain_Business= businesses.id order by auc.Event_Date");
+			auction.setEventDate(rs.getDate("Event_Date"));				
+			auction.setDescription(rs.getString("Description"));
+			auction.setEventType(new IdWithName(rs.getInt("auc.Event_Type"),rs.getString("event_type_name") ));
+			auction.setId(rs.getInt("id"));
+			auction.setOfferNumber(rs.getInt("counter"));
+			auction.setAuctionStatus(new IdWithName(rs.getInt("auc.Auction_Status"),rs.getString("auction_status.Name")));
+			auction.setCertainBusiness(new IdWithName(rs.getInt("auc.Certain_Business"),rs.getString("businesses.Name")));
+			auction.setDateFlexible(rs.getBoolean("Is_Date_Flexible"));
+			auction.setExceptionsDescription(rs.getString("Exceptions_Description"));
+			auction.setGuestesQuantiny(rs.getInt("Guestes_Quantiny"));
+			auction.setSmoking(rs.getBoolean("Smoking"));
+			auction.setMinAge(rs.getInt("Minimum_Age"));
+
+			/*load auction areas*/
+			/*load auction music styles*/
+			/*load auction business types*/
+			/*load auction sitting types*/
+			rs = stmt.executeQuery("select * from areas, treats where treats.id= ot.treat_id and ot.Offer_id=");
+			
+			while (rs.next())
+			{
+				
+			}			
+			
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally{
+			disconnectFromDBServer();
+		}
+
+		return auction;
+	}
+	
 	
 	public static OfferData getReviewedOfferData(Integer currOfferID, Integer currAuctionID )
 	{
@@ -159,14 +209,18 @@ public class DAL {
 		
 	}
 	
-	public static boolean addNewMessage(String description) throws Exception
+	public static boolean addNewMessage(String description, Integer auctionId) throws Exception
 	{
 		connectToDBServer();
 		
 		try {
+			//created on = now :
+			Calendar calendar = Calendar.getInstance();
+			Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+			
 			//create new message in db:
 			String sqlMessageInsertion= String.format("insert into Messages values(%d,%d,%d,%d,'%s','%s')",
-					null,null,null,null,null,description);
+					null,1,2,auctionId,currentTimestamp,description);
 			
 			stmt.executeUpdate(sqlMessageInsertion);
 			return true;
@@ -213,7 +267,6 @@ public class DAL {
 				auction.setId(currAuctionID);
 				auction.setArea(new IdWithName(rs.getInt("Areas.id"),rs.getString("Areas.Name")));
 				auction.setAuctionStatus(new IdWithName (rs.getInt("Auction_Status"),null));
-				auction.setBusinessType(new IdWithName (rs.getInt("Business_Type"),null));
 				auction.setDateFlexible(rs.getBoolean("Is_Date_Flexible"));
 				auction.setDescription(rs.getString("auc.Description"));
 				auction.setEventDate(rs.getDate("Event_Date"));
@@ -293,11 +346,11 @@ public class DAL {
 		
 		try {
 			//create new auction in db:
-			String sqlAuctionInsertion= String.format("insert into Auction values(%d,%d,'%s','%s',%d,'%s','%s',%d,%d,%d,'%s',%d,%d,'%s',%d,%d, %s)",
+			String sqlAuctionInsertion= String.format("insert into Auction values(%d,%d,'%s','%s',%d,'%s','%s',%d,%d,'%s',%d,'%s',%d,%d, %s)",
 					null,auction.getMinAge(),auction.getExceptionsDescription(),auction.getGuestesQuantiny(),getValidID(auction.getEventType()), 
-					sqlDate,auction.getIsDateFlexible(),getValidID( auction.getArea()),getValidID(auction.getBusinessType()),
+					sqlDate,auction.getIsDateFlexible(),getValidID( auction.getArea()),
 					getValidID(auction.getCertainBusiness()),auction.getDescription(),getValidID(auction.getDetailsToDisplay()),
-					getValidID(auction.getSittsType()),auction.isSmoking(), getValidID(auction.getAuctionStatus()),	auction.getCreatedBy(), null);
+					auction.isSmoking(), getValidID(auction.getAuctionStatus()),auction.getCreatedBy(), null);
 			
 			stmt.executeUpdate(sqlAuctionInsertion, Statement.RETURN_GENERATED_KEYS);
 			ResultSet rs= stmt.getGeneratedKeys();
@@ -308,6 +361,20 @@ public class DAL {
 			{
 				String sqlMusicStyles= String.format("insert into Auction_Music_Style values(%d,%d,%d)", null,auctionId , item.getId());
 				stmt.executeUpdate(sqlMusicStyles);
+			}
+			
+			//add relevant records to auction business type table:
+			for(IdWithName item: auction.getBusinessType())
+			{
+				String sqlBusinessType= String.format("insert into auction_business_type values(%d,%d,%d)", null,auctionId , item.getId());
+				stmt.executeUpdate(sqlBusinessType);
+			}	
+			
+			//add relevant records to auction sits type table:
+			for(IdWithName item: auction.getSittsType())
+			{
+				String sqlSittsType= String.format("insert into auction_sits_type values(%d,%d,%d)", null,auctionId , item.getId());
+				stmt.executeUpdate(sqlSittsType);
 			}	
 		} 
 		catch (Exception e) {

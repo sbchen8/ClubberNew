@@ -1,5 +1,3 @@
-/*123123*/
-
 body {
      height:100%;
      direction: rtl;
@@ -114,7 +112,7 @@ body {
 	width:200px;
 }
 
-#musicStyle{
+#musicStyle ,#business-type, #sitts-type{
 	height: 6em;
 	overflow: auto;
 	background-color: white;

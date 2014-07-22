@@ -50,6 +50,8 @@ public class NewAuction extends HttpServlet {
 		{
 			auction.setEventType(new IdWithName(Integer.parseInt(request.getParameter(Constants.EVENT_TYPE)),null));
 			addAllMusicStyles(request, auction);
+			addAllSittsTypes(request, auction);
+			addAllBusinessTypes(request, auction);
 			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			Date date= df.parse(request.getParameter(Constants.DATEPICKER));
 			auction.setEventDate(date);
@@ -58,7 +60,6 @@ public class NewAuction extends HttpServlet {
 			auction.setExceptionsDescription(request.getParameter(Constants.EXCEPTION_DESCRIPTION));
 			auction.setMinAge(Integer.parseInt(request.getParameter(Constants.MIN_AGE)));
 			auction.setArea(new IdWithName(Integer.parseInt(request.getParameter(Constants.AREA)),null));
-			auction.setBusinessType(new IdWithName(Integer.parseInt(request.getParameter(Constants.BUSINESS_TYPE)),null));
 			
 			if ((request.getParameter(Constants.CERTAIN_BUSINESS) != null) && (request.getParameter(Constants.CERTAIN_BUSINESS) !=""))
 			{
@@ -66,7 +67,6 @@ public class NewAuction extends HttpServlet {
 			}
 			
 			auction.setSmoking(Boolean.parseBoolean(request.getParameter(Constants.SMOKING)));
-			auction.setSittsType(new IdWithName(Integer.parseInt(request.getParameter(Constants.SITTS_TYPE)),null));
 			auction.setDescription(request.getParameter(Constants.GENERAL_DESCRIPTION));
 			
 			DAL.addNewAuction(auction);
@@ -82,11 +82,27 @@ public class NewAuction extends HttpServlet {
         }
 	}
 	
-	public  void addAllMusicStyles(HttpServletRequest request, AuctionData auction)
+	public void addAllMusicStyles(HttpServletRequest request, AuctionData auction)
 	{
 		String musicStyles[]= request.getParameter(Constants.MUSIC_STYLE_LIST).split("&");
 		for (String item : musicStyles) {
 			auction.getMusicStyle().add(new IdWithName(Integer.parseInt(item), null));
+		}
+	}
+	
+	public void addAllSittsTypes(HttpServletRequest request, AuctionData auction)
+	{
+		String sittsTypes[]= request.getParameter(Constants.SITS_TYPE_LIST).split("&");
+		for (String item : sittsTypes) {
+			auction.getSittsType().add(new IdWithName(Integer.parseInt(item), null));
+		}
+	}
+	
+	public void addAllBusinessTypes(HttpServletRequest request, AuctionData auction)
+	{
+		String businessTypes[]= request.getParameter(Constants.BUSINESS_TYPE_LIST).split("&");
+		for (String item : businessTypes) {
+			auction.getBusinessType().add(new IdWithName(Integer.parseInt(item), null));
 		}
 	}
 

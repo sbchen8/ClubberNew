@@ -19,7 +19,7 @@
     	<div class='logo'></div>
     	<div class='advertisements'></div>
     </div>
-    <div class='nav-bar'> פרופיל | המכרזים שלי | התרעות </div>
+    <div class='nav-bar'> פרופיל | המכרזים שלי | התראות </div>
     <br>
     </div>
     <div class='main-container'>  
@@ -52,13 +52,13 @@
 						<label class="offer-title-label"> סל פינוקים</label>
 					</div>
 				</div>
-				<input class='btn-primary' type="button" id="accept-offer-button" name="accept-offer-button"  value="קבל הצעה זו" onClick= "acceptOfferClicked()"/>
+				<input class='btn-primary' type="button" id="accept-offer-button" name="accept-offer-button"  value="קבל הצעה זו" onClick= "approveBtnClicked()"/>
 			</div>
 		</div>
        <div class='all-messages-container'>
 	       	<div class="old-messages"></div>
 	       	<div class="new-message"></div> 
-	       	 <input type="text" id='outgoing-message-text' class='outgoing-message outgoing-message-empty' onkeypress='sendMessage()' onblur='setNewMessageTextOnFocusOut();' onfocus='setNewMessageTextOnFocusIn();' id="new-message" name="new-message-input" value="השב...">        
+	       	 <input type="text" id='outgoing-message-text' class='outgoing-message outgoing-message-empty' onblur='setNewMessageTextOnFocusOut();' onfocus='setNewMessageTextOnFocusIn();' name="new-message-input" value="השב...">        
 	    </div>
 	    <div class='recomended-lines-container'></div>        
     </div>

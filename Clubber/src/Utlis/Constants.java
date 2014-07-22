@@ -43,9 +43,11 @@ public class Constants {
 	 public static final String MIN_AGE= "MinAge";
 	 public static final String AREA= "Area";
 	 public static final String BUSINESS_TYPE= "BusinessType";
+	 public static final String BUSINESS_TYPE_LIST= "BusinessTypeList";
 	 public static final String CERTAIN_BUSINESS= "CertainBusiness";
 	 public static final String SMOKING= "Smoking";
 	 public static final String SITTS_TYPE= "SittsType";
+	 public static final String SITS_TYPE_LIST= "SitsTypeList";
 	 public static final String GENERAL_DESCRIPTION= "GeneralDescription";
 	 
 	// Sign Up fields 

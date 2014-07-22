@@ -37,9 +37,9 @@
 	                loadListDataFromDB(data.eventTypes, '#event-type' );
 	                loadCheckboxListDataFromDB(data.musicStyles, '#musicStyle' );
 	                loadListDataFromDB(data.area, '#area' );
-	                loadListDataFromDB(data.businessType, '#business-type' );
+	                loadCheckboxListDataFromDB(data.businessType, '#business-type' );
 	                loadListDataFromDB(data.certainBusiness, '#certain-business' );
-	                loadListDataFromDB(data.sittsType, '#sitts-type' );
+	                loadCheckboxListDataFromDB(data.sittsType, '#sitts-type' );
 	            }},
 	        error: function(data){
 	            	console.log("error");}
@@ -108,6 +108,14 @@
 		var final= replaceAll("%23musicStyle=","",musicStyles);
 		var final2= replaceAll("%2F","",final); 
 		
+		var businessTypes= $('#business-type').find('input').serialize();
+		var final_businessType= replaceAll("%23business-type=","",businessTypes);
+		var final2_businessTypes= replaceAll("%2F","",final_businessType); 
+		
+		var sitsTypes= $('#sitts-type').find('input').serialize();
+		var final_sitsTypes= replaceAll("%23sitts-type=","",sitsTypes);
+		var final2_sitsTypes= replaceAll("%2F","",final_sitsTypes); 
+		
 		var eventType=  $('#event-type')[0].value;
 		var date= $('#datepicker')[0].value;
 		var isDateFlexible= $('#is-flexible-date')[0].value;
@@ -115,10 +123,8 @@
 		var exceptionsDescription= $('#exceptions-description')[0].value;
 		var minAge= $('#min-age')[0].value;
 		var area= $('#area')[0].value;
-		var businessType= $('#business-type')[0].value;
 		var certainBusiness= $('#certain-business')[0].value;
 		var smoking= $('#smoking')[0].value;
-		var sittsType= $('#sitts-type')[0].value;
 		var generalDescription= $('#general-description')[0].value;
 		
 	    $.ajax({
@@ -127,7 +133,7 @@
 	        dataType: 'json',
 	        data: {EventType: eventType, MusicStyleList: final2, Datepicker: date, IsFlexibleDate: isDateFlexible,
 	        	GuestsQuantity:guestsQuantity, ExceptionsDescription: exceptionsDescription, MinAge: minAge,
-	        	Area: area, BusinessType: businessType, CertainBusiness:certainBusiness, Smoking: smoking, SittsType:sittsType, GeneralDescription:generalDescription},
+	        	Area: area, BusinessTypeList: final2_businessTypes, CertainBusiness:certainBusiness, Smoking: smoking, SitsTypeList:final2_sitsTypes, GeneralDescription:generalDescription},
 	        success: function(data){
 	        	console.log("Auction creation succedded");}
 	        });
