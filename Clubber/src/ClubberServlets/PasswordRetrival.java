@@ -64,7 +64,7 @@ public class PasswordRetrival extends HttpServlet {
 			}
 			
 			DAL.updateUserPassword(recipientEmail, newPassword);
-			getServletContext().getRequestDispatcher("/MessagePage.jsp").forward(request, response);
+			getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
 		}
 		else
 		{

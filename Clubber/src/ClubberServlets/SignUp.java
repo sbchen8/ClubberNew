@@ -1,6 +1,9 @@
 package ClubberServlets;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -52,14 +55,26 @@ public class SignUp extends HttpServlet {
         String firstNameParam = request.getParameter(Constants.FIRST_NAME);
         String lastNameParam = request.getParameter(Constants.LAST_NAME);
         String genderParam = request.getParameter(Constants.GENDER);
-        String birthdateParam = request.getParameter(Constants.BIRTHDATE);
+        
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
+
+		try {
+			String dateParam = request.getParameter(Constants.BIRTHDATE);
+			date = df.parse(dateParam);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		Date birthdateParam = date;
+                
         String phoneNumberParam = request.getParameter(Constants.PHONE_NUMBER);
         String emailParam = request.getParameter(Constants.EMAIL);
         String passwordParam = PasswordGenarator.create();
                 
         boolean isSucceed = true; 
         UserType userType;
-        String message = "";
+        String message = "נרשמת בהצלחה לאתר, אנו ממליצים לאחר ההתחברות לשנות את סיסמתך";
         
         // Check if email unique
         if(DAL.isEmailUnique(emailParam) == false)
@@ -75,6 +90,7 @@ public class SignUp extends HttpServlet {
 	        {
 	        	userType = UserType.Client;
 	        	Client client = new Client(lastNameParam, firstNameParam, genderParam, phoneNumberParam, emailParam, birthdateParam, passwordParam);
+
 	        	if( sentMail(firstNameParam, passwordParam, emailParam) == true)
 	        	{
 	        		try {
@@ -82,47 +98,50 @@ public class SignUp extends HttpServlet {
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+						isSucceed = false;
+						message = "התגלתה תקלה בעת ההרשמה, אנא צור קשר clubber.cop@gmail.com";
 					}
 	        	}
 	        	else
 	        	{
 	        		isSucceed = false;
+	        		message = "ההרשמה נכשלה, המערכת נכשלה בשליחת מייל האימות";
 	        	}
 	        }
 	        else if(whoAmIParam.equals("PR") == true)
 	        {
 	        	userType = UserType.PR;
 	        	PR pr = new PR(lastNameParam, firstNameParam, genderParam, phoneNumberParam, emailParam, birthdateParam, passwordParam);
-	        	
-	        	try {
-					isSucceed = DAL.insertNewUser(pr, userType);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	        	
-	        	if(isSucceed == true)
-	        	{
-	        		if(sentMail(firstNameParam, passwordParam, emailParam) == false)
-	        		{
-	        			isSucceed = false;
-	        		}
-	        	}
-	        }
-        }
 
-        // set sign up verification message
-        if(isSucceed == true)
-        {
-        	message = "נרשמת בהצלחה לאתר, אנו ממליצים לאחר ההתחברות לשנות את סיסמתך";
-        }
-        else
-        {
-        	message = "ההרשמה נכשלה";
+        		if(sentMail(firstNameParam, passwordParam, emailParam) == true)
+        		{
+        		 	try {
+    					isSucceed = DAL.insertNewUser(pr, userType);
+    				} catch (ParseException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    					isSucceed = false;
+    					message = "התגלתה תקלה בעת ההרשמה, אנא צור קשר clubber.cop@gmail.com";
+    				}
+        		}
+        		else
+        		{
+        			isSucceed = false;
+        			message = "ההרשמה נכשלה, המערכת נכשלה בשליחת מייל האימות";
+        		}
+	        }
         }
         
         request.setAttribute(Constants.MESSAGE_TEXT, message);
-        getServletContext().getRequestDispatcher("/MessagePage.jsp").forward(request, response);                                            
+        
+        if(isSucceed == true)
+        {
+        	getServletContext().getRequestDispatcher("/WelcomePage.jsp").forward(request, response);
+        }
+        else
+        {
+        	getServletContext().getRequestDispatcher("/SignUp.jsp").forward(request, response);                                            
+        }
 	}
 
 	
@@ -130,7 +149,10 @@ public class SignUp extends HttpServlet {
 	{
 		boolean isSucceed = true;
 		String title = "Clubber - Registration to website";
-		String message = "Hello " + name + " ! your password is : " + password;
+		String message = "Hello " + name + "!"
+				+ "\n\nYour password is : " + password 
+				+ "\nWe recommended you to change your password for safety reasons. "
+				+ "\n\nThanks Clubber Team";
 				
 		try {
 			GoogleMail.Send(Constants.CLUBBER_USER_NAME, Constants.CLUBBER_USER_PASSWORD, email, title, message);

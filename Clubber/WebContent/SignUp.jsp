@@ -1,16 +1,19 @@
+<%@page import="Utlis.Constants"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
 <%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
+<% String messageText = (String)request.getAttribute(Constants.MESSAGE_TEXT); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Sign Up</title>
 		<link href="CSS/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">		
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 		<script src="//jqueryui.com/resources/demos/datepicker/jquery.ui.datepicker-he.js"></script>		
+  		<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
 	</head>
 	<body dir="rtl">
 		<div class="explanation-area">
@@ -21,7 +24,7 @@
 			  	<label id="whoAmILabel">מי אני?</label>
 			  	<input type="radio" name="whoAmI" value="PR" checked>
 				יחצן
-				<input type="radio" name="whoAmI" value="client">
+				<input type="radio" name="whoAmI" value="Client">
 				לקוח
 				<br>
 			  	
@@ -41,7 +44,7 @@
 				<br>
 				
 				<label id="birthdateLabel">תאריך לידה</label>
-				<input name="birthdate" id="birthdate">
+				<input name="birthdate" id="birthdate" required>
 	  			<br>
 				
 				<label id="phonenumberLabel">טלפון</label>
@@ -70,10 +73,19 @@
 	  			
 	  			<button type="submit" >הירשם</button>
 	  			<input type=reset value="נקה"><br>
+	  			
+	  			<div class="message-area">
+					<label id=loginFailed>
+					<% if(messageText != null){ %>
+						<%=messageText %>
+					<%} %>
+					</label>   			
+  				</div>
 			</form>
     	</div>	 
-		<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
-		<script src="http://jquery.bassistance.de/validate/additional-methods.js"></script>	
+    	
+		<!--<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
+		<script src="http://jquery.bassistance.de/validate/additional-methods.js"></script>-->	
 	
 		<script>
 	

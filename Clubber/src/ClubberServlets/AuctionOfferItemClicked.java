@@ -2,9 +2,6 @@ package ClubberServlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,11 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ClubberLogic.AuctionData;
-import ClubberLogic.DAL;
-import Utlis.AuctionManagementData;
 import Utlis.Constants;
-import Utlis.NewAuctionData;
 import Utlis.SessionUtils;
 
 import com.google.gson.Gson;

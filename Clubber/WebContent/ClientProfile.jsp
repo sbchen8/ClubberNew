@@ -8,11 +8,12 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-		<title>פרופיל</title>
+		<title>פרופיל - לקוח</title>
 	    <link href="CSS/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 	    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
 		<style>
 		div.star {
 		   width:26px; 
@@ -22,9 +23,9 @@
 		   float:right;
 		}
 
-		div.yellowStar {
+		div.yellow-star {
 		   width:26px;
-		   height:31px;
+		   height:30px;
 		   background-image:url('images/yellowStar.jpg');
 		   background-repeat:no-repeat;
 		   float:right;
@@ -34,7 +35,7 @@
 	</head>
 <body dir="rtl">
 	<div class="user-details">
-		<form class="user-details-form" id="prDetails" name="userDetails" method="post" action="UpdateUserDetails">
+		<form class="user-details-form" id="userDetails" name="userDetails" method="post" action="UpdateClientDetails">
 		  	
 		  	<label id="firstnameLabel">שם פרטי</label>
 		  	<input type="text" name="firstName" id="firstName" required disabled>
@@ -65,7 +66,7 @@
   			<br>
 
 			<label id="passwordLabel">סיסמה</label>
-			<input type="password" name="password" id="password" required disabled>
+			<input type="password" name="Password" id="password" required disabled>
   			<br>
 
 			<label id="verifyPasswordLabel">אימות סיסמה</label>
@@ -117,8 +118,6 @@
 		</div>
 		<br>
 	</div>
-	<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
-	<script src="http://jquery.bassistance.de/validate/additional-methods.js"></script>		
 	<script>
 	
 		// Set error messages  
@@ -155,10 +154,10 @@
 			$('#email').attr("disabled", false);
 			$('#password').attr("disabled", false);		
 			$('#verifyPassword').attr("disabled", false);
-			$("#updatePrDel").attr("disabled",false);
+			$("#updateUserDel").attr("disabled",false);
 		});
 		
-		$(function(){
+		function getUserProfile(){
 		    $.ajax({
 		        url: "GetDBData",
 		        type: "post",
@@ -176,30 +175,36 @@
 		        error: function(data){
 		            	console.log("error");}
 		    });
-		});
+		}
 		
-		$(function(){
+		function getClientProfileReview(){
 		    $.ajax({
 		        url: "GetDBData",
 		        type: "post",
 		        dataType: 'json',
-		        data:{RequestType: "DBDataCustomerProfileReview"},
+		        data:{RequestType: "DBDataClientProfileReview"},
 		        success: function(data) {
 					
 		        	var i;
 		        	if(data != null){
-			        	for(i=1; i < data.Availability; i++){
-			        		$(".punctualityStars")[i].attr("class", "colored-star");
+			        	for(i=1; i < data.availability; i++){
+			        		var star = $(".punctualityStars").children()[i];
+			        		$(star).removeClass("star");
+			        		$(star).addClass("yellow-star");
 			        	}
 			        	
-			        	for(i=1; i < data.Realiability; i++){
-			        		$(".reliabilityStars")[i].attr("class", "colored-star");
+			        	for(i=1; i < data.realiability; i++){
+			        		var star = $(".reliabilityStars").children()[i];
+			        		$(star).removeClass("star");
+			        		$(star).addClass("yellow-star");			        		
 			        	}
 			        				        	
-			        	var generalReview = (data.Availability + data.Realiability + data.Treats) / 3;
+			        	var generalReview = (data.availability + data.realiability) / 2;
 			        	
 			        	for(i=1; i < generalReview; i++){
-			        		$(".generalStars")[i].attr("class", "colored-star");
+			        		var star = $(".generalStars").children()[i];
+			        		$(star).removeClass("star");
+			        		$(star).addClass("yellow-star");			        		
 			        	}
 		        	}
 		        	
@@ -207,24 +212,32 @@
 		        error: function(data){
 		            	console.log("error");}
 		    });
-		});
+		}
 		
-		$(function(){
+		function getRecomendedUserLines(){
 		    $.ajax({
 		        url: "GetDBData",
 		        type: "post",
 		        dataType: 'json',
 		        data:{RequestType: "DBDataRecomendedLines"},
-		        success: function(data) {
-					data.foreach(function(line){
-						$(".recomendedLines").append("<p>'"+line.name+"'</p>");
-					});
+		       success: function(data) {
+		        	console.log(data);
+		   		 	$.each(data, function(index, val) {
+		   		 		$(".recomendedLines").append("<p>"+val.m_LineName+"</p>");
+			        });
 		        },
 		        error: function(data){
 		            	console.log("error");}
 		    });
-		});
+		}
 
+
+		$(function(){
+			getUserProfile();
+			getClientProfileReview();
+			getRecomendedUserLines();
+		});
+		
 		
 	</script>			
 </body>

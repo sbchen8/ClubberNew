@@ -1,13 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@page import="Utlis.Constants"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<% String statusMessage = (String)request.getAttribute(Constants.STATUS_MESSAGE); %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Password Retrival</title>
 	<link href="CSS/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">	
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>	
+	<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>	
 </head>
 <body dir="rtl">
 	<div class="password-retrival-area">
@@ -19,10 +22,12 @@
 		</form>
 	</div>
 	<div class="message-area">
-		<label id="statusMessageLabel"></label>
+		<label id="statusMessageLabel">
+			<% if(statusMessage != null){ %>
+				<%=statusMessage %>
+			<%} %>		
+		</label>
 	</div>
-	<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
-	<script src="http://jquery.bassistance.de/validate/additional-methods.js"></script>
 	<script>
 	
 	// Set default messages  

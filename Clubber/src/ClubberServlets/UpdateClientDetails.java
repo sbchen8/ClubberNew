@@ -11,22 +11,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ClubberLogic.DAL;
-import ClubberLogic.PR;
 import Utlis.Constants;
-
+import ClubberLogic.Client;
+import ClubberLogic.DAL;
 
 /**
- * Servlet implementation class UpdateUserDetails
+ * Servlet implementation class UpdateClientDetails
  */
-@WebServlet("/UpdatePrDetails")
-public class UpdatePrDetails extends HttpServlet {
+@WebServlet("/UpdateClientDetails")
+public class UpdateClientDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdatePrDetails() {
+    public UpdateClientDetails() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,11 +45,11 @@ public class UpdatePrDetails extends HttpServlet {
 		
         response.setContentType("text/html;charset=UTF-8");
         String message = "";
-        PR pr = new PR();
+        Client client = new Client();
         
-        pr.setFirstName(request.getParameter(Constants.FIRST_NAME));
-        pr.setLastName(request.getParameter(Constants.LAST_NAME));
-        pr.setGender(request.getParameter(Constants.GENDER));
+        client.setFirstName(request.getParameter(Constants.FIRST_NAME));
+        client.setLastName(request.getParameter(Constants.LAST_NAME));
+        client.setGender(request.getParameter(Constants.GENDER));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date birthDate = new Date();
@@ -60,15 +59,16 @@ public class UpdatePrDetails extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        pr.setBirthDate(birthDate);
+        client.setBirthDate(birthDate);
         
-        pr.setPhoneNumber(request.getParameter(Constants.PHONE_NUMBER));
-        pr.setEmail(request.getParameter(Constants.EMAIL));
-        pr.setPassword(request.getParameter(Constants.PASSWORD));
+        client.setPhoneNumber(request.getParameter(Constants.PHONE_NUMBER));
+        client.setEmail(request.getParameter(Constants.EMAIL));
+        client.setPassword(request.getParameter(Constants.PASSWORD));
                 
         boolean isSucceed = true;
+        
 		try {
-			isSucceed = DAL.updateUserDetails(pr);
+			isSucceed = DAL.updateUserDetails(client);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,10 +85,7 @@ public class UpdatePrDetails extends HttpServlet {
         }
         
         request.setAttribute(Constants.MESSAGE_TEXT, message);
-        getServletContext().getRequestDispatcher("/PrProfile.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/ClientProfile.jsp").forward(request, response);
 	}
 
 }
-
-
- 

@@ -1,6 +1,8 @@
 package ClubberServlets;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,23 +53,47 @@ public class Login extends HttpServlet {
         	isSucceed = false;
         	message = "דואר אלקטרוני לא קיים במערכת";
         }
+
+        // in case of time stamp exist (user lock) check if passed 3 hours 
+        long timeStamp = DAL.getLoginAttemptTimeStamp(emailParam);
+        Date currentDate = new Date();
+        long date = currentDate.getTime();
+        
+        if(timeStamp != 0 && timeStamp > currentDate.getTime())
+        {
+        	isSucceed = false;
+        	message = "מאחר והיו ניסיות מרובות למערכת ללא הצלחה, המשתמש ננעל.";        		
+        }
+        else if(timeStamp != 0 && timeStamp <= date)
+        {
+        	DAL.unlockUser(emailParam);
+        }
         
         if(isSucceed == true)
         {
-        	if(DAL.isPasswordMatchEmail(emailParam, passwordParam) == false)
+        	if(DAL.isPasswordMatcheEmail(emailParam, passwordParam) == false)
         	{
             	isSucceed = false;
             	message = "סיסמה אינה נכונה";
             	
-            	request.setAttribute(Constants.LOGIN_FAILED, message);
-            	getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);            	
+            	DAL.increaseLoginAttemptsDB(emailParam);
+
+            	if (DAL.getUserLoginAttempts(emailParam) > 5)
+            	{
+					DAL.updateLoginAttemptTimeStamp(emailParam);
+            	}
         	}
         }
-
+        
         if(isSucceed == true)
         {
         	request.getSession(true).setAttribute(Constants.EMAIL, emailParam);
-        	getServletContext().getRequestDispatcher("/welcomePage.jsp").forward(request, response);
+        	getServletContext().getRequestDispatcher("/WelcomePage.jsp").forward(request, response);
+        }
+        else
+        {
+        	request.setAttribute(Constants.LOGIN_FAILED, message);
+        	getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);        	
         }
 	}
 

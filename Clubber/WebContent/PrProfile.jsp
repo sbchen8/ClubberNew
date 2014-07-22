@@ -1,18 +1,19 @@
 <%@page import="Utlis.SessionUtils"%>
 <%@page import="Utlis.Constants"%>
 <%@page import="ClubberLogic.PR"%>
-<%@ page language="java" contentType="text/html; charset=windows-1255" pageEncoding="windows-1255"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <% String messageText = (String)request.getAttribute(Constants.MESSAGE_TEXT); %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-		<title>פרופיל</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>׳₪׳¨׳•׳₪׳™׳</title>
 	    <link href="CSS/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 	    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
 		<style>
 		div.star {
 		   width:26px; 
@@ -22,7 +23,7 @@
 		   float:right;
 		}
 
-		div.yellowStar {
+		div.yellow-Star {
 		   width:26px;
 		   height:31px;
 		   background-image:url('images/yellowStar.jpg');
@@ -35,53 +36,53 @@
 <body dir="rtl">
 	<div class="pr-actions">
 		<!--  redirect to AddNewLine.jsp page  -->
-		<a href="AddNewLine.jsp">הוסף ליין חדש</a>
+		<a href="AddNewLine.jsp">׳”׳•׳¡׳£ ׳׳™׳™׳ ׳—׳“׳©</a>
 		<!--  redirect to AddNewbusiness.jsp page  -->
-		<a href="AddNewbusiness.jsp">הוסף מקום בילוי חדש</a>
+		<a href="AddNewbusiness.jsp">׳”׳•׳¡׳£ ׳׳§׳•׳ ׳‘׳™׳׳•׳™ ׳—׳“׳©</a>
 		<!--  redirect to AddNewbusiness.jsp page  -->
-		<a href="SearchCustomers.jsp">חפש לקוחות</a>
+		<a href="SearchCustomers.jsp">׳—׳₪׳© ׳׳§׳•׳—׳•׳×</a>
 	</div>
 	<div class="user-details">
-		<form class="user-details-form" id="userDetails" name="userDetails" method="post" action="UpdateUserDetails">
+		<form class="user-details-form" id="userDetails" name="userDetails" method="post" action="UpdatePrDetails">
 		  	
-		  	<label id="firstnameLabel">שם פרטי</label>
+		  	<label id="firstnameLabel">׳©׳ ׳₪׳¨׳˜׳™</label>
 		  	<input type="text" name="firstName" id="firstName" required disabled>
 		  	<br>
 		  	
-		  	<label id="lastnameLabel">שם משפחה</label>
+		  	<label id="lastnameLabel">׳©׳ ׳׳©׳₪׳—׳”</label>
 		  	<input type="text" name="lastName" id="lastName" required disabled>			
 		  	<br>
 		  	
-		  	<label id="genderLabel">מין</label>
+		  	<label id="genderLabel">׳׳™׳</label>
 		  	<input type="radio" name="gender" value="Male" checked disabled >
-			זכר
+			׳–׳›׳¨
 			<input type="radio" name="gender" value="Female" disabled>
-			נקבה
+			׳ ׳§׳‘׳”
 			<br>
 			
-			<label id="birthdateLabel">תאריך לידה</label>
+			<label id="birthdateLabel">׳×׳׳¨׳™׳ ׳׳™׳“׳”</label>
 			<input name="birthdate" id="birthdate" disabled>
   			<br>
 			
-			<label id="phonenumberLabel">טלפון</label>
+			<label id="phonenumberLabel">׳˜׳׳₪׳•׳</label>
 			<input type="text" name="phoneNumber" id="phoneNumber" required disabled>
 			<br>
 
 			
-			<label id="emailLabel">דוא"ל</label>
+			<label id="emailLabel">׳“׳•׳"׳</label>
 			<input type="text" name="email" id="email" required disabled>
   			<br>
 
-			<label id="passwordLabel">סיסמה</label>
-			<input type="password" name="password" id="password" required disabled>
+			<label id="passwordLabel">׳¡׳™׳¡׳׳”</label>
+			<input type="password" name="Password" id="password" required disabled>
   			<br>
 
-			<label id="verifyPasswordLabel">אימות סיסמה</label>
+			<label id="verifyPasswordLabel">׳׳™׳׳•׳× ׳¡׳™׳¡׳׳”</label>
 			<input type="password" name="verifyPassword" id="verifyPassword" required disabled>
   			<br>
   			  			
-  			<button id="editPrDel" type="button" >ערוך</button>
-  			<button id="updateUserDel" type="submit" onclick="updateUserDetails()" disabled>שמור</button>
+  			<button id="editUserDel" type="button" >׳¢׳¨׳•׳</button>
+  			<button id="updateUserDel" type="submit" onclick="updateUserDetails()" disabled>׳©׳׳•׳¨</button>
 		</form>		
 		<br>
 		<label id="messageText">
@@ -91,7 +92,7 @@
 		</label>
 	</div>
 	<div class="user-rating">
-		<label id="generalLabel">כללי</label>
+		<label id="generalLabel">׳›׳׳׳™</label>
 		<br>
 		<div class="generalStars">
 			<div class="star"></div>
@@ -101,7 +102,7 @@
 			<div class="star"></div>
 		</div>
 		<br><br>
-		<label id="availabilityLabel">זמינות</label>
+		<label id="availabilityLabel">׳–׳׳™׳ ׳•׳×</label>
 		<br>
 		<div class="availabilityStars">
 			<div class="star"></div>
@@ -111,7 +112,7 @@
 			<div class="star"></div>
 		</div>
 		<br><br>
-		<label id="reliabilityLabel">נאמנות</label>
+		<label id="reliabilityLabel">׳ ׳׳׳ ׳•׳×</label>
 		<br>
 		<div class="reliabilityStars">
 			<div class="star"></div>
@@ -121,7 +122,7 @@
 			<div class="star"></div>
 		</div>
 		<br><br>
-		<label id="treatsLabel">פינוקים</label>
+		<label id="treatsLabel">׳₪׳™׳ ׳•׳§׳™׳</label>
 		<br>
 		<div class="treatsStars">
 			<div class="star"></div>
@@ -130,17 +131,15 @@
 			<div class="star"></div>
 			<div class="star"></div>
 		</div>	
-	</div>
-	<script src="http://jquery.bassistance.de/validate/jquery.validate.js"></script>
-	<script src="http://jquery.bassistance.de/validate/additional-methods.js"></script>		
+	</div>		
 	<script>
 	
 		// Set error messages  
 		jQuery.extend(jQuery.validator.messages, {
-		    required: "שדה חובה",
-		    email: 'כתובת דוא"ל אינה חוקית',
-		    equalTo: "סיסמאות אינן תואמות",
-		    date: "תאריך לידה אינו חוקי"		    
+		    required: "׳©׳“׳” ׳—׳•׳‘׳”",
+		    email: '׳›׳×׳•׳‘׳× ׳“׳•׳"׳ ׳׳™׳ ׳” ׳—׳•׳§׳™׳×',
+		    equalTo: "׳¡׳™׳¡׳׳׳•׳× ׳׳™׳ ׳ ׳×׳•׳׳׳•׳×",
+		    date: "׳×׳׳¨׳™׳ ׳׳™׳“׳” ׳׳™׳ ׳• ׳—׳•׳§׳™"		    
 		});
 		
 
@@ -169,10 +168,10 @@
 			$('#email').attr("disabled", false);
 			$('#password').attr("disabled", false);		
 			$('#verifyPassword').attr("disabled", false);
-			$("#updatePrDel").attr("disabled",false);
+			$("#updateUserDel").attr("disabled",false);
 		});
 		
-		$(function(){
+		function getUserProfile(){
 		    $.ajax({
 		        url: "GetDBData",
 		        type: "post",
@@ -190,9 +189,9 @@
 		        error: function(data){
 		            	console.log("error");}
 		    });
-		});
+		}
 		
-		$(function(){
+		function getPrProfileReview(){
 		    $.ajax({
 		        url: "GetDBData",
 		        type: "post",
@@ -202,22 +201,30 @@
 					
 		        	var i;
 		        	if(data != null){
-			        	for(i=1; i < data.Availability; i++){
-			        		$(".availabilityStars")[i].attr("class", "colored-star");
+			        	for(i=1; i < data.availability; i++){
+			        		var star = $(".availabilityStars").children()[i];
+			        		$(star).removeClass("star");
+			        		$(star).addClass("yellow-star");			        		
 			        	}
 			        	
-			        	for(i=1; i < data.Realiability; i++){
-			        		$(".reliabilityStars")[i].attr("class", "colored-star");
+			        	for(i=1; i < data.realiability; i++){
+			        		var star = $(".reliabilityStars").children()[i];
+			        		$(star).removeClass("star");
+			        		$(star).addClass("yellow-star");			        		
 			        	}
 			        	
-			        	for(i=1; i < data.Treats; i++){
-			        		$(".treatsStars")[i].attr("class", "colored-star");
+			        	for(i=1; i < data.treats; i++){
+			        		var star = $(".treatsStars").children()[i];
+			        		$(star).removeClass("star");
+			        		$(star).addClass("yellow-star");			        		
 			        	}
 			        	
-			        	var generalReview = (data.Availability + data.Realiability + data.Treats) / 3;
+			        	var generalReview = (data.availability + data.realiability + data.treats) / 3;
 			        	
 			        	for(i=1; i < generalReview; i++){
-			        		$(".generalStars")[i].attr("class", "colored-star");
+			        		var star = $(".generalStars").children()[i];
+			        		$(star).removeClass("star");
+			        		$(star).addClass("yellow-star");
 			        	}
 		        	}
 		        	
@@ -225,7 +232,12 @@
 		        error: function(data){
 		            	console.log("error");}
 		    });
-		});		
+		}		
+		
+		$(function(){
+			getUserProfile();
+			getPrProfileReview();
+		});
 		
 	</script>			
 </body>
