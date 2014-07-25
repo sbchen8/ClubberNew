@@ -1,4 +1,5 @@
 	$(function() {
+	
 		var date = new Date();
 		var currentMonth = date.getMonth();
 		var currentDate = date.getDate();
@@ -6,6 +7,7 @@
 		$('#datepicker').datepicker({
 			minDate: new Date(currentYear, currentMonth, currentDate)});
 		ajaxAuctionFormDBData();
+		
 	});
 	
 	function loadListDataFromDB(data, listName)

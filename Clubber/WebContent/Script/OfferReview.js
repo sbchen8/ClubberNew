@@ -116,16 +116,16 @@ function loadOfferFromDB(data)
 	    });
 	}
 	
-	function ajaxApproveCurrentOffer() {
+	/*function ajaxApproveCurrentOffer() {
 	    $.ajax({
 	        url: "GetDBData",
 	        type: "post",
 	        dataType: 'json',
 	        data:{RequestType: "GetDBData-OfferReview"},
 	        success: function(data) {
-	            if (data != null) {
+	           if (data != null) {
 	            	/*if offer pending to accept and expiration date not over and auction status is active then accept offer*/
-	            	if ((data.offerStatusId.id == 2) && (data.expirationDate< now)&& ())
+	            	/*if ((data.offerStatusId.id == 2) && (data.expirationDate< now)&& ())
             		{
 	            		
             		}
@@ -136,7 +136,7 @@ function loadOfferFromDB(data)
 	        error: function(data){
 	            	console.log("error- getting offer details");}	        
 	    });
-	}
+	}*/
 	
 	
 	function ajaxSendMessage(){
