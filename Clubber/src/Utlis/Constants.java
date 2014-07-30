@@ -78,4 +78,11 @@ public class Constants {
 	 
 	 //outgoing message fields
 	 public static String OUTGOING_MESSAGE_DESCRIPITON= "OutGoingMessageDescription";
+	 
+	 //search Auction fields
+	 public static String AGES_RANGE= "agesRange";
+	 public static String MUSICS_TYLE= "musicStyle";
+	 public static String DAY_IN_WEEK= "dayInWeek";
+	 public static String MATCHES_ALL= "matchesAll";
+
 }

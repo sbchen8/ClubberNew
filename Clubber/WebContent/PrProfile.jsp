@@ -201,30 +201,28 @@
 					
 		        	var i;
 		        	if(data != null){
-			        	for(i=1; i < data.availability; i++){
+			        	for(i=0; i < data.availability; i++){
 			        		var star = $(".availabilityStars").children()[i];
 			        		$(star).removeClass("star");
-			        		$(star).addClass("yellow-star");			        		
+			        		$(star).addClass("yellow-Star");			        		
 			        	}
 			        	
-			        	for(i=1; i < data.realiability; i++){
+			        	for(i=0; i < data.realiability; i++){
 			        		var star = $(".reliabilityStars").children()[i];
 			        		$(star).removeClass("star");
-			        		$(star).addClass("yellow-star");			        		
+			        		$(star).addClass("yellow-Star");			        		
 			        	}
 			        	
-			        	for(i=1; i < data.treats; i++){
+			        	for(i=0; i < data.treats; i++){
 			        		var star = $(".treatsStars").children()[i];
 			        		$(star).removeClass("star");
-			        		$(star).addClass("yellow-star");			        		
+			        		$(star).addClass("yellow-Star");			        		
 			        	}
-			        	
-			        	var generalReview = (data.availability + data.realiability + data.treats) / 3;
-			        	
-			        	for(i=1; i < generalReview; i++){
+			        
+			        	for(i=0; i < data.general; i++){
 			        		var star = $(".generalStars").children()[i];
 			        		$(star).removeClass("star");
-			        		$(star).addClass("yellow-star");
+			        		$(star).addClass("yellow-Star");
 			        	}
 		        	}
 		        	

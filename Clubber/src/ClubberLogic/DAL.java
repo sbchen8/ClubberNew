@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
+
 import Utlis.AuctionManagementData;
 import Utlis.IdWithName;
 import Utlis.NewAuctionData;
@@ -716,7 +718,8 @@ public class DAL {
 	public static UserReviews getPrProfileReview(String email) {
 		// TODO Auto-generated method stub
 		
-		UserReviews reviews = null;
+		UserReviews reviews = new UserReviews();
+		List<UserReviews> totalReviews = new ArrayList<>();
 		
 		connectToDBServer();
 
@@ -731,11 +734,25 @@ public class DAL {
 			
 			while (rs.next())
 			{
-				reviews = new UserReviews();
-				reviews.setAvailability(rs.getInt("Availability"));
-				reviews.setRealiability(rs.getInt("Realiability"));
-				reviews.setTreats(rs.getInt("Treats"));
+				UserReviews temp = new UserReviews();
+				temp.setAvailability(rs.getInt("Availability"));
+				temp.setRealiability(rs.getInt("Realiability"));
+				temp.setTreats(rs.getInt("Treats"));
+				
+				totalReviews.add(temp);
 			}
+			
+			for (UserReviews userReviews : totalReviews) {
+				reviews.setAvailability(reviews.getAvailability()+userReviews.getAvailability());
+				reviews.setRealiability(reviews.getRealiability()+userReviews.getRealiability());
+				reviews.setTreats(reviews.getTreats()+userReviews.getTreats());
+			
+			}
+			
+			reviews.setAvailability(reviews.getAvailability()/totalReviews.size());
+			reviews.setRealiability(reviews.getRealiability()/totalReviews.size());
+			reviews.setTreats(reviews.getTreats()/totalReviews.size());
+			reviews.setGeneral((reviews.getAvailability() + reviews.getRealiability() + reviews.getTreats()) / 3);
 		
 		} 
 		catch (SQLException e) {
@@ -752,7 +769,8 @@ public class DAL {
 
 	public static UserReviews getClientProfileReview(String email) {
 		// TODO Auto-generated method stub
-		UserReviews reviews = null;
+		UserReviews reviews = new UserReviews();
+		List<UserReviews> totalReviews = new ArrayList<>();
 		
 		connectToDBServer();
 
@@ -764,13 +782,25 @@ public class DAL {
 					   + "(SELECT id from clubber_db.users "
 					   + "WHERE Email ='" + email + "')");
 			
-			
 			while (rs.next())
 			{
-				reviews = new UserReviews();
-				reviews.setPunctuality(rs.getInt("Punctuality"));
-				reviews.setRealiability(rs.getInt("Realiability"));
+				UserReviews temp = new UserReviews();
+				temp.setPunctuality(rs.getInt("Punctuality"));
+				temp.setRealiability(rs.getInt("Realiability"));
+				
+				totalReviews.add(temp);
 			}
+			
+			for (UserReviews userReviews : totalReviews) {
+				reviews.setPunctuality(reviews.getPunctuality()+userReviews.getPunctuality());
+				reviews.setRealiability(reviews.getRealiability()+userReviews.getRealiability());
+			
+			}
+			
+			reviews.setPunctuality(reviews.getPunctuality()/totalReviews.size());
+			reviews.setRealiability(reviews.getRealiability()/totalReviews.size());
+
+			reviews.setGeneral((reviews.getPunctuality() + reviews.getRealiability()) / 2);
 		
 		} 
 		catch (SQLException e) {
@@ -892,5 +922,32 @@ public class DAL {
 		}		
 		
 	}
+	
+	public static UserType getUserType(String email) {
+		
+		UserType userType = UserType.Client;
+		
+		connectToDBServer();
+		
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT User_Type "
+										   + "FROM clubber_db.users "
+										   + "WHERE Email ='" + email + "'");
+			if (rs.next())
+			{
+				userType = UserType.valueOf(rs.getString("User_Type"));
+			}		
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		finally{
+			disconnectFromDBServer();
+		}
+		
+		return userType;
+	}
+
 	
 }

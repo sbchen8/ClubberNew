@@ -23,7 +23,7 @@
 		   float:right;
 		}
 
-		div.yellow-star {
+		div.yellow-Star {
 		   width:26px;
 		   height:30px;
 		   background-image:url('images/yellowStar.jpg');
@@ -187,24 +187,22 @@
 					
 		        	var i;
 		        	if(data != null){
-			        	for(i=1; i < data.availability; i++){
+			        	for(i=0; i < data.punctuality; i++){
 			        		var star = $(".punctualityStars").children()[i];
 			        		$(star).removeClass("star");
-			        		$(star).addClass("yellow-star");
+			        		$(star).addClass("yellow-Star");
 			        	}
 			        	
-			        	for(i=1; i < data.realiability; i++){
+			        	for(i=0; i < data.realiability; i++){
 			        		var star = $(".reliabilityStars").children()[i];
 			        		$(star).removeClass("star");
-			        		$(star).addClass("yellow-star");			        		
+			        		$(star).addClass("yellow-Star");			        		
 			        	}
-			        				        	
-			        	var generalReview = (data.availability + data.realiability) / 2;
 			        	
-			        	for(i=1; i < generalReview; i++){
+			        	for(i=0; i < data.general; i++){
 			        		var star = $(".generalStars").children()[i];
 			        		$(star).removeClass("star");
-			        		$(star).addClass("yellow-star");			        		
+			        		$(star).addClass("yellow-Star");			        		
 			        	}
 		        	}
 		        	

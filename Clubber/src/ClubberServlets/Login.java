@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ClubberLogic.DAL;
+import ClubberLogic.UserType;
 import Utlis.Constants;
 
 /**
@@ -44,6 +45,7 @@ public class Login extends HttpServlet {
 		
         String emailParam = request.getParameter(Constants.EMAIL);
         String passwordParam = request.getParameter(Constants.PASSWORD);
+        UserType userType = UserType.Client;
         
         boolean isSucceed = true; 
         String message = "";
@@ -83,11 +85,16 @@ public class Login extends HttpServlet {
 					DAL.updateLoginAttemptTimeStamp(emailParam);
             	}
         	}
+        	else
+        	{
+        		userType = DAL.getUserType(emailParam);
+        	}
         }
         
         if(isSucceed == true)
         {
         	request.getSession(true).setAttribute(Constants.EMAIL, emailParam);
+        	request.getSession(true).setAttribute(Constants.WHO_AM_I, userType);
         	getServletContext().getRequestDispatcher("/WelcomePage.jsp").forward(request, response);
         }
         else
