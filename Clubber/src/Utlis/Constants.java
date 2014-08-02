@@ -84,5 +84,22 @@ public class Constants {
 	 public static String MUSICS_TYLE= "musicStyle";
 	 public static String DAY_IN_WEEK= "dayInWeek";
 	 public static String MATCHES_ALL= "matchesAll";
+	 
+	 // business profile fields
+	 public static final String DB_DATA_GET_BUSINESS_DATA = "DBDataGetBusinessData";
+	 public static String BUSINESS_ID= "id";
+	 public static String BUSINESS_NAME= "name";
+	 //public static String BUSINESS_TYPE= "type";
+	 public static String BUSINESS_AREA= "area";
+	 public static String BUSINESS_CITY= "city";
+	 public static String BUSINESS_STREET= "street";
+	 public static String BUSINESS_HOME_NUMBER= "homeNumber";
+	 public static String BUSINESS_PHONE_NUMBER= "phoneNumber";
+	 public static String BUSINESS_DESCRIPTION= "description";
+	 public static String BUSINESS_PHOTO= "photo";
+	 //business photo
 
+	 
+	 // all businesses fields
+	 public static String DB_DATA_ALL_BUSINESSES= "DBDataAllBusinesses";
 }

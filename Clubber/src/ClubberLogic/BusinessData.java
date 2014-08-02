@@ -11,7 +11,7 @@ public class BusinessData {
 	private Integer m_CityId;
 	private Integer m_StreetId;
 	private Integer m_HouseNumber;
-	private String m_BusinessPhoneNumber;
+	private String m_PhoneNumber;
 	private String m_Description;
 	private File m_Photo;
 	private Integer m_BusinessTypeId;
@@ -48,11 +48,11 @@ public class BusinessData {
 	public void setM_HouseNumber(Integer m_HouseNumber) {
 		this.m_HouseNumber = m_HouseNumber;
 	}
-	public String getM_BusinessPhoneNumber() {
-		return m_BusinessPhoneNumber;
+	public String getM_PhoneNumber() {
+		return m_PhoneNumber;
 	}
-	public void setM_BusinessPhoneNumber(String m_BusinessPhoneNumber) {
-		this.m_BusinessPhoneNumber = m_BusinessPhoneNumber;
+	public void setM_PhoneNumber(String m_BusinessPhoneNumber) {
+		this.m_PhoneNumber = m_BusinessPhoneNumber;
 	}
 	public String getM_Description() {
 		return m_Description;
@@ -75,13 +75,7 @@ public class BusinessData {
 	public void setM_Lines(ArrayList<LineData> m_Lines) {
 		this.m_Lines = m_Lines;
 	}
-	public Integer getId() {
-		return m_Id;
-	}
-	public void setId(Integer id) {
-		this.m_Id = id;
-	}
-	
+
 	public List<LineData> getM_Lines() {
 		return m_Lines;
 	}

@@ -3,6 +3,7 @@ package ClubberServlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ClubberLogic.BusinessData;
 import ClubberLogic.DAL;
 import ClubberLogic.LineData;
 import ClubberLogic.PR;
@@ -119,7 +121,15 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             	List<LineData> recomendedLines = DAL.getCustomerRecomendedLines(prEmail);
             	json = gson.toJson(recomendedLines);
             }
-            
+            else if(requestType.equals(Constants.DB_DATA_ALL_BUSINESSES)){
+            	ArrayList<BusinessData> businesses = DAL.getAllBusinesses();
+            	json = gson.toJson(businesses);
+            }
+            else if(requestType.equals(Constants.DB_DATA_GET_BUSINESS_DATA)){
+            	int businessId = Integer.parseInt(request.getParameter("businessId"));
+            	BusinessData businessData = DAL.getBusinessData(businessId);
+            	json = gson.toJson(businessData);
+            }
             
             System.out.println(json);
             out.print(json);

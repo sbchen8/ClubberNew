@@ -873,11 +873,11 @@ public class DAL {
 					dateStr = (rs.getString("L.Line_Start_Date"));
 					BusinessData bData = new BusinessData();
 					//set business data
-					bData.setId(rs.getInt("b.id"));
+					bData.setM_Id(rs.getInt("b.id"));
 					bData.setM_Name(rs.getString("b.name"));
 					bData.setM_StreetId(rs.getInt("b.street"));
 					bData.setM_HouseNumber(rs.getInt("b.structure_number"));
-					bData.setM_BusinessPhoneNumber(rs.getString("b.Business_Phone_Number"));
+					bData.setM_PhoneNumber(rs.getString("b.Business_Phone_Number"));
 					bData.setM_Description(rs.getString("b.Description"));
 					bData.setM_BusinessTypeId(rs.getInt("b.Business_Type"));
 					bData.setM_CityId(rs.getInt("b.city"));
@@ -949,5 +949,135 @@ public class DAL {
 		return userType;
 	}
 
+	public static BusinessData getBusinessData(int businessId) throws ParseException{
+
+		connectToDBServer();
+			
+		BusinessData businessData = null;
+
+
+		DateFormat df = new SimpleDateFormat("dd-MMM-yy HH:mm:ss a");
+		String date= df.format(new Date());
+		Date date2= df.parse(date);
+		java.sql.Date sqlDate = new java.sql.Date(date2.getTime());
+		
+		try 
+		{
+			ResultSet rs = stmt.executeQuery("SELECT * "
+					   + "FROM line L, Businesses B  "
+					   + "WHERE B.id ='" + businessId + "' and "
+					   + "B.id =  L.Business_id");
+					   //+ "B.id =  L.Business_id and "
+					   //+ "L.Line_End_Date >= '" + sqlDate);
+
+			while (rs.next())
+			{
+				
+				businessData = new BusinessData();
+				//set business data
+				businessData.setM_Id(rs.getInt("b.id"));
+				businessData.setM_Name(rs.getString("b.name"));
+				businessData.setM_StreetId(rs.getInt("b.street"));
+				businessData.setM_HouseNumber(rs.getInt("b.structure_number"));
+				businessData.setM_PhoneNumber(rs.getString("b.Business_Phone_Number"));
+				businessData.setM_Description(rs.getString("b.Description"));
+				businessData.setM_BusinessTypeId(rs.getInt("b.Business_Type"));
+				businessData.setM_CityId(rs.getInt("b.city"));
+				businessData.setM_AreaId(rs.getInt("b.area"));
+				
+				LineData lineData= new LineData();
+				DateFormat formatter;
+				formatter = new SimpleDateFormat("yyyy-mm-dd");
+				String dateStr = (rs.getString("L.Line_Start_Date"));
+				Date startDate = formatter.parse(dateStr);
+				lineData.setM_LineName(rs.getString("L.name"));
+				lineData.setDescription(rs.getString("L.Description"));
+				lineData.setDj(rs.getString("L.DJ"));
+				lineData.setMinAge(rs.getInt("L.Min_Age"));
+				lineData.setStartDate(startDate);
+				
+				businessData.getM_Lines().add(lineData);
+				
+			}		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally{ 
+			disconnectFromDBServer();
+		}
+
+		return businessData;
+		
+	}
+
+	public static boolean updateBusinessDetails(BusinessData businessData) {
+		// TODO Auto-generated method stub
+		boolean isSucceed = true;
+		
+		connectToDBServer();
+		
+		String sql = "UPDATE clubber_db.businesses "
+				   + "SET Name = '" + businessData.getM_Name() + "'"
+				   + ", Area = '" + businessData.getM_AreaId() + "'"
+				   + ", City = '" + businessData.getM_CityId() + "'"
+				   + ", Street = '" + businessData.getM_StreetId() + "'"
+				   + ", Structure_Number = '" + businessData.getM_HouseNumber() + "'"
+   				   + ", Business_Type = '" + businessData.getM_BusinessTypeId() + "'"
+  				   + ", Business_Phone_Number = '" + businessData.getM_PhoneNumber() + "'"
+				   + " WHERE id ='" + businessData.getM_Id() + "'";
+		
+		try {
+			stmt.executeUpdate(sql);	
+		} 
+		catch (SQLException e) {
+			isSucceed = false;
+			e.printStackTrace();
+			
+		}
+		finally{
+			disconnectFromDBServer();
+		}
+		
+		return isSucceed;
+	}
+	
+	public static ArrayList<BusinessData> getAllBusinesses(){
+		
+		ArrayList<BusinessData> businesses = null;
+		
+		connectToDBServer();
+		
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * "
+										   + "FROM clubber_db.businesses ");
+			if (rs.next())
+			{
+				businesses = new ArrayList<>();
+				
+				BusinessData businessData = new BusinessData();
+				businessData.setM_Id(rs.getInt("id"));
+				businessData.setM_Name(rs.getString("name"));
+				businessData.setM_StreetId(rs.getInt("street"));
+				businessData.setM_HouseNumber(rs.getInt("structure_number"));
+				businessData.setM_PhoneNumber(rs.getString("Business_Phone_Number"));
+				businessData.setM_Description(rs.getString("Description"));
+				businessData.setM_BusinessTypeId(rs.getInt("Business_Type"));
+				businessData.setM_CityId(rs.getInt("city"));
+				businessData.setM_AreaId(rs.getInt("area"));
+				
+				businesses.add(businessData);
+			}		
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		finally{
+			disconnectFromDBServer();
+		}		
+		
+		return businesses;
+		
+	}
 	
 }
