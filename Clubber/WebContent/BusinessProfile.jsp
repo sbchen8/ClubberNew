@@ -97,10 +97,10 @@
 		        data:{RequestType: "DBDataGetBusinessData", businessId: id},
 		        success: function(data) {
 		        	$("#name").val(data.m_Name);
-		        	$("#BusinessType").val(data.m_BusinessTypeId);
-		        	$("#area").val(data.m_AreaId);
-		        	$("#city").val(data.m_CityId);
-		        	$("#street").val(data.m_StreetId);
+		        	$("#BusinessType").val(data.m_BusinessTypeId.Name);
+		        	$("#area").val(data.m_AreaId.Name);
+		        	$("#city").val(data.m_CityId.Name);
+		        	$("#street").val(data.m_StreetId.Name);
 		        	$("#homeNumber").val(data.m_HouseNumber);
 		        	$("#phoneNumber").val(data.m_PhoneNumber);
 		        	$("#description").val(data.m_Description);

@@ -18,6 +18,8 @@ import java.util.List;
 
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
+
 import Utlis.AuctionManagementData;
 import Utlis.IdWithName;
 import Utlis.NewAuctionData;
@@ -867,7 +869,14 @@ public class DAL {
 			
 			try 
 			{
-				ResultSet rs = stmt.executeQuery("select * from line L, Businesses B where L.Business_id = B.id AND L.Line_Start_Date >= '"+i_Date+"'");
+				ResultSet rs = stmt.executeQuery("select * "
+												+ "from line L, Businesses B, areas a, city c, streets s, business_type t "
+												+ "where L.Business_id = B.id AND L.Line_Start_Date >= '"+i_Date+"' and"
+											    +" B.area = a.id and "
+											    + "B.city = c.id and "
+									 		    + "B.street = s.id and "
+											    + "B.Business_Type = t.id");	
+
 				while (rs.next())
 				{
 					dateStr = (rs.getString("L.Line_Start_Date"));
@@ -875,13 +884,13 @@ public class DAL {
 					//set business data
 					bData.setM_Id(rs.getInt("b.id"));
 					bData.setM_Name(rs.getString("b.name"));
-					bData.setM_StreetId(rs.getInt("b.street"));
+					bData.setM_StreetId(new IdWithName(rs.getInt("b.street"), rs.getString("s.Name")));
 					bData.setM_HouseNumber(rs.getInt("b.structure_number"));
 					bData.setM_PhoneNumber(rs.getString("b.Business_Phone_Number"));
 					bData.setM_Description(rs.getString("b.Description"));
-					bData.setM_BusinessTypeId(rs.getInt("b.Business_Type"));
-					bData.setM_CityId(rs.getInt("b.city"));
-					bData.setM_AreaId(rs.getInt("b.area"));
+					bData.setM_BusinessTypeId(new IdWithName(rs.getInt("b.Business_Type"), rs.getString("t.Name")));
+					bData.setM_CityId(new IdWithName(rs.getInt("b.city"), rs.getString("c.Name")));
+					bData.setM_AreaId(new IdWithName(rs.getInt("b.area"), rs.getString("a.Name")));
 					
 					LineData lData= new LineData();
 					date = formatter.parse(dateStr);
@@ -964,9 +973,13 @@ public class DAL {
 		try 
 		{
 			ResultSet rs = stmt.executeQuery("SELECT * "
-					   + "FROM line L, Businesses B  "
+					   + "FROM line L, Businesses B, areas a, city c, streets s, business_type t "
 					   + "WHERE B.id ='" + businessId + "' and "
-					   + "B.id =  L.Business_id");
+					   + "B.id =  L.Business_id and "
+					   +" b.area = a.id and "
+					   + "b.city = c.id and "
+					   + "b.street = s.id and "
+					   + "b.Business_Type = t.id");			
 					   //+ "B.id =  L.Business_id and "
 					   //+ "L.Line_End_Date >= '" + sqlDate);
 
@@ -977,13 +990,13 @@ public class DAL {
 				//set business data
 				businessData.setM_Id(rs.getInt("b.id"));
 				businessData.setM_Name(rs.getString("b.name"));
-				businessData.setM_StreetId(rs.getInt("b.street"));
+				businessData.setM_StreetId(new IdWithName(rs.getInt("b.street"), rs.getString("s.Name")));
 				businessData.setM_HouseNumber(rs.getInt("b.structure_number"));
 				businessData.setM_PhoneNumber(rs.getString("b.Business_Phone_Number"));
 				businessData.setM_Description(rs.getString("b.Description"));
-				businessData.setM_BusinessTypeId(rs.getInt("b.Business_Type"));
-				businessData.setM_CityId(rs.getInt("b.city"));
-				businessData.setM_AreaId(rs.getInt("b.area"));
+				businessData.setM_BusinessTypeId(new IdWithName(rs.getInt("b.Business_Type"), rs.getString("t.Name")));
+				businessData.setM_CityId(new IdWithName(rs.getInt("b.city"), rs.getString("c.Name")));
+				businessData.setM_AreaId(new IdWithName(rs.getInt("b.area"), rs.getString("a.Name")));
 				
 				LineData lineData= new LineData();
 				DateFormat formatter;
@@ -1049,7 +1062,11 @@ public class DAL {
 		
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * "
-										   + "FROM clubber_db.businesses ");
+										   + "FROM businesses b, areas a, city c, streets s, business_type t "
+										   + "WHERE b.area = a.id and "
+										   + "b.city = c.id and "
+										   + "b.street = s.id and "
+										   + "b.Business_Type = t.id");
 			if (rs.next())
 			{
 				businesses = new ArrayList<>();
@@ -1057,13 +1074,13 @@ public class DAL {
 				BusinessData businessData = new BusinessData();
 				businessData.setM_Id(rs.getInt("id"));
 				businessData.setM_Name(rs.getString("name"));
-				businessData.setM_StreetId(rs.getInt("street"));
+				businessData.setM_StreetId(new IdWithName(rs.getInt("b.street"), rs.getString("s.Name")));
 				businessData.setM_HouseNumber(rs.getInt("structure_number"));
 				businessData.setM_PhoneNumber(rs.getString("Business_Phone_Number"));
 				businessData.setM_Description(rs.getString("Description"));
-				businessData.setM_BusinessTypeId(rs.getInt("Business_Type"));
-				businessData.setM_CityId(rs.getInt("city"));
-				businessData.setM_AreaId(rs.getInt("area"));
+				businessData.setM_BusinessTypeId(new IdWithName(rs.getInt("b.Business_Type"), rs.getString("t.name")));
+				businessData.setM_CityId(new IdWithName(rs.getInt("b.city"), rs.getString("c.Name")));
+				businessData.setM_AreaId(new IdWithName(rs.getInt("b.area"), rs.getString("a.Name")));
 				
 				businesses.add(businessData);
 			}		

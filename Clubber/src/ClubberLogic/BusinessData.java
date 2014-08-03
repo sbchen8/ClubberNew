@@ -4,17 +4,19 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import Utlis.IdWithName;
+
 public class BusinessData {
 	private Integer m_Id;
 	private String m_Name;
-	private Integer m_AreaId;
-	private Integer m_CityId;
-	private Integer m_StreetId;
+	private IdWithName m_AreaId;
+	private IdWithName m_CityId;
+	private IdWithName m_StreetId;
 	private Integer m_HouseNumber;
 	private String m_PhoneNumber;
 	private String m_Description;
 	private File m_Photo;
-	private Integer m_BusinessTypeId;
+	private IdWithName m_BusinessTypeId;
 	private ArrayList<LineData> m_Lines = new ArrayList<LineData>();
 		
 	
@@ -24,22 +26,22 @@ public class BusinessData {
 	public void setM_Id(Integer m_Id) {
 		this.m_Id = m_Id;
 	}
-	public Integer getM_AreaId() {
+	public IdWithName getM_AreaId() {
 		return m_AreaId;
 	}
-	public void setM_AreaId(Integer m_AreaId) {
+	public void setM_AreaId(IdWithName m_AreaId) {
 		this.m_AreaId = m_AreaId;
 	}
-	public Integer getM_CityId() {
+	public IdWithName getM_CityId() {
 		return m_CityId;
 	}
-	public void setM_CityId(Integer m_CityId) {
+	public void setM_CityId(IdWithName m_CityId) {
 		this.m_CityId = m_CityId;
 	}
-	public Integer getM_StreetId() {
+	public IdWithName getM_StreetId() {
 		return m_StreetId;
 	}
-	public void setM_StreetId(Integer m_StreetId) {
+	public void setM_StreetId(IdWithName m_StreetId) {
 		this.m_StreetId = m_StreetId;
 	}
 	public Integer getM_HouseNumber() {
@@ -66,10 +68,10 @@ public class BusinessData {
 	public void setM_Photo(File m_Photo) {
 		this.m_Photo = m_Photo;
 	}
-	public Integer getM_BusinessTypeId() {
+	public IdWithName getM_BusinessTypeId() {
 		return m_BusinessTypeId;
 	}
-	public void setM_BusinessTypeId(Integer m_BusinessTypeId) {
+	public void setM_BusinessTypeId(IdWithName m_BusinessTypeId) {
 		this.m_BusinessTypeId = m_BusinessTypeId;
 	}
 	public void setM_Lines(ArrayList<LineData> m_Lines) {

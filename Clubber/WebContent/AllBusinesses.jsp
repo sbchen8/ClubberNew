@@ -30,9 +30,9 @@
 						var business = '<div id=businesse'+businesses[i].m_Id +'class="businesse" style="background-color:red;" onClick="goToBusinessProfile('+businesses[i].m_Id +');">' +
 						'<div class = "businesse-id" style="visibility: hidden" >'+ businesses[i].m_Id + '</div>'+
 						'<div class = "businesse-name">'+ businesses[i].m_Name + '</div>'+
-						'<div class = "businesse-type">' + businesses[i].m_BusinessTypeId + '</div>'+
-						'<div class = "businesse-range-ages">' + businesses[i].m_AreaId	+ '</div>'+
-						'<div class = "businesse-description">'	+ businesses[i].m_CityId + '</div>'+
+						'<div class = "businesse-type">' + businesses[i].m_BusinessTypeId.Name + '</div>'+
+						'<div class = "businesse-range-ages">' + businesses[i].m_AreaId.Name	+ '</div>'+
+						'<div class = "businesse-description">'	+ businesses[i].m_CityId.Name + '</div>'+
 						'<div class = "businesse-photo">' + businesses[i].m_Photo + '</div>'+
 						'</div>';
 						
