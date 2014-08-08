@@ -18,6 +18,7 @@ import ClubberLogic.LineData;
 import ClubberLogic.PR;
 import ClubberLogic.UserReviews;
 import Utlis.Constants;
+import Utlis.IdWithName;
 import Utlis.SessionUtils;
 
 import com.google.gson.Gson;
@@ -129,6 +130,16 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             	int businessId = Integer.parseInt(request.getParameter("businessId"));
             	BusinessData businessData = DAL.getBusinessData(businessId);
             	json = gson.toJson(businessData);
+            }
+            else if(requestType.equals(Constants.DB_DATA_GET_BUSINESS_AREAS_DATA))
+            {
+            	ArrayList<IdWithName> areasList = DAL.getBusinessAreasData();
+            	json = gson.toJson(areasList);            	
+            }
+            else if(requestType.equals(Constants.DB_DATA_GET_BUSINESS_CITIES_DATA)){
+            	int areaId = Integer.parseInt(request.getParameter("areaId"));
+            	ArrayList<IdWithName> citiesList = DAL.getBusinessCitiesData(areaId);
+            	json = gson.toJson(citiesList);            	
             }
             
             System.out.println(json);

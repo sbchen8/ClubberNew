@@ -89,10 +89,14 @@ public class Constants {
 	 public static final String DB_DATA_GET_BUSINESS_DATA = "DBDataGetBusinessData";
 	 public static String BUSINESS_ID= "id";
 	 public static String BUSINESS_NAME= "name";
-	 //public static String BUSINESS_TYPE= "type";
-	 public static String BUSINESS_AREA= "area";
-	 public static String BUSINESS_CITY= "city";
-	 public static String BUSINESS_STREET= "street";
+	 public static String BUSINESS_TYPE_ID= "BusinessTypeId";
+	 public static String BUSINESS_TYPE_NAME= "BusinessTypeName";
+	 public static String BUSINESS_AREA_ID= "areaId";
+	 public static String BUSINESS_AREA_NAME= "areaName";
+	 public static String BUSINESS_CITY_ID= "cityId";
+	 public static String BUSINESS_CITY_NAME= "cityName";
+	 public static String BUSINESS_STREET_ID= "streetId";
+	 public static String BUSINESS_STREET_NAME= "streetName";
 	 public static String BUSINESS_HOME_NUMBER= "homeNumber";
 	 public static String BUSINESS_PHONE_NUMBER= "phoneNumber";
 	 public static String BUSINESS_DESCRIPTION= "description";
@@ -102,4 +106,6 @@ public class Constants {
 	 
 	 // all businesses fields
 	 public static String DB_DATA_ALL_BUSINESSES= "DBDataAllBusinesses";
+	 public static String DB_DATA_GET_BUSINESS_AREAS_DATA= "DBDataGetBusinessAreasData";
+	 public static String DB_DATA_GET_BUSINESS_CITIES_DATA= "DBDataGetBusinessCitiesData";
 }

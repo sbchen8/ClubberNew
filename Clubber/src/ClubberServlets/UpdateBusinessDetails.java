@@ -15,6 +15,7 @@ import ClubberLogic.BusinessData;
 import ClubberLogic.Client;
 import ClubberLogic.DAL;
 import Utlis.Constants;
+import Utlis.IdWithName;
 
 /**
  * Servlet implementation class UpdateBusinessDetails
@@ -48,12 +49,25 @@ public class UpdateBusinessDetails extends HttpServlet {
         String message = "";
         BusinessData businessData = new BusinessData();
         
-        //businessData.setM_Id(Integer.parseInt(request.getParameter(Constants.BUSINESS_ID)));
-        businessData.setM_Id(new Integer(2));
+        businessData.setM_Id(Integer.parseInt(request.getParameter(Constants.BUSINESS_ID)));
         businessData.setM_Name(request.getParameter(Constants.BUSINESS_NAME));
-        //businessData.setM_BusinessTypeId(request.getParameter(Constants.BUSINESS_TYPE));
-        //businessData.setM_AreaId(request.getParameter(Constants.BUSINESS_AREA));
-        //businessData.setM_CityId(request.getParameter(Constants.BUSINESS_CITY));
+        
+        Integer typeId = new Integer(Integer.parseInt(request.getParameter(Constants.BUSINESS_TYPE_ID)));
+        IdWithName type = new IdWithName(typeId, request.getParameter(Constants.BUSINESS_TYPE_NAME));
+        businessData.setM_BusinessTypeId(type);
+        
+        Integer areaId = new Integer(Integer.parseInt(request.getParameter(Constants.BUSINESS_AREA_ID)));
+        IdWithName area = new IdWithName(areaId, request.getParameter(Constants.BUSINESS_AREA_NAME));
+        businessData.setM_AreaId(area);
+        
+        Integer cityId = new Integer(Integer.parseInt(request.getParameter(Constants.BUSINESS_CITY_ID)));
+        IdWithName city = new IdWithName(cityId, request.getParameter(Constants.BUSINESS_CITY_NAME));
+        businessData.setM_CityId(city);
+
+        Integer streetId =  new Integer(Integer.parseInt(request.getParameter(Constants.BUSINESS_STREET_ID)));
+        IdWithName street = new IdWithName(streetId, request.getParameter(Constants.BUSINESS_STREET_NAME));
+        businessData.setM_StreetId(street);
+        
         businessData.setM_HouseNumber(Integer.parseInt(request.getParameter(Constants.BUSINESS_HOME_NUMBER)));
         businessData.setM_PhoneNumber(request.getParameter(Constants.BUSINESS_PHONE_NUMBER));
         businessData.setM_Description(request.getParameter(Constants.BUSINESS_DESCRIPTION));

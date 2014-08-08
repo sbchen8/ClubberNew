@@ -27,7 +27,7 @@
 				if (businesses.length > 0) {
 					for (var i = 0; i < businesses.length; i++) {
 						
-						var business = '<div id=businesse'+businesses[i].m_Id +'class="businesse" style="background-color:red;" onClick="goToBusinessProfile('+businesses[i].m_Id +');">' +
+						var business = '<div id=businesse'+businesses[i].m_Id +'class="businesse" style="background-color:lightblue;" onClick="goToBusinessProfile('+businesses[i].m_Id +');">' +
 						'<div class = "businesse-id" style="visibility: hidden" >'+ businesses[i].m_Id + '</div>'+
 						'<div class = "businesse-name">'+ businesses[i].m_Name + '</div>'+
 						'<div class = "businesse-type">' + businesses[i].m_BusinessTypeId.Name + '</div>'+

@@ -15,15 +15,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
-
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
-
 import Utlis.AuctionManagementData;
 import Utlis.IdWithName;
 import Utlis.NewAuctionData;
-import Utlis.SessionUtils;
 
 public class DAL {
 	private static Connection conn;
@@ -1031,11 +1025,11 @@ public class DAL {
 		
 		String sql = "UPDATE clubber_db.businesses "
 				   + "SET Name = '" + businessData.getM_Name() + "'"
-				   + ", Area = '" + businessData.getM_AreaId() + "'"
-				   + ", City = '" + businessData.getM_CityId() + "'"
-				   + ", Street = '" + businessData.getM_StreetId() + "'"
+				   + ", Area = '" + businessData.getM_AreaId().getId() + "'"
+				   + ", City = '" + businessData.getM_CityId().getId() + "'"
+				   + ", Street = '" + businessData.getM_StreetId().getId() + "'"
 				   + ", Structure_Number = '" + businessData.getM_HouseNumber() + "'"
-   				   + ", Business_Type = '" + businessData.getM_BusinessTypeId() + "'"
+   				   + ", Business_Type = '" + businessData.getM_BusinessTypeId().getId() + "'"
   				   + ", Business_Phone_Number = '" + businessData.getM_PhoneNumber() + "'"
 				   + " WHERE id ='" + businessData.getM_Id() + "'";
 		
@@ -1056,7 +1050,7 @@ public class DAL {
 	
 	public static ArrayList<BusinessData> getAllBusinesses(){
 		
-		ArrayList<BusinessData> businesses = null;
+		ArrayList<BusinessData> businesses = new ArrayList<>();
 		
 		connectToDBServer();
 		
@@ -1067,10 +1061,9 @@ public class DAL {
 										   + "b.city = c.id and "
 										   + "b.street = s.id and "
 										   + "b.Business_Type = t.id");
-			if (rs.next())
+
+			while (rs.next())
 			{
-				businesses = new ArrayList<>();
-				
 				BusinessData businessData = new BusinessData();
 				businessData.setM_Id(rs.getInt("id"));
 				businessData.setM_Name(rs.getString("name"));
@@ -1094,6 +1087,68 @@ public class DAL {
 		}		
 		
 		return businesses;
+		
+	}
+
+	public static ArrayList<IdWithName> getBusinessAreasData() {
+
+		ArrayList<IdWithName> areasList = new ArrayList<>();
+		
+		connectToDBServer();
+		
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * "
+										   + "FROM areas ");
+
+			while (rs.next())
+			{
+				int areadId = rs.getInt("id");
+				String areaName = rs.getString("Name");
+						
+				IdWithName areaIdWithName = new IdWithName(areadId, areaName);
+				areasList.add(areaIdWithName);
+			
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			disconnectFromDBServer();
+		}		
+		
+		return areasList;
+	}
+
+	public static ArrayList<IdWithName> getBusinessCitiesData(int areadId) {
+
+		ArrayList<IdWithName> citiesList = new ArrayList<>();
+		
+		connectToDBServer();
+		
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * "
+										   + "FROM city "
+										   + "WHERE Area_id = " + areadId);
+
+			while (rs.next())
+			{
+				int cityId = rs.getInt("id");
+				String cityName = rs.getString("Name");
+						
+				IdWithName cityIdWithName = new IdWithName(cityId, cityName);
+				citiesList.add(cityIdWithName);
+			
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			disconnectFromDBServer();
+		}		
+		
+		return citiesList;
 		
 	}
 	

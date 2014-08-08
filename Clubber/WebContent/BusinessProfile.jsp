@@ -19,24 +19,30 @@
 	<div class="business-details">
 		<form class="business-details-form" id="businessDetails" name="businessDetails" method="post" action="UpdateBusinessDetails">
 		  	
+		  	<input type="text" name="id" id="id"  hidden>
+		  	
 		  	<label id="businessNameLabel">שם</label>
 		  	<input type="text" name="name" id="name" required disabled>
 		  	<br>
 		  	
 		  	<label id="businessNameLabel">סוג עסק</label>
-		  	<input type="text" name="BusinessType" id="BusinessType" required disabled>
+		  	<input type="text" name="BusinessTypeId" id="BusinessTypeId" hidden>
+		  	<input type="text" name="BusinessTypeName" id="BusinessTypeName" required disabled>
 		  	<br>
 		  	
 		  	<label id="areaLabel">איזור</label>
-		  	<input type="text" name="area" id="area" required disabled>			
+		  	<input type="text" name="areaId" id="areaId" hidden />			
+		  	<select name="areaName" id="areaName" required disabled></select>
 		  	<br>
 
 		  	<label id="cityLabel">עיר</label>
-		  	<input type="text" name="city" id="city" required disabled>			
+		  	<input type="text" name="cityId" id="cityId" hidden/>
+		  	<select name="cityName" id="cityName" required disabled></select>			
 		  	<br>
 
 		  	<label id="streetLabel">רחוב</label>
-		  	<input type="text" name="street" id="street" required disabled>			
+		  	<input type="text" name="streetId" id="streetId" required disabled hidden>
+		  	<input type="text" name="streetName" id="streetName" required disabled>			
 		  	<br>
 
 		  	<label id="streetLabel">מס' בית</label>
@@ -79,10 +85,10 @@
 		
 		$("#editBusinessDel").click(function() {
 			$('#name').attr("disabled", false);
-			$('#BusinessType').attr("disabled", false);
-			$('#area').attr("disabled", false);
-			$('#city').attr("disabled", false);
-			$('#street').attr("disabled", false);		
+			$('#BusinessTypeName').attr("disabled", false);
+			$('#areaName').attr("disabled", false);
+			$('#cityName').attr("disabled", false);
+			$('#streetName').attr("disabled", false);		
 			$('#homeNumber').attr("disabled", false);
 			$('#phoneNumber').attr("disabled", false);
 			$('#description').attr("disabled", false);
@@ -96,16 +102,30 @@
 		        dataType: 'json',
 		        data:{RequestType: "DBDataGetBusinessData", businessId: id},
 		        success: function(data) {
+		        	
+		        	$("#id").val(data.m_Id);
 		        	$("#name").val(data.m_Name);
-		        	$("#BusinessType").val(data.m_BusinessTypeId.Name);
-		        	$("#area").val(data.m_AreaId.Name);
-		        	$("#city").val(data.m_CityId.Name);
-		        	$("#street").val(data.m_StreetId.Name);
+		        	$("#BusinessTypeName").val(data.m_BusinessTypeId.Name);
+
+		        	var areaVal = '<option>' + data.m_AreaId.Name +'</option>';
+		        	$("#areaName").append(areaVal);
+		        	$("areaId").val(data.m_AreaId.id);
+
+		        	var cityVal = '<option>' + data.m_CityId.Name +'</option>';
+		        	$("#cityName").append(cityVal);		   
+		        	$("cityId").val(data.m_CityId.id);
+		        	
+		        	var areaId = data.m_AreaId.id;
+					getAllCitiesByArea(areaId);
+		        	
+		        	$("#streetName").val(data.m_StreetId.Name);
+		        	$("#streetId").val(data.m_StreetId.id);
 		        	$("#homeNumber").val(data.m_HouseNumber);
 		        	$("#phoneNumber").val(data.m_PhoneNumber);
 		        	$("#description").val(data.m_Description);
 		        	
-		        	showAllBusinessLines(data.m_Lines);
+		        	showAllBusinessLines(data.m_Lines);	 
+		        	uploadAreasFromDB();
 		        },
 		        error: function(data){
 		            	console.log("error");}
@@ -163,8 +183,61 @@
 		}
 
 		
-		$(function onLoad(){
+		function uploadAreasFromDB(){
+		    $.ajax({
+		        url: "GetDBData",
+		        type: "post",
+		        dataType: 'json',
+		        data:{RequestType: "DBDataGetBusinessAreasData"},
+		        success: function(areasList) {
+		        	var areas = $("#areaName");
+		        	
+		        	//delete former data 
+		        	areas.html("");
+		        	
+					for (var i = 0; i < areasList.length; i++) {
+						areas.append('<option id=' + areasList[i].id +'>' + areasList[i].Name + '</option>');
+					}
+		        },
+		        error: function(data){
+		            	console.log("error");}
+		    });
 			
+		}
+		
+		$('#areaName').change(function() {
+
+		    var id = $(this).find(':selected')[0].id;
+		    getAllCitiesByArea(id);
+
+		});
+		
+		function getAllCitiesByArea(id){
+		    $.ajax({
+		        url: "GetDBData",
+		        type: "post",
+		        dataType: 'json',
+		        data:{RequestType: "DBDataGetBusinessCitiesData", areaId: id},
+		        success: function(citiesList) {
+		        	
+		        	var cities = $("#cityName");
+		        	
+		        	//delete former data 
+		        	cities.html("");
+		        	
+					for (var i = 0; i < citiesList.length; i++) {
+						cities.append('<option>' + citiesList[i].Name + '</option>');
+					}
+
+		        },
+		        error: function(data){
+		            	console.log("error");}
+		    });
+			
+			
+		}
+		
+		$(function onLoad(){
 			getBusinessData(sessionStorage.getItem("businessId"));
 		});
 		
