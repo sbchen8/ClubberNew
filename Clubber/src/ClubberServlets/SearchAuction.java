@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ClubberLogic.DAL;
 import Utlis.Constants;
 
 /**
@@ -44,9 +45,13 @@ public class SearchAuction extends HttpServlet {
         String agesRangeParam = request.getParameter(Constants.AGES_RANGE);
         String musicStyleParam = request.getParameter(Constants.MUSIC_STYLE);
         String dayInWeekParam = request.getParameter(Constants.DAY_IN_WEEK);
-        String matchesAllParam = request.getParameter(Constants.MATCHES_ALL);
+        String searchByMyLinesParam = request.getParameter(Constants.SEARCH_BY_MY_LINES);
+        String prEmail = request.getParameter(Constants.EMAIL);
         
-        
+        if(searchByMyLinesParam != null && searchByMyLinesParam.equals("on"))
+        {
+        	//DAL.searchAuctionsByPrLines(prEmail);
+        }
 	}
 
 }

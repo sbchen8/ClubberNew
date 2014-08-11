@@ -83,7 +83,7 @@ public class Constants {
 	 public static String AGES_RANGE= "agesRange";
 	 public static String MUSICS_TYLE= "musicStyle";
 	 public static String DAY_IN_WEEK= "dayInWeek";
-	 public static String MATCHES_ALL= "matchesAll";
+	 public static String SEARCH_BY_MY_LINES= "searchByMyLines";
 	 
 	 // business profile fields
 	 public static final String DB_DATA_GET_BUSINESS_DATA = "DBDataGetBusinessData";

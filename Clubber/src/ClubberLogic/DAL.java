@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+
 import Utlis.AuctionManagementData;
 import Utlis.IdWithName;
 import Utlis.NewAuctionData;
@@ -1185,6 +1186,10 @@ public class DAL {
 		
 		return typesList;
 		
+		
+	}
+
+	public static void searchAuctionsByPrLines(String email) {
 		
 	}
 	
