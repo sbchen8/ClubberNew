@@ -1023,15 +1023,19 @@ public class DAL {
 		
 		connectToDBServer();
 		
-		String sql = "UPDATE clubber_db.businesses "
-				   + "SET Name = '" + businessData.getM_Name() + "'"
-				   + ", Area = '" + businessData.getM_AreaId().getId() + "'"
-				   + ", City = '" + businessData.getM_CityId().getId() + "'"
-				   + ", Street = '" + businessData.getM_StreetId().getId() + "'"
-				   + ", Structure_Number = '" + businessData.getM_HouseNumber() + "'"
-   				   + ", Business_Type = '" + businessData.getM_BusinessTypeId().getId() + "'"
-  				   + ", Business_Phone_Number = '" + businessData.getM_PhoneNumber() + "'"
-				   + " WHERE id ='" + businessData.getM_Id() + "'";
+		String sql = "UPDATE businesses B, streets S "
+				   + "SET B.Name = '" + businessData.getM_Name() + "'"
+				   + ", B.Area = '" + businessData.getM_AreaId().getId() + "'"
+				   + ", B.City = '" + businessData.getM_CityId().getId() + "'"
+				   + ", B.Street = '" + businessData.getM_StreetId().getId() + "'"
+				   + ", B.Structure_Number = '" + businessData.getM_HouseNumber() + "'"
+   				   + ", B.Business_Type = '" + businessData.getM_BusinessTypeId().getId() + "'"
+  				   + ", B.Business_Phone_Number = '" + businessData.getM_PhoneNumber() + "'"
+  				   + ", B.Description = '" + businessData.getM_Description() + "'"
+				   + ", S.City_id = '" + businessData.getM_CityId().getId() + "'"
+				   + ", S.Name = '" + businessData.getM_StreetId().getName() + "'"  				   
+				   + " WHERE B.id ='" + businessData.getM_Id() + "' and "
+				   + " S.id ='" + businessData.getM_StreetId().getId() + "'";
 		
 		try {
 			stmt.executeUpdate(sql);	
@@ -1149,6 +1153,38 @@ public class DAL {
 		}		
 		
 		return citiesList;
+		
+	}
+
+	public static ArrayList<IdWithName> getBusinessesTypeData() {
+
+		ArrayList<IdWithName> typesList = new ArrayList<>();
+		
+		connectToDBServer();
+		
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * "
+										   + "FROM business_type ");
+
+			while (rs.next())
+			{
+				int typeId = rs.getInt("id");
+				String typeName = rs.getString("Name");
+						
+				IdWithName typeIdWithName = new IdWithName(typeId, typeName);
+				typesList.add(typeIdWithName);
+			
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			disconnectFromDBServer();
+		}		
+		
+		return typesList;
+		
 		
 	}
 	

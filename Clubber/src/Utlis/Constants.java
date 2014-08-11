@@ -108,4 +108,6 @@ public class Constants {
 	 public static String DB_DATA_ALL_BUSINESSES= "DBDataAllBusinesses";
 	 public static String DB_DATA_GET_BUSINESS_AREAS_DATA= "DBDataGetBusinessAreasData";
 	 public static String DB_DATA_GET_BUSINESS_CITIES_DATA= "DBDataGetBusinessCitiesData";
+	 public static String DB_DATA_GET_BUSINESSES_TYPE_DATA= "DBDataGetBusinessesTypeData";
+	 
 }

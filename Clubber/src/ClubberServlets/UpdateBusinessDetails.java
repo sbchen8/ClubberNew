@@ -1,9 +1,6 @@
 package ClubberServlets;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ClubberLogic.BusinessData;
-import ClubberLogic.Client;
 import ClubberLogic.DAL;
 import Utlis.Constants;
 import Utlis.IdWithName;
@@ -51,7 +47,7 @@ public class UpdateBusinessDetails extends HttpServlet {
         
         businessData.setM_Id(Integer.parseInt(request.getParameter(Constants.BUSINESS_ID)));
         businessData.setM_Name(request.getParameter(Constants.BUSINESS_NAME));
-        
+
         Integer typeId = new Integer(Integer.parseInt(request.getParameter(Constants.BUSINESS_TYPE_ID)));
         IdWithName type = new IdWithName(typeId, request.getParameter(Constants.BUSINESS_TYPE_NAME));
         businessData.setM_BusinessTypeId(type);
@@ -64,7 +60,7 @@ public class UpdateBusinessDetails extends HttpServlet {
         IdWithName city = new IdWithName(cityId, request.getParameter(Constants.BUSINESS_CITY_NAME));
         businessData.setM_CityId(city);
 
-        Integer streetId =  new Integer(Integer.parseInt(request.getParameter(Constants.BUSINESS_STREET_ID)));
+        Integer streetId = new Integer(Integer.parseInt(request.getParameter(Constants.BUSINESS_STREET_ID)));
         IdWithName street = new IdWithName(streetId, request.getParameter(Constants.BUSINESS_STREET_NAME));
         businessData.setM_StreetId(street);
         

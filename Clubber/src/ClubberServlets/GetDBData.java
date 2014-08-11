@@ -141,6 +141,11 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             	ArrayList<IdWithName> citiesList = DAL.getBusinessCitiesData(areaId);
             	json = gson.toJson(citiesList);            	
             }
+            else if(requestType.equals(Constants.DB_DATA_GET_BUSINESSES_TYPE_DATA))
+            {
+            	ArrayList<IdWithName> typesList = DAL.getBusinessesTypeData();
+            	json = gson.toJson(typesList);            	
+            }            
             
             System.out.println(json);
             out.print(json);
