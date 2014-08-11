@@ -110,4 +110,8 @@ public class Constants {
 	 public static String DB_DATA_GET_BUSINESS_CITIES_DATA= "DBDataGetBusinessCitiesData";
 	 public static String DB_DATA_GET_BUSINESSES_TYPE_DATA= "DBDataGetBusinessesTypeData";
 	 
+	 // search for auction
+	 public static String DB_DATA_AUCTION_MUSIC_STYLE= "DBDataAuctionMusicStyle";
+	 
+	 
 }

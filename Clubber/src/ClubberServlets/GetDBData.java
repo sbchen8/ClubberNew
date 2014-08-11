@@ -145,6 +145,11 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             {
             	ArrayList<IdWithName> typesList = DAL.getBusinessesTypeData();
             	json = gson.toJson(typesList);            	
+            }         
+            else if(requestType.equals(Constants.DB_DATA_AUCTION_MUSIC_STYLE))
+            {
+            	ArrayList<IdWithName> typesList = DAL.getAuctionMusicStyle();
+            	json = gson.toJson(typesList);            	
             }            
             
             System.out.println(json);

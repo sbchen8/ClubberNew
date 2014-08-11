@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Insert title here</title>
+		<title>Search for auction</title>
 		<link href="CSS/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 	    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">		
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -26,18 +26,9 @@
 				  	<input type="checkbox" name="agesRange" value="over25" checked>25 ומעלה
 				  	<br>
 				  	
-	<!-- 			  	ask if it is critical to upload all this data from musicstyle table -->
 				  	<label id="musicStyleLabel">סגנון מוזיקה</label>
-				  	<input type="checkbox" id="musicStyle" onClick="toggle(this)" checked> הכל
-				  	<input type="checkbox" name="musicStyle" value="pop" checked>פופ
-				  	<input type="checkbox" name="musicStyle" value="africanAmerican" checked>שחורה
-				  	<input type="checkbox" name="musicStyle" value="reggae" checked>רגאיי
-				  	<input type="checkbox" name="musicStyle" value="electronic" checked>אלקטרוני 
-				  	<input type="checkbox" name="musicStyle" value="HipHop" checked>היפ הופ
-				  	<input type="checkbox" name="musicStyle" value="house" checked>האוס
-				  	<input type="checkbox" name="musicStyle" value="rock" checked>רוק
-				  	<input type="checkbox" name="musicStyle" value="reggaeton" checked>רגאטון
-				  	<br>
+				  	<div class="auction-music-style">
+					</div>
 					
 				  	<label id="dayInWeekLabel">יום בשבוע</label>
 				  	<input type="checkbox" id="dayInWeek" onClick="toggle(this)" checked> הכל
@@ -77,6 +68,35 @@
 			checkboxes[i].checked = source.checked;
 		}
 	}
+	
+	$(function() {
+	
+		musicStyleDiv = $(".auction-music-style");
+	  	
+	    $.ajax({
+	        url: "GetDBData",
+	        type: "post",
+	        dataType: 'json',
+	        data:{RequestType: "DBDataAuctionMusicStyle"},
+	        success: function(data) {
+				
+	        	musicStyleDiv.append($('<label><input type="checkbox" id="musicStyle" onClick="toggle(this)" checked>הכל </label>'));
+	        	
+	        	for(var i=0; i < data.length; i++){
+	        		
+	        		var element = '<label><input type="checkbox" name="musicStyle" checked>' +data[i].Name+ '</label>' ;
+	        		musicStyleDiv.append($(element));
+	        	}
+	        	
+	        },
+	        error: function(data){
+	            	console.log("error");}
+	    });
+
+	  	
+	});
+	
+	
 	</script>
 	</body>
 </html>

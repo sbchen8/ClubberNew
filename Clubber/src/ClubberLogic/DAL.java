@@ -1185,12 +1185,65 @@ public class DAL {
 		}		
 		
 		return typesList;
-		
-		
 	}
 
-	public static void searchAuctionsByPrLines(String email) {
+	public static ArrayList<AuctionData> searchAuctionsByPrLines(String email) {
 		
+		ArrayList<AuctionData> auctionList = new ArrayList<>();
+
+		connectToDBServer();
+		
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * "
+										   + "FROM auction A, line L,  "
+										   + "WHERE  =   ");
+
+			while (rs.next())
+			{
+
+				
+				
+				//auctionList.add(typeIdWithName);
+			
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			disconnectFromDBServer();
+		}		
+		
+		return auctionList;		
+	}
+
+	public static ArrayList<IdWithName> getAuctionMusicStyle() {
+
+		ArrayList<IdWithName> musicStyleList = new ArrayList<>();
+
+		connectToDBServer();
+		
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * "
+										   + "FROM music_style MS ");
+
+			while (rs.next())
+			{
+				Integer id = rs.getInt("MS.id");
+				String name = rs.getString("MS.Name");
+				IdWithName styleIdWithName = new IdWithName(id, name); 
+				musicStyleList.add(styleIdWithName);
+			
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			disconnectFromDBServer();
+		}		
+		
+		return musicStyleList;				
 	}
 	
 }

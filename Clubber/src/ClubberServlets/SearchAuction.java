@@ -1,6 +1,7 @@
 package ClubberServlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ClubberLogic.AuctionData;
 import ClubberLogic.DAL;
 import Utlis.Constants;
 
@@ -50,7 +52,7 @@ public class SearchAuction extends HttpServlet {
         
         if(searchByMyLinesParam != null && searchByMyLinesParam.equals("on"))
         {
-        	//DAL.searchAuctionsByPrLines(prEmail);
+        	ArrayList<AuctionData> auctionsList =  DAL.searchAuctionsByPrLines(prEmail);
         }
 	}
 
