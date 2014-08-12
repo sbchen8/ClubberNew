@@ -48,6 +48,7 @@ public class SearchAuction extends HttpServlet {
         String musicStyleParam = request.getParameter(Constants.MUSIC_STYLE);
         String dayInWeekParam = request.getParameter(Constants.DAY_IN_WEEK);
         String searchByMyLinesParam = request.getParameter(Constants.SEARCH_BY_MY_LINES);
+  
         String prEmail = request.getParameter(Constants.EMAIL);
         
         if(searchByMyLinesParam != null && searchByMyLinesParam.equals("on"))
