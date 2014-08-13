@@ -81,7 +81,6 @@ public class Constants {
 	 
 	 //search Auction fields
 	 public static String AGES_RANGE= "agesRange";
-	 public static String MUSICS_TYLE= "musicStyle";
 	 public static String DAY_IN_WEEK= "dayInWeek";
 	 public static String SEARCH_BY_MY_LINES= "searchByMyLines";
 	 

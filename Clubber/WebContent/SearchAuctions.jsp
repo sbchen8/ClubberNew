@@ -10,13 +10,14 @@
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 		<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+		<script src="Script/DateFormater.js"  type="text/javascript"></script>		
 	</head>
 	<body dir="rtl">
 		<div class="message">
 		התוצאות ממויינות אוטומטית לפי האזורים שבהם יש לך ליין לא ניתן לראות מכרזים באזורים אחרים. 
 		</div>
 		<div class="search-area">
-			<form class="search-auction-form" id="searchAuction" name="searchAuction" method="post" action="SearchAuction">
+			<form class="search-auction-form" id="searchAuction" name="searchAuction" method="post">
 				
 				<div class="search-filters">
 				  	<label id="agesRangeLabel">טווח גילאים</label>
@@ -42,8 +43,11 @@
 				<input type="checkbox" name="searchByMyLines" id="searchByMyLines">
 				חפש לפי התאמה לליינים שלי
 				<br>
-				<button type="submit" >חפש</button>
+				<button type="button" id="searchAuctions" >חפש</button>
 			</form>
+	       <div class='all-auctions-container'>   
+	             
+	   	   </div>    
 		</div>	
 	<script>
 		
@@ -76,11 +80,11 @@
 	        data:{RequestType: "DBDataAuctionMusicStyle"},
 	        success: function(data) {
 				
-	        	musicStyleDiv.append($('<label><input type="checkbox" id="musicStyle" onClick="toggle(this)" checked>הכל </label>'));
+	        	musicStyleDiv.append($('<label><input type="checkbox" id="MusicStyle" onClick="toggle(this)" checked>הכל </label>'));
 	        	
 	        	for(var i=0; i < data.length; i++){
 	        		
-	        		var element = '<label><input type="checkbox" name="musicStyle" checked>' +data[i].Name+ '</label>' ;
+	        		var element = '<label><input type="checkbox" name="MusicStyle" checked>' +data[i].Name+ '</label>' ;
 	        		musicStyleDiv.append($(element));
 	        	}
 	        	
@@ -104,6 +108,79 @@
 		number: "גיל מינימלי אינו חוקי",
 	  	range: "גיל מינימלי אינו חוקי"
 	});
+	
+	$("#searchAuctions").click(function(){
+	    $.ajax({
+	        url: "SearchAuction",
+	        type: "post",
+	        dataType: 'json',
+	        data: {agesRange: "agesRange",
+	        	  musicStyle: "MusicStyle",
+	        	  dayInWeek: "dayInWeek",
+	        	  searchByMyLines: "on"},
+	        success: function(data) {
+
+				console.log("adding auctions");
+				var counterDescription= " הצעות התקבלו  ";
+				var description;
+				
+				$(".all-auctions-container").html("");
+				
+				for (var item in data) {
+					if (data[item].description== null)
+					{
+						description="";
+					}
+					else
+					{
+						description= data[item].description;
+					}
+					
+					$(' <div id=' +data[item].id+' class="my-auction-container" title="לחץ כאן כדי לראות את פרטי המכרז" onclick="auctionClicked('+data[item].id + ')"> <div class="my-auction-title">'+data[item].eventType.Name+ ' - '+ formattedDate(data[item].eventDate) +'</div>'
+							+ '<div class="my-auction-description">'+description+'</div>'
+							+ '<div class="my-auction-offer-number">'+data[item].offerNumber+counterDescription +'</div>'
+							+'</div>').appendTo($(".all-auctions-container")) ;
+				}
+
+	        	
+	        	
+	        },
+	        error: function(data){
+	            	console.log("error");}
+	    });
+		
+	});
+			
+		function auctionClicked(auctionID)
+		{
+			  $.ajax({
+			        url: "AuctionOfferItemClicked",
+			        type: "post",
+			        dataType: 'json',
+			        data:{ClickedItemType: "AuctionItemClicked", ItemID:auctionID},
+			        success: function(data) {
+			        	 console.log("redirect to auction management page");
+			             window.location.href = 'AuctionManagement.jsp';
+			            },
+			        error: function(data){
+			            	console.log("error");}
+			            
+			        
+			    });
+		}
+		
+		
+		function formattedDate(date) {
+		    var d = new Date(date || Date.now()),
+		        month = '' + (d.getMonth() + 1),
+		        day = '' + d.getDate(),
+		        year = d.getFullYear();
+
+		    if (month.length < 2) month = '0' + month;
+		    if (day.length < 2) day = '0' + day;
+
+		    return [day, month, year].join('/');
+		}
 	</script>
 	</body>
 </html>

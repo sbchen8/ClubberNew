@@ -1,6 +1,7 @@
 package ClubberServlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -9,9 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import ClubberLogic.AuctionData;
 import ClubberLogic.DAL;
 import Utlis.Constants;
+import Utlis.SessionUtils;
 
 /**
  * Servlet implementation class SearchAuction
@@ -42,6 +46,8 @@ public class SearchAuction extends HttpServlet {
 		// TODO Auto-generated method stub
 		
         response.setContentType("text/html;charset=UTF-8");
+
+        ArrayList<AuctionData> auctionsList = new ArrayList<>();
         
         // Get User parameter
         String agesRangeParam = request.getParameter(Constants.AGES_RANGE);
@@ -53,8 +59,24 @@ public class SearchAuction extends HttpServlet {
         
         if(searchByMyLinesParam != null && searchByMyLinesParam.equals("on"))
         {
-        	ArrayList<AuctionData> auctionsList =  DAL.searchAuctionsByPrLines(prEmail);
+        	auctionsList =  DAL.searchAuctionsByPrLines(prEmail);
         }
+        
+		PrintWriter out = response.getWriter();
+		Gson gson = new Gson();        
+        
+        try 
+        {
+            out.print(gson.toJson(auctionsList));
+        }
+        catch(Exception e)
+        {
+        	out.print(gson.toJson(auctionsList));
+        }
+        finally 
+        {
+            out.close();
+        }        
         
         getServletContext().getRequestDispatcher("/SearchAuctions.jsp").forward(request, response);
 	}
