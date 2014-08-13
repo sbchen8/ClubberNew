@@ -55,6 +55,8 @@ public class SearchAuction extends HttpServlet {
         {
         	ArrayList<AuctionData> auctionsList =  DAL.searchAuctionsByPrLines(prEmail);
         }
+        
+        getServletContext().getRequestDispatcher("/SearchAuctions.jsp").forward(request, response);
 	}
 
 }

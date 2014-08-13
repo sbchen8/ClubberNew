@@ -9,6 +9,7 @@
 	    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">		
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
 	</head>
 	<body dir="rtl">
 		<div class="message">
@@ -19,11 +20,7 @@
 				
 				<div class="search-filters">
 				  	<label id="agesRangeLabel">טווח גילאים</label>
-					<input type="checkbox" id="agesRange" onclick="toggle(this)" checked> הכל
-				  	<input type="checkbox" name="agesRange" id="16-18" value="16-18" checked>16-18
-				  	<input type="checkbox" name="agesRange" value="19-20" checked>19-20
-				  	<input type="checkbox" name="agesRange" value="21-24" checked>21-24
-				  	<input type="checkbox" name="agesRange" value="over25" checked>25 ומעלה
+					<input type="text" name="agesRange" id="agesRange">
 				  	<br>
 				  	
 				  	<label id="musicStyleLabel">סגנון מוזיקה</label>
@@ -47,8 +44,7 @@
 				<br>
 				<button type="submit" >חפש</button>
 			</form>
-		</div>
-		
+		</div>	
 	<script>
 		
 	$("#searchByMyLines").click(function() {
@@ -92,11 +88,22 @@
 	        error: function(data){
 	            	console.log("error");}
 	    });
-
-	  	
+	});	
+	
+	$("#searchAuction").validate({
+		  rules: {
+			    agesRange: {
+			    	number: true,
+			      	range: [1,120]
+			    }
+			 }
 	});
 	
-	
+	// Set error messages  
+	jQuery.extend(jQuery.validator.messages, {
+		number: "גיל מינימלי אינו חוקי",
+	  	range: "גיל מינימלי אינו חוקי"
+	});
 	</script>
 	</body>
 </html>

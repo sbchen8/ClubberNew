@@ -14,7 +14,7 @@
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 		<script src="https://jqueryui.com/resources/demos/datepicker/datepicker-he.js"></script>		
-  		<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+		<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
 	</head>
 	<body dir="rtl">
 		<div class="explanation-area">
@@ -122,7 +122,6 @@
 			      	email: true
 			    },
 		
-			    
 				verifyPassword: {
 		      		equalTo: "#password"
 			  	},
