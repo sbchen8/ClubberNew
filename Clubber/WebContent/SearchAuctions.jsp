@@ -51,12 +51,27 @@
 		</div>	
 	<script>
 		
+	function formattedDate(date) {
+	    var d = new Date(date || Date.now()),
+	        month = '' + (d.getMonth() + 1),
+	        day = '' + d.getDate(),
+	        year = d.getFullYear();
+
+	    if (month.length < 2) month = '0' + month;
+	    if (day.length < 2) day = '0' + day;
+
+	    return [day, month, year].join('/');
+	}
+	
 	$("#searchByMyLines").click(function() {
 		var isChecked = $("#searchByMyLines").is(':checked');
+		$("#agesRange").attr("disabled",isChecked);
+		$("#agesRange").val("");
 		var checkboxes = $('.search-filters input[type=checkbox]');
 		
 		for(var i = 0; i < checkboxes.length; i++) {
 			checkboxes[i].disabled = isChecked;
+			checkboxes[i].checked = !isChecked;
 		}
 	});	
 	
@@ -122,28 +137,18 @@
 
 				console.log("adding auctions");
 				var counterDescription= " הצעות התקבלו  ";
-				var description;
 				
 				$(".all-auctions-container").html("");
 				
 				for (var item in data) {
-					if (data[item].description== null)
-					{
-						description="";
-					}
-					else
-					{
-						description= data[item].description;
-					}
 					
-					$(' <div id=' +data[item].id+' class="my-auction-container" title="לחץ כאן כדי לראות את פרטי המכרז" onclick="auctionClicked('+data[item].id + ')"> <div class="my-auction-title">'+data[item].eventType.Name+ ' - '+ formattedDate(data[item].eventDate) +'</div>'
-							+ '<div class="my-auction-description">'+description+'</div>'
-							+ '<div class="my-auction-offer-number">'+data[item].offerNumber+counterDescription +'</div>'
+					$(' <div id=' +data[item].id+' class="auction-container" title="לחץ כאן כדי לראות את פרטי המכרז" onclick="auctionClicked('+data[item].id + ')">'
+								+'<div class="auction-title">'+ data[item].eventType.Name+ ' - '+ formattedDate(data[item].eventDate) +'</div>'
+								+ '<div class="auction-min-age"> <label id="minAge">גיל מינימלי: </label>'+data[item].minAge+'</div>'
+								+ '<div class="auction-area"> <label id="area">איזור: </label>'+data[item].area.Name+'</div>'
+								+ '<div class="auction-offer-number">'+data[item].offerNumber+counterDescription +'</div>'
 							+'</div>').appendTo($(".all-auctions-container")) ;
 				}
-
-	        	
-	        	
 	        },
 	        error: function(data){
 	            	console.log("error");}
@@ -151,36 +156,21 @@
 		
 	});
 			
-		function auctionClicked(auctionID)
-		{
-			  $.ajax({
-			        url: "AuctionOfferItemClicked",
-			        type: "post",
-			        dataType: 'json',
-			        data:{ClickedItemType: "AuctionItemClicked", ItemID:auctionID},
-			        success: function(data) {
-			        	 console.log("redirect to auction management page");
-			             window.location.href = 'AuctionManagement.jsp';
-			            },
-			        error: function(data){
-			            	console.log("error");}
-			            
-			        
-			    });
-		}
-		
-		
-		function formattedDate(date) {
-		    var d = new Date(date || Date.now()),
-		        month = '' + (d.getMonth() + 1),
-		        day = '' + d.getDate(),
-		        year = d.getFullYear();
-
-		    if (month.length < 2) month = '0' + month;
-		    if (day.length < 2) day = '0' + day;
-
-		    return [day, month, year].join('/');
-		}
+	function auctionClicked(auctionID)
+	{
+		  $.ajax({
+		        url: "AuctionOfferItemClicked",
+		        type: "post",
+		        dataType: 'json',
+		        data:{ClickedItemType: "AuctionItemClicked", ItemID:auctionID},
+		        success: function(data) {
+		        	 console.log("redirect to auction management page");
+		             window.location.href = 'AuctionManagement.jsp';
+		            },
+		        error: function(data){
+		            	console.log("error");}
+		    });
+	}
 	</script>
 	</body>
 </html>

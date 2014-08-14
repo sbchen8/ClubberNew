@@ -61,6 +61,10 @@ public class SearchAuction extends HttpServlet {
         {
         	auctionsList =  DAL.searchAuctionsByPrLines(prEmail);
         }
+        else if(agesRangeParam != null)
+        {
+
+        }
         
 		PrintWriter out = response.getWriter();
 		Gson gson = new Gson();        
