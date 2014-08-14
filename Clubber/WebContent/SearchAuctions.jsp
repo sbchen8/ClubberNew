@@ -9,48 +9,29 @@
 	    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">		
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-		<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
-		<script src="Script/DateFormater.js"  type="text/javascript"></script>		
+		<script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js" type="text/javascript"></script>
+		<link href="CSS/dataTable.css" rel="stylesheet" type="text/css">		
+		<style>
+		tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+		</style>
 	</head>
 	<body dir="rtl">
 		<div class="message">
 		התוצאות ממויינות אוטומטית לפי האזורים שבהם יש לך ליין לא ניתן לראות מכרזים באזורים אחרים. 
 		</div>
-		<div class="search-area">
-			<form class="search-auction-form" id="searchAuction" name="searchAuction" method="post">
-				
-				<div class="search-filters">
-				  	<label id="agesRangeLabel">טווח גילאים</label>
-					<input type="text" name="agesRange" id="agesRange">
-				  	<br>
-				  	
-				  	<label id="musicStyleLabel">סגנון מוזיקה</label>
-				  	<div class="auction-music-style">
-					</div>
-					
-				  	<label id="dayInWeekLabel">יום בשבוע</label>
-				  	<input type="checkbox" id="dayInWeek" onClick="toggle(this)" checked> הכל
-				  	<input type="checkbox" name="dayInWeek" value="sunday" checked>ראשון
-				  	<input type="checkbox" name="dayInWeek" value="monday" checked>שני
-				  	<input type="checkbox" name="dayInWeek" value="tuesday" checked>שלישי
-				  	<input type="checkbox" name="dayInWeek" value="wednesday" checked>רביעי
-				  	<input type="checkbox" name="dayInWeek" value="thursday" checked>חמישי
-				  	<input type="checkbox" name="dayInWeek" value="friday" checked>שישי
-				  	<input type="checkbox" name="dayInWeek" value="saturday" checked>שבת
-				  	<br>
-			  	</div>
-				
-				<input type="checkbox" name="searchByMyLines" id="searchByMyLines">
-				חפש לפי התאמה לליינים שלי
-				<br>
-				<button type="button" id="searchAuctions" >חפש</button>
-			</form>
-	       <div class='all-auctions-container'>   
-	             
-	   	   </div>    
+		<div class="search-by-my-lines-area">
+			<input type="checkbox" name="searchByMyLines" id="searchByMyLines">
+			חפש לפי התאמה לליינים שלי
+			<br>
 		</div>	
+      	<div class='all-auctions-container'>
+      	
+      	</div>   
 	<script>
-		
 	function formattedDate(date) {
 	    var d = new Date(date || Date.now()),
 	        month = '' + (d.getMonth() + 1),
@@ -63,98 +44,51 @@
 	    return [day, month, year].join('/');
 	}
 	
-	$("#searchByMyLines").click(function() {
-		var isChecked = $("#searchByMyLines").is(':checked');
-		$("#agesRange").attr("disabled",isChecked);
-		$("#agesRange").val("");
-		var checkboxes = $('.search-filters input[type=checkbox]');
-		
-		for(var i = 0; i < checkboxes.length; i++) {
-			checkboxes[i].disabled = isChecked;
-			checkboxes[i].checked = !isChecked;
+	$("#searchByMyLines").change(function() {
+		if(this.checked){
+			getAuctionsByMyLines();
+		}
+		else{
+			getAllAuctions();
 		}
 	});	
 	
-	function toggle(source) {
-		var name = source.id;
-		checkboxes = document.getElementsByName(name);
-		
-		for(var i = 0; i <= checkboxes.length; i++){
-			checkboxes[i].checked = source.checked;
-		}
-	}
-	
-	$(function() {
-	
-		musicStyleDiv = $(".auction-music-style");
-	  	
+	function getAuctionsByMyLines(){
 	    $.ajax({
 	        url: "GetDBData",
 	        type: "post",
 	        dataType: 'json',
-	        data:{RequestType: "DBDataAuctionMusicStyle"},
+	        data: {RequestType: "searchByMyLines"},
 	        success: function(data) {
-				
-	        	musicStyleDiv.append($('<label><input type="checkbox" id="MusicStyle" onClick="toggle(this)" checked>הכל </label>'));
-	        	
-	        	for(var i=0; i < data.length; i++){
-	        		
-	        		var element = '<label><input type="checkbox" name="MusicStyle" checked>' +data[i].Name+ '</label>' ;
-	        		musicStyleDiv.append($(element));
-	        	}
-	        	
+				  showAuctions(data);
 	        },
 	        error: function(data){
 	            	console.log("error");}
 	    });
-	});	
+	}
 	
-	$("#searchAuction").validate({
-		  rules: {
-			    agesRange: {
-			    	number: true,
-			      	range: [1,120]
-			    }
-			 }
-	});
-	
-	// Set error messages  
-	jQuery.extend(jQuery.validator.messages, {
-		number: "גיל מינימלי אינו חוקי",
-	  	range: "גיל מינימלי אינו חוקי"
-	});
-	
-	$("#searchAuctions").click(function(){
-	    $.ajax({
-	        url: "SearchAuction",
-	        type: "post",
-	        dataType: 'json',
-	        data: {agesRange: "agesRange",
-	        	  musicStyle: "MusicStyle",
-	        	  dayInWeek: "dayInWeek",
-	        	  searchByMyLines: "on"},
-	        success: function(data) {
-
-				console.log("adding auctions");
-				var counterDescription= " הצעות התקבלו  ";
-				
-				$(".all-auctions-container").html("");
-				
-				for (var item in data) {
-					
-					$(' <div id=' +data[item].id+' class="auction-container" title="לחץ כאן כדי לראות את פרטי המכרז" onclick="auctionClicked('+data[item].id + ')">'
-								+'<div class="auction-title">'+ data[item].eventType.Name+ ' - '+ formattedDate(data[item].eventDate) +'</div>'
-								+ '<div class="auction-min-age"> <label id="minAge">גיל מינימלי: </label>'+data[item].minAge+'</div>'
-								+ '<div class="auction-area"> <label id="area">איזור: </label>'+data[item].area.Name+'</div>'
-								+ '<div class="auction-offer-number">'+data[item].offerNumber+counterDescription +'</div>'
-							+'</div>').appendTo($(".all-auctions-container")) ;
-				}
-	        },
-	        error: function(data){
-	            	console.log("error");}
-	    });
+	function showAuctions(data){
+		console.log("adding auctions");
+		var counterDescription= " הצעות התקבלו  ";
 		
-	});
+		$(".all-auctions-container").html("");
+
+		var table= '<table id="auctionsTable" cellspacing="2">'
+			  +'<thead><tr><th>סוג אירוע</th><th>תאריך</th><th>גיל מינימלי</th><th>איזור</th><th>מספר הצעות שהוצעו</th></tr></thead>';
+			  +'<tfoot><tr><th>סוג אירוע</th><th>תאריך</th><th>גיל מינימלי</th><th>איזור</th><th>מספר הצעות שהוצעו</th></tr></tfoot><tbody>';
+
+		for (var item in data) {			
+			table += '<tr id=' +data[item].id+' title="לחץ כאן כדי לראות את פרטי המכרז" onclick="auctionClicked('+data[item].id + ');">'
+					 +'<td>'+ data[item].eventType.Name+ '</td>'
+					 +'<td>'+ formattedDate(data[item].eventDate) +'</td>'
+					 +'<td>'+data[item].minAge+'</td>'
+					 +'<td>'+data[item].area.Name+'</td>'
+					 +'<td>'+data[item].offerNumber+counterDescription +'</td></tr>';
+		}
+		
+		table += '</tbody></table>';
+		$(".all-auctions-container").append($(table));
+	}
 			
 	function auctionClicked(auctionID)
 	{
@@ -171,6 +105,46 @@
 		            	console.log("error");}
 		    });
 	}
+	
+	function getAllAuctions(){
+	    $.ajax({
+	        url: "GetDBData",
+	        type: "post",
+	        dataType: 'json',
+	        data: {RequestType: "DBDataAllAuctions"},
+	        success: function(data) {
+				  showAuctions(data);
+	        },
+	        error: function(data){
+	            	console.log("error");}
+	    });
+	}
+	
+	$(function onLoad(){
+		getAllAuctions();
+	});
+	
+	$(document).ready(function() {
+	    // Setup - add a text input to each footer cell
+	    $('#auctionsTable tfoot th').each( function () {
+	        var title = $('#auctionsTable thead th').eq( $(this).index() ).text();
+	        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+	    } );
+	 
+	    // DataTable
+	    var table = $('#auctionsTable').DataTable();
+	 
+	    // Apply the search
+	    table.columns().eq( 0 ).each( function ( colIdx ) {
+	        $( 'input', table.column( colIdx ).footer() ).on( 'keyup change', function () {
+	            table
+	                .column( colIdx )
+	                .search( this.value )
+	                .draw();
+	        } );
+	    } );
+	} );	
+
 	</script>
 	</body>
 </html>

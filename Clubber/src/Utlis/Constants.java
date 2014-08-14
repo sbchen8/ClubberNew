@@ -80,9 +80,8 @@ public class Constants {
 	 public static String OUTGOING_MESSAGE_DESCRIPITON= "OutGoingMessageDescription";
 	 
 	 //search Auction fields
-	 public static String AGES_RANGE= "agesRange";
-	 public static String DAY_IN_WEEK= "dayInWeek";
 	 public static String SEARCH_BY_MY_LINES= "searchByMyLines";
+	 public static String DB_DATA_ALL_AUCTIONS = "DBDataAllAuctions";
 	 
 	 // business profile fields
 	 public static final String DB_DATA_GET_BUSINESS_DATA = "DBDataGetBusinessData";
@@ -108,9 +107,4 @@ public class Constants {
 	 public static String DB_DATA_GET_BUSINESS_AREAS_DATA= "DBDataGetBusinessAreasData";
 	 public static String DB_DATA_GET_BUSINESS_CITIES_DATA= "DBDataGetBusinessCitiesData";
 	 public static String DB_DATA_GET_BUSINESSES_TYPE_DATA= "DBDataGetBusinessesTypeData";
-	 
-	 // search for auction
-	 public static String DB_DATA_AUCTION_MUSIC_STYLE= "DBDataAuctionMusicStyle";
-	 
-	 
 }

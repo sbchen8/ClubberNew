@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ClubberLogic.AuctionData;
 import ClubberLogic.BusinessData;
 import ClubberLogic.DAL;
 import ClubberLogic.LineData;
@@ -55,7 +56,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		Integer auctionId= SessionUtils.getCurrentAuctionToDisplay(request.getSession());
 		Integer offerID= SessionUtils.getCurrentOfferToDisplay(request.getSession());
 				
-		
+		ArrayList<AuctionData> auctionsList = new ArrayList<>();
 		//all returns data types:
 		Object data;
 		
@@ -146,11 +147,16 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             	ArrayList<IdWithName> typesList = DAL.getBusinessesTypeData();
             	json = gson.toJson(typesList);            	
             }         
-            else if(requestType.equals(Constants.DB_DATA_AUCTION_MUSIC_STYLE))
+            else if(requestType.equals(Constants.SEARCH_BY_MY_LINES))
             {
-            	ArrayList<IdWithName> typesList = DAL.getAuctionMusicStyle();
-            	json = gson.toJson(typesList);            	
-            }            
+            	auctionsList =  DAL.getAuctionsByPrLines(prEmail);
+            	json = gson.toJson(auctionsList);
+            }
+            else if(requestType.equals(Constants.DB_DATA_ALL_AUCTIONS))
+            {
+            	auctionsList =  DAL.getAllAuctions();
+            	json = gson.toJson(auctionsList);
+            }
             
             System.out.println(json);
             out.print(json);

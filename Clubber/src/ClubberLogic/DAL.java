@@ -1187,9 +1187,8 @@ public class DAL {
 		return typesList;
 	}
 
-	public static ArrayList<AuctionData> searchAuctionsByPrLines(String email) {
+	public static ArrayList<AuctionData> getAuctionsByPrLines(String email) {
 		email = "orelsharabi8@gmail.com";
-		AuctionData auctionData = new AuctionData();
 		ArrayList<AuctionData> auctionList = new ArrayList<>();
 		int createdById = 0;
 
@@ -1213,6 +1212,7 @@ public class DAL {
 
 			while (rs.next())
 			{
+				AuctionData auctionData = new AuctionData();
 				auctionData.setId(rs.getInt("A.id"));
 				auctionData.setMinAge(rs.getInt("A.Minimum_Age"));
 				auctionData.setExceptionsDescription(rs.getString("A.Exceptions_Description"));
@@ -1337,5 +1337,106 @@ public class DAL {
 		
 		return musicStyleList;				
 	}
+
+	public static ArrayList<AuctionData> getAllAuctions() {
+		ArrayList<AuctionData> auctionList = new ArrayList<>();
+
+		connectToDBServer();
+		
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * "
+										   + "FROM auction A, users U, businesses B, event_type ET, areas AR, details_to_display D, auction_status S "
+										   + "WHERE U.id = A.Created_By and "
+										   + "B.Business_Type = A.Business_Type and "
+										   + "A.Event_Type = ET.id and "
+										   + "A.Area = AR.id and "
+										   + "A.Details_To_Display = D.id and "
+										   + "A.Auction_Status = S.id");
+			while (rs.next())
+			{
+				AuctionData auctionData = new AuctionData();
+				auctionData.setId(rs.getInt("A.id"));
+				auctionData.setMinAge(rs.getInt("A.Minimum_Age"));
+				auctionData.setExceptionsDescription(rs.getString("A.Exceptions_Description"));
+				auctionData.setGuestesQuantiny(rs.getInt("A.Guestes_Quantiny"));
+				auctionData.setEventType(new IdWithName(rs.getInt("ET.id"), rs.getString("ET.Name")));
+				auctionData.setEventDate(rs.getDate("A.Event_Date"));
+				auctionData.setDateFlexible(rs.getBoolean("A.Is_Date_Flexible"));
+				auctionData.setArea(new IdWithName(rs.getInt("AR.id"), rs.getString("AR.Name")));
+				auctionData.setCertainBusiness(new IdWithName(rs.getInt("B.id"), rs.getString("B.Name")));
+				auctionData.setDescription(rs.getString("A.Description"));
+				auctionData.setDetailsToDisplay(new IdWithName(rs.getInt("D.id"), rs.getString("D.Name")));
+				auctionData.setSmoking(rs.getBoolean("A.Smoking"));
+				auctionData.setAuctionStatus(new IdWithName(rs.getInt("S.id"), rs.getString("S.Name")));
+				auctionData.setCreatedBy(new IdWithName(rs.getInt("A.Created_By"), rs.getString("U.First_Name")));
+				
+				auctionList.add(auctionData);
+			}
+			
+			for (int i = 0; i < auctionList.size(); i++) {
+				// get all auction_id music style		
+				ResultSet rs1 = stmt.executeQuery("SELECT * "
+						   + "FROM line_music_style LMS, auction_music_style AMS, music_style MS "
+						   + "WHERE AMS.Music_Style_Id = LMS.Music_Style_Id and "
+						   + "AMS.Music_Style_Id = MS.id and "
+						   + "LMS.Music_Style_Id = MS.id and "
+						   + "AMS.Auction_Id = "+ auctionList.get(i).getId());
+
+				List<IdWithName> musicStyles = new LinkedList<>();
+				
+				while(rs1.next())
+				{
+					IdWithName musicStyle = new IdWithName(rs1.getInt("MS.id"), rs1.getString("MS.Name"));
+					musicStyles.add(musicStyle);
+				}
+				
+				auctionList.get(i).setMusicStyle(musicStyles);
+			}
+			
+			for (int i = 0; i < auctionList.size(); i++) {
+				
+				// get all auction_id businesses type
+				ResultSet rs2 = stmt.executeQuery("SELECT * "
+						   + "FROM auction A, business_type BT "
+						   + "WHERE A.Business_Type = BT.id");
+
+				List<IdWithName> businessesType = new LinkedList<>();
+				
+				while(rs2.next())
+				{
+					IdWithName businessType = new IdWithName(rs2.getInt("BT.id"), rs2.getString("BT.Name"));
+					businessesType.add(businessType);
+				}
+				
+				auctionList.get(i).setBusinessType(businessesType);
+			}
+			
+			for (int i = 0; i < auctionList.size(); i++) {
+				
+				// get all auction_id seats type
+				ResultSet rs3 = stmt.executeQuery("SELECT * "
+						   + "FROM auction A, sitts_type ST "
+						   + "WHERE A.Seats_Type = ST.id");
+
+				List<IdWithName> seatsType = new LinkedList<>();
+				
+				while(rs3.next())
+				{
+					IdWithName seatType = new IdWithName(rs3.getInt("ST.id"), rs3.getString("ST.Name"));
+					seatsType.add(seatType);
+				}
+				
+				auctionList.get(i).setSittsType(seatsType);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			disconnectFromDBServer();
+		}		
 	
+		return auctionList;	
+	}
 }
