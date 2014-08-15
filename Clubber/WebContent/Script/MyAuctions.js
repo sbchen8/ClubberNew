@@ -68,7 +68,8 @@ function loadDataFromDB(data, areaName)
 	            }},
 	        error: function(data){
 	            	console.log("error");}
-
+	            
+	        
 	    });
 	}
 
