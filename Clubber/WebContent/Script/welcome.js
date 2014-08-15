@@ -4,12 +4,11 @@
 			var currentMonth = date.getMonth() + 1;
 			var currentDay = date.getDate();
 			var currentYear = date.getFullYear();
-			var fullCurrentDateStr = currentYear + "-" + currentMonth + "-"
-					+ currentDay;
-			getMainLinesFromDB(fullCurrentDateStr);
+			var fullCurrentDateStr = currentDay + "/" + currentMonth + "/" + currentYear ;
+			dateChange(fullCurrentDateStr);
 		});
 
-$(function() {
+$(function getDate() {
 	var date = new Date();
 	var currentMonth = date.getMonth();
 	var currentDay = date.getDate();
@@ -63,6 +62,7 @@ function dateChange (date){
 
 function getMainLinesFromDB(fullDate) {
 	console.log('function approched');
+	alert (fullDate);
 	
 	console.log('Getting template from server');
 	
@@ -89,7 +89,7 @@ function getMainLinesFromDB(fullDate) {
 				  temp_template.find('.line_box_date').html();
 				  temp_template.find('.line_box_hour').html();
 				  temp_template.find('.line_box_line').html($(this)[0]['m_Lines'][0]['description']);
-				  
+				  temp_template.find('.line_box_entrance_fee').html($(this)[0]['m_Lines'][0]['entranceFee']);
 				  
 				  temp_template.find('.line_box_name').html($(this)[0]['m_Name']);
 				  
@@ -121,7 +121,7 @@ function getMainLinesFromDB(fullDate) {
 	});*/
 $('#loader_image').remove();
 }
-function PrintWelcomeLinesTable(data) {
+/*function PrintWelcomeLinesTable(data) {
 	var $Lines = $('#Lines_Div');
 	var currDate = 0;
 	$Lines.html("");
@@ -145,7 +145,7 @@ function PrintWelcomeLinesTable(data) {
 		$Lines.append('<h1>אין אירועים זמינים</h1>');
 	}
 	$Lines.append('</div>');
-}
+}*/
 
 function ajaxAuctionFormDBData() {
 	$.ajax({

@@ -852,11 +852,13 @@ public class DAL {
 
 	
 	public static ArrayList<BusinessData> getWelcomeScreenEvents(String i_Date) throws ParseException {
-		String dateStr;
-		DateFormat formatter ; 
-		Date date ; 
-		   formatter = new SimpleDateFormat("yyyy-mm-dd");
-		   
+		final String NEW_FORMAT = "yyyy-MM-dd";
+		String parsedDate, dateStr;
+		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); ;
+		Date date = formatter.parse(i_Date);
+		DateFormat sqlFormatter = new SimpleDateFormat(NEW_FORMAT);
+		parsedDate = sqlFormatter.format(date);
+				   
 		   ArrayList<BusinessData> data = new ArrayList<BusinessData>();
 		// access date fields
 			
@@ -866,11 +868,11 @@ public class DAL {
 			{
 				ResultSet rs = stmt.executeQuery("select * "
 												+ "from line L, Businesses B, areas a, city c, streets s, business_type t "
-												+ "where L.Business_id = B.id AND L.Line_Start_Date >= '"+i_Date+"' and"
-											    +" B.area = a.id and "
-											    + "B.city = c.id and "
-									 		    + "B.street = s.id and "
-											    + "B.Business_Type = t.id");	
+												+ "where L.Business_id = B.id AND L.Line_End_Date >= '"+parsedDate+"' And"
+											    +" B.Area_id = a.id and "
+											    + "B.city_id = c.id and "
+									 		    + "B.street_id = s.id and "
+											    + "B.Business_Type_id = t.id");	
 
 				while (rs.next())
 				{
@@ -879,19 +881,20 @@ public class DAL {
 					//set business data
 					bData.setM_Id(rs.getInt("b.id"));
 					bData.setM_Name(rs.getString("b.name"));
-					bData.setM_StreetId(new IdWithName(rs.getInt("b.street"), rs.getString("s.Name")));
+					bData.setM_StreetId(new IdWithName(rs.getInt("b.street_id"), rs.getString("s.Name")));
 					bData.setM_HouseNumber(rs.getInt("b.structure_number"));
 					bData.setM_PhoneNumber(rs.getString("b.Business_Phone_Number"));
 					bData.setM_Description(rs.getString("b.Description"));
-					bData.setM_BusinessTypeId(new IdWithName(rs.getInt("b.Business_Type"), rs.getString("t.Name")));
-					bData.setM_CityId(new IdWithName(rs.getInt("b.city"), rs.getString("c.Name")));
-					bData.setM_AreaId(new IdWithName(rs.getInt("b.area"), rs.getString("a.Name")));
+					bData.setM_BusinessTypeId(new IdWithName(rs.getInt("b.Business_Type_id"), rs.getString("t.Name")));
+					bData.setM_CityId(new IdWithName(rs.getInt("b.city_id"), rs.getString("c.Name")));
+					bData.setM_AreaId(new IdWithName(rs.getInt("b.area_id"), rs.getString("a.Name")));
 					
-					LineData lData= new LineData();
-					date = formatter.parse(dateStr);
+					LineData lData = new LineData();
+					date = formatter.parse(i_Date);
 					lData.setM_LineName(rs.getString("L.name"));
 					lData.setDescription(rs.getString("L.Description"));
 					lData.setDj(rs.getString("L.DJ"));
+					lData.setEntranceFee(rs.getString("L.entrance_fee"));
 					lData.setMinAge(rs.getInt("L.Min_Age"));
 					lData.setStartDate(date);
 					
