@@ -1431,7 +1431,7 @@ public class DAL {
 				auctionList.get(i).setSittsType(seatsType);
 			}
 			
-		} catch (SQLException e) {
+		} catch (SQLException e) {f
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -1473,7 +1473,8 @@ public class DAL {
 				auctionData.setAuctionStatus(new IdWithName(rs.getInt("S.id"), rs.getString("S.Name")));
 				auctionData.setCreatedBy(new IdWithName(rs.getInt("A.Created_By"), rs.getString("U.First_Name")));
 				
-			}		finally{
+			}		
+			finally{
 			disconnectFromDBServer();
 		}		
 

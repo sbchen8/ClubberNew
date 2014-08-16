@@ -28,23 +28,9 @@
     #ui-datepicker-div{
         background: #000;
         padding: 10px;
-        width: 100%;
     }
-    .ui-datepicker-calendar{
-    	width: 17em;
-    }
-    
-    .ui-datepicker-calendar tbody {
-    	 text-align: left;
-    }
-    
-    .ui-datepicker {
-        padding: 15px;
-    }
-        
-    .ui-datepicker-next{
-     float: left;
-     padding: 10px;
+    label{
+    	width: 200px;
     }
     </style>
 </head><!--/head-->

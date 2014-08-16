@@ -1,5 +1,25 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@  include file="patternTemplates/header.tpl" %>
+<style>
+
+    .ui-datepicker-calendar{
+    	width: 17em;
+    }
+    
+    .ui-datepicker-calendar tbody {
+    	 text-align: left;
+    }
+    
+    .ui-datepicker {
+        padding: 15px;
+    }
+        
+    .ui-datepicker-next{
+     float: left;
+     padding: 10px;
+    }
+   </style>
+
     <div id="latest-events">
         <div class="container">
             <div class="event-inner">                
