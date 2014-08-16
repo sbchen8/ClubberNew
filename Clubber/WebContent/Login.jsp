@@ -6,8 +6,6 @@
 
 <%@  include file="patternTemplates/header.tpl" %>
 
-
-
     <div id="latest-events">
         <div class="container">
             <div class="event-inner">                

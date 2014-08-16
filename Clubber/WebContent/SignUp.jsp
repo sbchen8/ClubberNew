@@ -14,7 +14,7 @@
 			  	<input type="radio" name="whoAmI" value="PR" checked>
 				יחצן
 				<input type="radio" name="whoAmI" value="Client">
-				לקוח
+				Clubber
 				<br><br>
 			  	
 			  	<div class="lable" id="firstnameLabel">שם פרטי</div>
@@ -33,9 +33,9 @@
 				<br><br>
 				
 				<div class="lable" id="birthdateLabel">תאריך לידה</div>
-				<input name="birthdate" id="birthdate" required>
+				<input type = "datetime" name="birthdate" id="birthdate" required>
 	  			<br>
-				
+	  							
 				<div class="lable" id="phonenumberLabel">טלפון</div>
 				<input type="text" name="phoneNumber" id="phoneNumber" required>
 				<br>
@@ -46,7 +46,7 @@
 	  			<br>
 
 				<div class="lable" id="passwordLabel">סיסמה</div>
-				<input type="password" name="password" id="password" required>
+				<input type="password" name="password" id="password">
 	  			<br>
 				 
 				<div class="lable" id="verifyPasswordLabel">אימות סיסמה</div>
@@ -90,6 +90,53 @@
     
     
     <script src="js/datepicker-he.js"></script>
+    
+    <script>
+	
+		// date picker
+		$(function() {
+			var date = new Date();
+			var currentYear = date.getFullYear();
+			$('#birthdate').datepicker({
+				yearRange: "-120:+0",
+				minDate: new Date(currentYear - 120, 1, 1),
+				maxDate: date,
+				changeMonth: true,
+		      	changeYear: true,
+		      	showOn: "button",
+		        buttonImage: "images/calendar.gif",
+		        buttonImageOnly: true});	      	
+		});
+	
+		
+		// Set error messages  
+		jQuery.extend(jQuery.validator.messages, {
+		    required: "שדה חובה",
+		    email: 'כתובת דוא"ל אינה חוקית',
+		    equalTo: "סיסמאות אינן תואמות",
+		    date: "תאריך לידה אינו חוקי"
+		    
+		});
+		
+
+		$( "#createAccount" ).validate({
+			  rules: {
+			    email: {
+			      	email: true
+			    },
+		
+			    
+				verifyPassword: {
+		      		equalTo: "#password"
+			  	},
+			    
+			    birthdate: {
+			    	date: true
+			    }
+			 }
+			});		
+
+		</script>			
     
 </body>
 </html>

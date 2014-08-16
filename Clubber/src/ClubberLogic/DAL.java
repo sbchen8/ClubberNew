@@ -808,7 +808,6 @@ public class DAL {
 			disconnectFromDBServer();
 		}
 		
-		
 		return reviews;
 
 	}

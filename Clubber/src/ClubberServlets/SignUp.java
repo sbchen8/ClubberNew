@@ -48,7 +48,8 @@ public class SignUp extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         
         // Get User parameter
         String whoAmIParam = request.getParameter(Constants.WHO_AM_I);
@@ -70,17 +71,18 @@ public class SignUp extends HttpServlet {
                 
         String phoneNumberParam = request.getParameter(Constants.PHONE_NUMBER);
         String emailParam = request.getParameter(Constants.EMAIL);
-        String passwordParam = PasswordGenarator.create();
+        String passwordParam = request.getParameter(Constants.PASSWORD);
+        //String passwordParam = PasswordGenarator.create();
                 
         boolean isSucceed = true; 
         UserType userType;
-        String message = "נרשמת בהצלחה לאתר, אנו ממליצים לאחר ההתחברות לשנות את סיסמתך";
+        String message = "ן¿½ן¿½ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ן¿½, ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ן¿½ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ן¿½ן¿½ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ן¿½ן¿½ ן¿½ן¿½ ן¿½ן¿½ן¿½ן¿½ן¿½ן¿½";
         
         // Check if email unique
         if(DAL.isEmailUnique(emailParam) == false)
         {
         	isSucceed = false;
-        	message = "דואר אלקטרוני קיים במערכת";
+        	message = "׳›׳×׳•׳‘׳× ׳”׳׳™׳™׳ ׳›׳‘׳¨ ׳§׳™׳™׳׳× ׳‘׳׳¢׳¨׳›׳×";
         }        
         
         // Check if the user is client or PR
@@ -99,13 +101,13 @@ public class SignUp extends HttpServlet {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 						isSucceed = false;
-						message = "התגלתה תקלה בעת ההרשמה, אנא צור קשר clubber.cop@gmail.com";
+						message = "ן¿½ן¿½ן¿½ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ן¿½ן¿½ן¿½, ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ clubber.cop@gmail.com";
 					}
 	        	}
 	        	else
 	        	{
 	        		isSucceed = false;
-	        		message = "ההרשמה נכשלה, המערכת נכשלה בשליחת מייל האימות";
+	        		message = "ן¿½ן¿½ן¿½ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ן¿½ן¿½, ן¿½ן¿½ן¿½ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ן¿½ ן¿½ן¿½ן¿½ן¿½ן¿½ן¿½";
 	        	}
 	        }
 	        else if(whoAmIParam.equals("PR") == true)
@@ -121,13 +123,13 @@ public class SignUp extends HttpServlet {
     					// TODO Auto-generated catch block
     					e.printStackTrace();
     					isSucceed = false;
-    					message = "התגלתה תקלה בעת ההרשמה, אנא צור קשר clubber.cop@gmail.com";
+    					message = " clubber.cop@gmail.com :׳§׳¨׳×׳” ׳×׳§׳׳” ׳‘׳”׳׳™׳ ׳”׳”׳¨׳©׳׳”, ׳׳ ׳” ׳₪׳ ׳” ׳ ";
     				}
         		}
         		else
         		{
         			isSucceed = false;
-        			message = "ההרשמה נכשלה, המערכת נכשלה בשליחת מייל האימות";
+        			message = "׳”׳׳™׳™׳ ׳׳ ׳ ׳©׳׳—.";
         		}
 	        }
         }
@@ -136,7 +138,7 @@ public class SignUp extends HttpServlet {
         
         if(isSucceed == true)
         {
-        	getServletContext().getRequestDispatcher("/WelcomePage.jsp").forward(request, response);
+        	getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }
         else
         {
