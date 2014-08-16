@@ -157,6 +157,11 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             	auctionsList =  DAL.getAllAuctions();
             	json = gson.toJson(auctionsList);
             }
+            else if(requestType.equals(Constants.DB_DATA_AUCTION_BY_ID))
+            {
+            	data = DAL.getAuctionById(request.getParameter("AuctionId"));
+            	json = gson.toJson(auctionsList);
+            }
             
             System.out.println(json);
             out.print(json);

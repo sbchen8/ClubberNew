@@ -1441,4 +1441,42 @@ public class DAL {
 	
 		return auctionList;	
 	}
+
+	public AuctionData getAuctionById(String i_AuctionId) {
+
+		AuctionData auctionData = new AuctionData();
+		connectToDBServer();
+		
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * "
+										   + "FROM auction A, users U, businesses B, event_type ET, areas AR, details_to_display D, auction_status S "
+										   + "WHERE A.id = '"+ i_AuctionId +"' + U.id = A.Created_By and "
+										   + "B.Business_Type = A.Business_Type and "
+										   + "A.Event_Type = ET.id and "
+										   + "A.Area = AR.id and "
+										   + "A.Details_To_Display = D.id and "
+										   + "A.Auction_Status = S.id");
+			while (rs.next())
+			{				
+				auctionData.setId(rs.getInt("A.id"));
+				auctionData.setMinAge(rs.getInt("A.Minimum_Age"));
+				auctionData.setExceptionsDescription(rs.getString("A.Exceptions_Description"));
+				auctionData.setGuestesQuantiny(rs.getInt("A.Guestes_Quantiny"));
+				auctionData.setEventType(new IdWithName(rs.getInt("ET.id"), rs.getString("ET.Name")));
+				auctionData.setEventDate(rs.getDate("A.Event_Date"));
+				auctionData.setDateFlexible(rs.getBoolean("A.Is_Date_Flexible"));
+				auctionData.setArea(new IdWithName(rs.getInt("AR.id"), rs.getString("AR.Name")));
+				auctionData.setCertainBusiness(new IdWithName(rs.getInt("B.id"), rs.getString("B.Name")));
+				auctionData.setDescription(rs.getString("A.Description"));
+				auctionData.setDetailsToDisplay(new IdWithName(rs.getInt("D.id"), rs.getString("D.Name")));
+				auctionData.setSmoking(rs.getBoolean("A.Smoking"));
+				auctionData.setAuctionStatus(new IdWithName(rs.getInt("S.id"), rs.getString("S.Name")));
+				auctionData.setCreatedBy(new IdWithName(rs.getInt("A.Created_By"), rs.getString("U.First_Name")));
+				
+			}		finally{
+			disconnectFromDBServer();
+		}		
+
+		 return data;
+	}
 }

@@ -10,6 +10,7 @@ public class Constants {
 	 public static final String DB_DATA_MESSAGES="GetDBData-Messages";
 	 public static final String DB_DATA_ADD_MESSAGE="GetDBData-AddMessage";
 	 public static final String DB_DATA_MAIN_LINES = "GetDBData-WelcomeLines";
+	 public static final String DB_DATA_AUCTION_BY_ID = "GetDBData-GetAuctionById";
 	 
  	// PrProfile fields
 	 public static final String DB_DATA_USER_PROFILE= "DBDataUserProfile";
@@ -85,6 +86,7 @@ public class Constants {
 	 
 	 // business profile fields
 	 public static final String DB_DATA_GET_BUSINESS_DATA = "DBDataGetBusinessData";
+	 
 	 public static String BUSINESS_ID= "id";
 	 public static String BUSINESS_NAME= "name";
 	 public static String BUSINESS_TYPE_ID= "BusinessTypeId";
