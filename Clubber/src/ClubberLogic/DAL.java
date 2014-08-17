@@ -1210,6 +1210,7 @@ public class DAL {
 										   + "A.Area = AR.id and "
 										   + "A.Details_To_Display = D.id and "
 										   + "A.Auction_Status = S.id and "
+										   + "S.id = 1 and "										   
 										   + "A.Event_Date BETWEEN L.Line_Start_Date AND L.Line_End_Date");
 
 			while (rs.next())
@@ -1258,7 +1259,8 @@ public class DAL {
 				// get all auction_id businesses type
 				ResultSet rs2 = stmt.executeQuery("SELECT * "
 						   + "FROM auction A, business_type BT "
-						   + "WHERE A.Business_Type = BT.id");
+						   + "WHERE A.Business_Type = BT.id and "
+				   		   + "A.id = "+ auctionList.get(i).getId());						   
 
 				List<IdWithName> businessesType = new LinkedList<>();
 				
@@ -1276,7 +1278,8 @@ public class DAL {
 				// get all auction_id seats type
 				ResultSet rs3 = stmt.executeQuery("SELECT * "
 						   + "FROM auction A, sitts_type ST "
-						   + "WHERE A.Seats_Type = ST.id");
+						   + "WHERE A.Seats_Type = ST.id and "
+		   		   		   + "A.id = "+ auctionList.get(i).getId());				
 
 				List<IdWithName> seatsType = new LinkedList<>();
 				
@@ -1291,8 +1294,9 @@ public class DAL {
 			
 			for (int i = 0; i < auctionList.size(); i++) {
 				ResultSet rs4 = stmt.executeQuery("SELECT * "
-						   + "FROM users U "
-						   + "WHERE U.id = " +  createdById);
+						   + "FROM auction A, users U "
+						   + "WHERE U.id = " +  createdById +" and "
+				   		   + "A.id = "+ auctionList.get(i).getId());				
 
 				if(rs4.next())
 				{
@@ -1353,6 +1357,7 @@ public class DAL {
 										   + "A.Event_Type = ET.id and "
 										   + "A.Area = AR.id and "
 										   + "A.Details_To_Display = D.id and "
+										   + "S.id = 1 and "										   
 										   + "A.Auction_Status = S.id");
 			while (rs.next())
 			{
@@ -1400,7 +1405,8 @@ public class DAL {
 				// get all auction_id businesses type
 				ResultSet rs2 = stmt.executeQuery("SELECT * "
 						   + "FROM auction A, business_type BT "
-						   + "WHERE A.Business_Type = BT.id");
+						   + "WHERE A.Business_Type = BT.id and "
+						   + "A.id = "+ auctionList.get(i).getId());
 
 				List<IdWithName> businessesType = new LinkedList<>();
 				
@@ -1418,7 +1424,8 @@ public class DAL {
 				// get all auction_id seats type
 				ResultSet rs3 = stmt.executeQuery("SELECT * "
 						   + "FROM auction A, sitts_type ST "
-						   + "WHERE A.Seats_Type = ST.id");
+						   + "WHERE A.Seats_Type = ST.id and "
+				   		   + "A.id = "+ auctionList.get(i).getId());				
 
 				List<IdWithName> seatsType = new LinkedList<>();
 				
@@ -1431,7 +1438,7 @@ public class DAL {
 				auctionList.get(i).setSittsType(seatsType);
 			}
 			
-		} catch (SQLException e) {f
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -1442,7 +1449,7 @@ public class DAL {
 		return auctionList;	
 	}
 
-	public AuctionData getAuctionById(String i_AuctionId) {
+	public static AuctionData getAuctionById(String i_AuctionId) {
 
 		AuctionData auctionData = new AuctionData();
 		connectToDBServer();
@@ -1474,10 +1481,13 @@ public class DAL {
 				auctionData.setCreatedBy(new IdWithName(rs.getInt("A.Created_By"), rs.getString("U.First_Name")));
 				
 			}		
-			finally{
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
 			disconnectFromDBServer();
-		}		
-
-		 return data;
+		}
+		 return auctionData;
 	}
 }

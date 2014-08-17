@@ -71,12 +71,11 @@ public class SignUp extends HttpServlet {
                 
         String phoneNumberParam = request.getParameter(Constants.PHONE_NUMBER);
         String emailParam = request.getParameter(Constants.EMAIL);
-        String passwordParam = request.getParameter(Constants.PASSWORD);
-        //String passwordParam = PasswordGenarator.create();
+        String passwordParam = PasswordGenarator.create();
                 
         boolean isSucceed = true; 
         UserType userType;
-        String message = "����� ������ ����, ��� ������� ���� �������� ����� �� ������";
+		String message = "נרשמת בהצלחה לאתר, אנו ממליצים לאחר ההתחברות לשנות את סיסמתך";	
         
         // Check if email unique
         if(DAL.isEmailUnique(emailParam) == false)
@@ -101,13 +100,13 @@ public class SignUp extends HttpServlet {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 						isSucceed = false;
-						message = "������ ���� ��� ������, ��� ��� ��� clubber.cop@gmail.com";
+						message = "התגלתה תקלה בעת ההרשמה, אנא צור קשר clubber.cop@gmail.com";
 					}
 	        	}
 	        	else
 	        	{
 	        		isSucceed = false;
-	        		message = "������ �����, ������ ����� ������ ���� ������";
+	        		message = "ההרשמה נכשלה, המערכת נכשלה בשליחת מייל האימות";
 	        	}
 	        }
 	        else if(whoAmIParam.equals("PR") == true)
@@ -129,7 +128,7 @@ public class SignUp extends HttpServlet {
         		else
         		{
         			isSucceed = false;
-        			message = "המייל לא נשלח.";
+        			message = "ההרשמה נכשלה, המערכת נכשלה בשליחת מייל האימות";
         		}
 	        }
         }

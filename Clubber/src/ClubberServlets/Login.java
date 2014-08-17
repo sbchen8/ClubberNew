@@ -63,7 +63,7 @@ public class Login extends HttpServlet {
         if(timeStamp != 0 && timeStamp > currentDate.getTime())
         {
         	isSucceed = false;
-        	message = "���� ���� ������ ������ ������ ��� �����, ������ ����.";        		
+        	message = "מאחר והיו ניסיות מרובות למערכת ללא הצלחה, המשתמש ננעל.";        		
         }
         else if(timeStamp != 0 && timeStamp <= date)
         {
@@ -75,7 +75,7 @@ public class Login extends HttpServlet {
         	if(DAL.isPasswordMatcheEmail(emailParam, passwordParam) == false)
         	{
             	isSucceed = false;
-            	message = "";
+            	message = "סיסמה אינה נכונה";
             	
             	DAL.increaseLoginAttemptsDB(emailParam);
 

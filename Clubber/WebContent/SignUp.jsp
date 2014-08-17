@@ -45,13 +45,13 @@
 				<input type="text" name="email" size="40" id="email" required>
 	  			<br>
 
-				<div class="lable" id="passwordLabel">סיסמה</div>
-				<input type="password" name="password" id="password">
-	  			<br>
+<!-- 				<div class="lable" id="passwordLabel">סיסמה</div> -->
+<!-- 				<input type="password" name="password" id="password"> -->
+<!-- 	  			<br> -->
 				 
-				<div class="lable" id="verifyPasswordLabel">אימות סיסמה</div>
-				<input type="password" name="verifyPassword" id="verifyPassword" required>
-	  			<br><br>
+<!-- 				<div class="lable" id="verifyPasswordLabel">אימות סיסמה</div> -->
+<!-- 				<input type="password" name="verifyPassword" id="verifyPassword" required> -->
+<!-- 	  			<br><br> -->
 	  			
 	  			<div class="captcha-area">
 			       
