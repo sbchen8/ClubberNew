@@ -1,13 +1,12 @@
 <%@page import="Utlis.SessionUtils"%>
 <%@page import="Utlis.Constants"%>
 <%@page import="ClubberLogic.PR"%>
-<%
-	String messageText = (String) request
-			.getAttribute(Constants.MESSAGE_TEXT);
-%>
-
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@  include file="patternTemplates/header.tpl"%>
+
+<%
+	String messageText = (String) request.getAttribute(Constants.MESSAGE_TEXT);
+%>
 
 <style>
 input{
@@ -43,43 +42,56 @@ input{
 						<form class="user-details-form" id="userDetails"
 							name="userDetails" method="post" action="UpdateClientDetails">
 
-							<label id="firstnameLabel">שם פרטי</label> <input type="text"
-								name="firstName" id="firstName" required > <br>
+							<label id="firstnameLabel">שם פרטי</label> 
+							<input type="text" name="firstName" id="firstName" required disabled > 
+							<br>
 
-							<label id="lastnameLabel">שם משפחה</label> <input type="text"
-								name="lastName" id="lastName" required > <br>
+							<label id="lastnameLabel">שם משפחה</label> 
+							<input type="text" name="lastName" id="lastName" required disabled> 
+							<br>
 
-							<label id="genderLabel">מין</label> <input type="radio"
-								name="gender" value="Male" checked > זכר <input
-								type="radio" name="gender" value="Female" > נקבה
-							<br> <label id="birthdateLabel">תאריך לידה</label> <input
-								name="birthdate" id="birthdate" class="datepicker" > <br><br> <label
-								id="phonenumberLabel">טלפון</label> <input type="text"
-								name="phoneNumber" id="phoneNumber" required > <br>
+							<label id="genderLabel">מין</label> 
+							<input type="radio" name="gender" value="Male" checked disabled> זכר 
+							<input type="radio" name="gender" value="Female" disabled> נקבה
+							<br> 
+							
+							<label id="birthdateLabel">תאריך לידה</label> 
+							<input name="birthdate" id="birthdate" class="datepicker" disabled> 
+							<br><br> 
+							
+							<label id="phonenumberLabel">טלפון</label> 
+							<input type="text" name="phoneNumber" id="phoneNumber" required disabled > 
+							<br>
 
+							<label id="emailLabel">דוא"ל</label> 
+							<input type="text" name="email" id="email" required disabled > 
+							<br> 
+							
+							<label id="passwordLabel">סיסמה</label> 
+							<input type="password" name="Password" id="password" required disabled> 
+							<br>
 
-							<label id="emailLabel">דוא"ל</label> <input type="text"
-								name="email" id="email" required > <br> <label
-								id="passwordLabel">סיסמה</label> <input type="password"
-								name="Password" id="password" required > <br>
-
-							<label id="verifyPasswordLabel">אימות סיסמה</label> <input
-								type="password" name="verifyPassword" id="verifyPassword"
-								required > <br>
+							<label id="verifyPasswordLabel">אימות סיסמה</label> 
+							<input type="password" name="verifyPassword" id="verifyPassword" required disabled> 
+							<br>
 
 							<button id="editUserDel" type="button">ערוך</button>
-							<button id="updateUserDel" type="submit"
-								onclick="updateUserDetails()" >שמור</button>
+							<button id="updateUserDel" type="submit" onclick="updateUserDetails()" disabled >שמור</button>
 						</form>
-						<br> <label id="messageText"> <%
- 	if (messageText != null) {
- %>
-							<%=messageText%> <%
- 	}
- %>
+						<br> 
+						
+						<label id="messageText"> <%
+					 	if (messageText != null) {
+					 	%>
+							<%=messageText%> 
+						<%
+					 	}
+					 	%>
 						</label>
 					</div>
-					<div class="recomendedLines"></div>
+					<div class="recomendedLines">
+					</div>
+					
 					<div class="user-rating">
 						<label id="generalLabel">כללי</label> <br>
 						<div class="generalStars">
@@ -109,10 +121,6 @@ input{
 						</div>
 						<br>
 					</div>
-
-
-
-
 				</div></div>
 			</div>
 		</div>
@@ -130,7 +138,7 @@ input{
 <script type="text/javascript" src="js/jquery.backstretch.min.js"></script>
 <script type="text/javascript" src="js/switcher.js"></script>
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
 
 <script src="js/datepicker-he.js"></script>
 
@@ -182,8 +190,7 @@ input{
 			success : function(data) {
 				$("#firstName").val(data.firstName);
 				$("#lastName").val(data.lastName);
-				$('input[name="gender"][value="' + data.gender + '"]').prop(
-						"checked", true);
+				$('input[name="gender"][value="' + data.gender + '"]').prop("checked", true);
 				$("#birthdate").val(data.birthDate);
 				$("#phoneNumber").val(data.phoneNumber);
 				$("#email").val(data.email);
@@ -244,8 +251,11 @@ input{
 			success : function(data) {
 				console.log(data);
 				$.each(data, function(index, val) {
-					$(".recomendedLines").append(
-							"<p>" + val.m_LineName + "</p>");
+					
+					$(".recomendedLines").append($('<p>' + val.line.m_LineName + ' - ' + val.business.m_Name + ' </p>'
+							+'<p> גיל מינימלי: ' + val.line.minAge + '</p>'
+							+'<p>' + val.business.m_StreetId.Name + ' ' +val.business.m_HouseNumber + ', ' + val.business.m_CityId.Name + '</p>'
+							+'<p>' + val.line.description +'</p>'));
 				});
 			},
 			error : function(data) {

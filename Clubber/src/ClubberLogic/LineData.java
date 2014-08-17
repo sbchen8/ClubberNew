@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Date;
 import java.util.LinkedList;
 
+import Utlis.IdWithName;
+
 public class LineData {
 	private Integer id;
 	private String m_LineName;
@@ -15,6 +17,8 @@ public class LineData {
 	private String entranceFee;
 	private String dj;
 	private String openingHour;
+	private IdWithName pr;
+	private IdWithName business;
 	private final LinkedList<Integer> musicStylesIds;
 
 	public LineData()
@@ -104,6 +108,22 @@ public class LineData {
 
 	public void setM_LineName(String m_LineName) {
 		this.m_LineName = m_LineName;
+	}
+
+	public IdWithName getPr() {
+		return pr;
+	}
+
+	public void setPr(IdWithName pr) {
+		this.pr = pr;
+	}
+
+	public IdWithName getBusiness() {
+		return business;
+	}
+
+	public void setBusiness(IdWithName business) {
+		this.business = business;
 	}
 
 }

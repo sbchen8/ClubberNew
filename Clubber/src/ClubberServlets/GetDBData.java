@@ -20,6 +20,7 @@ import ClubberLogic.PR;
 import ClubberLogic.UserReviews;
 import Utlis.Constants;
 import Utlis.IdWithName;
+import Utlis.LineManagementData;
 import Utlis.SessionUtils;
 
 import com.google.gson.Gson;
@@ -60,7 +61,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		//all returns data types:
 		Object data;
 		
-		String prEmail= SessionUtils.getUserEmail(request);
+		String userEmail= SessionUtils.getUserEmail(request);
 		String requestType= request.getParameter("RequestType");
 		PrintWriter out = response.getWriter();
 		String json=null;
@@ -107,20 +108,20 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
        		}
             else if(requestType.equals(Constants.DB_DATA_USER_PROFILE))
             {
-            	PR pr= DAL.getUserProfileData(prEmail);
+            	PR pr= DAL.getUserProfileData(userEmail);
             	json = gson.toJson(pr);
             }
             else if(requestType.equals(Constants.DB_DATA_PR_PROFILE_REVIEW)){
-            	UserReviews reviews = DAL.getPrProfileReview(prEmail);
+            	UserReviews reviews = DAL.getPrProfileReview(userEmail);
             	json = gson.toJson(reviews);
             }
             else if(requestType.equals(Constants.DB_DATA_CLIENT_PROFILE_REVIEW)){
-            	UserReviews reviews = DAL.getClientProfileReview(prEmail);
+            	UserReviews reviews = DAL.getClientProfileReview(userEmail);
             	json = gson.toJson(reviews);
             	
             }
             else if(requestType.equals(Constants.DB_DATA_RECOMENDED_LINES)){
-            	List<LineData> recomendedLines = DAL.getCustomerRecomendedLines(prEmail);
+            	List<LineManagementData> recomendedLines = DAL.getCustomerRecomendedLines(userEmail);
             	json = gson.toJson(recomendedLines);
             }
             else if(requestType.equals(Constants.DB_DATA_ALL_BUSINESSES)){
@@ -149,7 +150,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             }         
             else if(requestType.equals(Constants.SEARCH_BY_MY_LINES))
             {
-            	auctionsList =  DAL.getAuctionsByPrLines(prEmail);
+            	auctionsList =  DAL.getAuctionsByPrLines(userEmail);
             	json = gson.toJson(auctionsList);
             }
             else if(requestType.equals(Constants.DB_DATA_ALL_AUCTIONS))

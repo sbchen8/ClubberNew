@@ -51,7 +51,7 @@ public class UpdateClientDetails extends HttpServlet {
         client.setLastName(request.getParameter(Constants.LAST_NAME));
         client.setGender(request.getParameter(Constants.GENDER));
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
         Date birthDate = new Date();
         try {
 			birthDate = sdf.parse(request.getParameter(Constants.BIRTHDATE));
@@ -77,11 +77,11 @@ public class UpdateClientDetails extends HttpServlet {
         
         if(isSucceed == true)
         {
-        	message = "äòãëåï áåöò";
+        	message = "×”×¢×“×›×•×Ÿ ×‘×•×¦×¢";
         }
         else
         {
-        	message = "äòãëåï ğëùì";
+        	message = "×”×¢×“×›×•×Ÿ × ×›×©×œ";
         }
         
         request.setAttribute(Constants.MESSAGE_TEXT, message);

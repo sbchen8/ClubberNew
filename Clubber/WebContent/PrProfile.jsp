@@ -1,7 +1,7 @@
 <%@page import="Utlis.SessionUtils"%>
 <%@page import="Utlis.Constants"%>
 <%@page import="ClubberLogic.PR"%>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <% String messageText = (String)request.getAttribute(Constants.MESSAGE_TEXT); %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

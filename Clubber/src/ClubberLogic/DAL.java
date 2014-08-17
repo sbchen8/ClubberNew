@@ -18,6 +18,7 @@ import java.util.List;
 
 import Utlis.AuctionManagementData;
 import Utlis.IdWithName;
+import Utlis.LineManagementData;
 import Utlis.NewAuctionData;
 
 public class DAL {
@@ -408,11 +409,11 @@ public class DAL {
 
 		connectToDBServer();
 
-		DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
+		DateFormat df = new SimpleDateFormat("dd-MMM-yy HH:mm:ss a");
 		String date= df.format(userData.getBirthDate());
 		Date date2= df.parse(date);
-		java.sql.Date sqlDate = new java.sql.Date(date2.getTime());
-				
+		java.sql.Date sqlDate = new java.sql.Date(date2.getTime());		
+		
 		String sql= "INSERT INTO USERS(User_Type, First_Name, Last_Name, Gender, Phone_Number, Email, Password, Birth_Date)"
 				+ " VALUES('"+userType+"','"+userData.getFirstName()+"','"+userData.getLastName()+"','"+userData.getGender()+"','"+userData.getPhoneNumber()+"','"+userData.getEmail()+"','"+userData.getPassword()+"','"+sqlDate+"')";
 		try {
@@ -666,7 +667,6 @@ public class DAL {
 		} 
 		catch (SQLException e) {
 			e.printStackTrace();
-			
 		}
 		finally{
 			disconnectFromDBServer();
@@ -812,29 +812,49 @@ public class DAL {
 
 	}
 
-	public static List<LineData> getCustomerRecomendedLines(String email) {
+	public static List<LineManagementData> getCustomerRecomendedLines(String email) {
 
-		List<LineData> lines = null;
+		List<LineManagementData> lines = null;
 		
 		connectToDBServer();
 
 		try {
 
-			ResultSet rs = stmt.executeQuery("select L.name, L.line_photo "
-					+ "from users as U, auction as A, line as L, businesses as B"
-					+ " where email = '" + email + "' and"
-					+ " U.id = A.Created_By and"
-					+ " A.area = B.Area and"
-					+ " B.id = L.Business_id");
+			ResultSet rs = stmt.executeQuery("select * "
+											+ "From users U, auction A, line L, businesses B, city C, streets S "
+											+ "where email = '" + email + "' and "
+											+ "U.id = A.Created_By and "
+											+ "A.area = B.Area and "
+											+ "C.Area_id = A.area and "
+											+ "S.City_id = C.id and "
+											+ "S.id = B.Street and "
+											+ "B.id = L.Business_id");
 			
 			while (rs.next())
 			{
+				
 				lines = new ArrayList<>();
-				LineData line = new LineData();
-				line.setM_LineName(rs.getString("name"));
+				LineData lineData = new LineData();
+				BusinessData businessData = new BusinessData();
+				
+				lineData.setId(rs.getInt("L.id"));
+				lineData.setM_LineName(rs.getString("L.Name"));
+				lineData.setBusiness(new IdWithName(rs.getInt("L.Business_id"), rs.getString("B.Name")));
+				lineData.setMinAge(rs.getInt("L.Min_Age"));
+				lineData.setDescription(rs.getString("L.Description"));
+				lineData.setEntranceFee(rs.getString("L.Entrance_Fee"));
+				lineData.setDj(rs.getString("L.DJ"));
+				lineData.setOpeningHour(rs.getTime("L.Opening_Hour").toString());
 				//line.setPhoto(rs.getString("line_photo"));
 				
-				lines.add(line);
+				businessData.setM_Id(rs.getInt("B.id"));
+				businessData.setM_Name(rs.getString("B.Name"));
+				businessData.setM_StreetId(new IdWithName(rs.getInt("S.id"), rs.getString("S.Name")));
+				businessData.setM_CityId(new IdWithName(rs.getInt("C.id"), rs.getString("C.Name")));
+				businessData.setM_HouseNumber(rs.getInt("B.Structure_Number"));
+
+				LineManagementData lineManagementData = new LineManagementData(lineData, businessData);
+				lines.add(lineManagementData);
 			}
 		
 		} 
@@ -1489,5 +1509,5 @@ public class DAL {
 			disconnectFromDBServer();
 		}
 		 return auctionData;
-	}
+	}	
 }

@@ -46,9 +46,26 @@
     <script type="text/javascript" src="js/jquery.backstretch.min.js"></script>
     <script type="text/javascript" src="js/switcher.js"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-    
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
     
     <script src="js/datepicker-he.js"></script>
-	    
+	<script>
+	
+	// Set default messages  
+	jQuery.extend(jQuery.validator.messages, {
+	    required: "שדה חובה",
+	    email: 'כתובת דוא"ל אינה חוקית' 
+	});	
+	
+	// validate fields
+	$( "#loginForm" ).validate({
+		  rules: {
+		    email: {
+		      	email: true
+		    }
+		 }
+		});		
+	
+	</script>	    
 </body>
 </html>

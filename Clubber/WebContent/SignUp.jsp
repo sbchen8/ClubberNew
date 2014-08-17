@@ -1,4 +1,8 @@
+<%@page import="Utlis.Constants"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
+<%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
+<% String messageText = (String)request.getAttribute(Constants.MESSAGE_TEXT); %>
 <%@  include file="patternTemplates/header.tpl" %>
     <div id="latest-events">
         <div class="container">
@@ -9,6 +13,13 @@
                             <h2 class="heading"> הרשמה <strong>לאתר</strong> </h2 >       
                                  <div class="signup-area">
   			<form class="create-account-form" id="createAccount" name="createAccount" method="post" action="SignUp">
+	  			<div class="message-area">
+					<label id=loginFailed>
+					<% if(messageText != null){ %>
+						<%=messageText %>
+					<%} %>
+					</label>   			
+  				</div>
 			  	<br>
 			  	<div class="lable" id="whoAmILabel">מי אני?</div>
 			  	<input type="radio" name="whoAmI" value="PR" checked>
@@ -54,16 +65,15 @@
 <!-- 	  			<br><br> -->
 	  			
 	  			<div class="captcha-area">
-			       
+			       <%
+			         ReCaptcha c = ReCaptchaFactory.newReCaptcha("YOUR_PUBLIC_KEY", "YOUR_PRIVATE_KEY", false);
+			         out.print(c.createRecaptchaHtml(null, null));
+			       %>
+
 	  			</div>
 	  			
 	  			<button type="submit" >הירשם</button>
 	  			<input type=reset value="נקה"><br>
-	  			
-	  			<div class="message-area">
-					<label id=loginFailed>
-					</label>   			
-  				</div>
 			</form>
     	</div>	                      
                         </div>                                       
@@ -87,7 +97,7 @@
     <script type="text/javascript" src="js/jquery.backstretch.min.js"></script>
     <script type="text/javascript" src="js/switcher.js"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-    
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
     
     <script src="js/datepicker-he.js"></script>
     
