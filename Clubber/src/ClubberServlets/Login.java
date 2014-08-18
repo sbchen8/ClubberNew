@@ -94,7 +94,7 @@ public class Login extends HttpServlet {
         {
         	request.getSession(true).setAttribute(Constants.EMAIL, emailParam);
         	request.getSession(true).setAttribute(Constants.WHO_AM_I, userType);
-        	getServletContext().getRequestDispatcher("/ClientProfile.jsp").forward(request, response);
+        	getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         }
         else
         {
