@@ -8,6 +8,7 @@ public class UserMessagesData {
 	private Integer fromUserId;
 	private Integer toUserId;
 	private Integer auctionId;
+	private Integer lineId;
 	private Date createdOn;
 	private String description;
 	
@@ -57,6 +58,14 @@ public class UserMessagesData {
 	
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Integer getLineId() {
+		return lineId;
+	}
+
+	public void setLineId(Integer lineId) {
+		this.lineId = lineId;
 	}
 
 }

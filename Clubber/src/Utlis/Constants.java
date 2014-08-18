@@ -21,6 +21,7 @@ public class Constants {
 	 public static final String DB_DATA_RECOMENDED_LINES = "DBDataRecomendedLines";	
 	 public static final String DB_DATA_GET_BUSINESS_DATA = "DBDataGetBusinessData";
 	 public static final String DB_DATA_GET_MUSIC_STYLE_DATA = "DBDataGetMusicStyleData";
+	 public static final String DB_DATA_GET_JOIN_LINE_REQUEST_DATA = "DBDataGetJoinRequestData";
 
 	 // PrProfile fields
 	 public static final String USER_DATA= "userData";

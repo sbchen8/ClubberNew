@@ -1564,5 +1564,40 @@ public class DAL {
 		}		
 		
 		return isSucceed;
+	}
+
+	public static ArrayList<UserMessagesData> getJoinLineRequestData(String email) {
+		email = "orelsharabi8@gmail.com";
+		ArrayList<UserMessagesData> joinLineRequestList = new ArrayList<>();
+		connectToDBServer();
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * "
+										   + "FROM messages M, users U "
+										   + "WHERE M.To_User_id = U.id and "
+										   + "M.Line_id is not null and  "
+										   + "M.Auction_id is null and "
+										   + "U.Email ='" + email + "'");
+			while (rs.next())
+			{				
+				UserMessagesData messagesData = new UserMessagesData();
+				messagesData.setId(rs.getInt("M.id"));
+				messagesData.setFromUserId(rs.getInt("M.From_User_id"));
+				messagesData.setToUserId(rs.getInt("M.To_User_id"));
+				messagesData.setLineId(rs.getInt("M.Line_id"));
+				messagesData.setCreatedOn(rs.getDate("M.Created_On"));
+				
+				joinLineRequestList.add(messagesData);
+			}	
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			disconnectFromDBServer();
+		}
+		
+		
+		return joinLineRequestList;
 	}	
 }
