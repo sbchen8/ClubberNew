@@ -31,7 +31,7 @@
 
 								  	<div class="lable" id="linebusinessNameLable">מקום הליין</div>
 								  	<input type="text" name="businessId" id="businessId" hidden />
-								  	<select type="text" name="businessName" name="businessName" required></select>
+								  	<select type="text" name="businessName" id="businessName" required></select>
 									<br>
 																  	
 								  	<div class="lable" id="lineMusicStyleLabel">סגנון מוזיקה
@@ -183,7 +183,6 @@
 	    });
 		
 	}
-
 	
 	$(function onLoad(){
 		uploadMusicStyleData();
