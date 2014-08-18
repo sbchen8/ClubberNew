@@ -1509,5 +1509,32 @@ public class DAL {
 			disconnectFromDBServer();
 		}
 		 return auctionData;
+	}
+
+	public static boolean addNewBusiness(BusinessData businessData) {
+		boolean isSucceed = true;
+
+		connectToDBServer();
+		
+		String sql= "INSERT INTO businesses(Name, Street, Structure_Number, Business_Phone_Number, Description, Business_Type, City, Area) "
+				+ "VALUES ('"+ businessData.getM_Name()+ "','" + businessData.getM_StreetId().getId() +"','"+ businessData.getM_HouseNumber() +"','" + businessData.getM_PhoneNumber()+"','"+ businessData.getM_Description() +"','"+ businessData.getM_BusinessTypeId().getId() +"','"+ businessData.getM_CityId().getId() +"','"+ businessData.getM_AreaId().getId()+"')";
+		
+		String sql1= "INSERT INTO streets(City_id, Name) "
+				+ "VALUES ('"+ businessData.getM_CityId().getId()+ "','" + businessData.getM_StreetId().getName() +"')";
+		
+		try {
+			stmt.executeUpdate(sql);
+			stmt.executeUpdate(sql1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			isSucceed = false;
+			e.printStackTrace();
+		}
+		finally
+		{
+			disconnectFromDBServer();
+		}		
+		
+		return isSucceed;
 	}	
 }
