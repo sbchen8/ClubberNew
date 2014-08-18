@@ -9,6 +9,7 @@ import Utlis.IdWithName;
 public class LineData {
 	private Integer id;
 	private String m_LineName;
+	private Integer m_DayInWeek;
 	private Date startDate;
 	private Date endDate;
 	private Integer minAge;
@@ -124,6 +125,14 @@ public class LineData {
 
 	public void setBusiness(IdWithName business) {
 		this.business = business;
+	}
+
+	public Integer getM_DayInWeek() {
+		return m_DayInWeek;
+	}
+
+	public void setM_DayInWeek(Integer m_DayInWeek) {
+		this.m_DayInWeek = m_DayInWeek;
 	}
 
 }

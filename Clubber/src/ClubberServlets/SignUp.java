@@ -57,7 +57,7 @@ public class SignUp extends HttpServlet {
         String lastNameParam = request.getParameter(Constants.LAST_NAME);
         String genderParam = request.getParameter(Constants.GENDER);
         
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat df = new SimpleDateFormat("dd/mm/yyyy");
 		Date date = new Date();
 
 		try {

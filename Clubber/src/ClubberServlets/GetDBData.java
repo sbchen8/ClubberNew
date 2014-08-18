@@ -56,8 +56,9 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		//get auction,offer ids:
 		Integer auctionId= SessionUtils.getCurrentAuctionToDisplay(request.getSession());
 		Integer offerID= SessionUtils.getCurrentOfferToDisplay(request.getSession());
-				
 		ArrayList<AuctionData> auctionsList = new ArrayList<>();
+		ArrayList<IdWithName> musicStyleList = new ArrayList<>();
+
 		//all returns data types:
 		Object data;
 		
@@ -162,6 +163,12 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             {
             	data = DAL.getAuctionById(request.getParameter("AuctionId"));
             	json = gson.toJson(auctionsList);
+            }
+            else if(requestType.equals(Constants.DB_DATA_GET_MUSIC_STYLE_DATA))
+            {
+            	musicStyleList = DAL.getMusicStyleData();
+            	json = gson.toJson(musicStyleList);
+            	
             }
             
             System.out.println(json);

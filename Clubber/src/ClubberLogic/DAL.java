@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.catalina.connector.Request;
+
 import Utlis.AuctionManagementData;
 import Utlis.IdWithName;
 import Utlis.LineManagementData;
@@ -980,29 +982,20 @@ public class DAL {
 		connectToDBServer();
 			
 		BusinessData businessData = null;
-
-
-		DateFormat df = new SimpleDateFormat("dd-MMM-yy HH:mm:ss a");
-		String date= df.format(new Date());
-		Date date2= df.parse(date);
-		java.sql.Date sqlDate = new java.sql.Date(date2.getTime());
 		
 		try 
 		{
 			ResultSet rs = stmt.executeQuery("SELECT * "
-					   + "FROM line L, Businesses B, areas a, city c, streets s, business_type t "
+					   + "FROM Businesses B, areas A, city C, streets S, business_type T "
 					   + "WHERE B.id ='" + businessId + "' and "
-					   + "B.id =  L.Business_id and "
-					   +" b.area = a.id and "
-					   + "b.city = c.id and "
-					   + "b.street = s.id and "
-					   + "b.Business_Type = t.id");			
-					   //+ "B.id =  L.Business_id and "
-					   //+ "L.Line_End_Date >= '" + sqlDate);
+					   +" B.area = A.id and "
+					   + "B.city = C.id and "
+					   + "B.street = S.id and "
+					   + "B.Business_Type = T.id");			
+
 
 			while (rs.next())
 			{
-				
 				businessData = new BusinessData();
 				//set business data
 				businessData.setM_Id(rs.getInt("b.id"));
@@ -1014,21 +1007,25 @@ public class DAL {
 				businessData.setM_BusinessTypeId(new IdWithName(rs.getInt("b.Business_Type"), rs.getString("t.Name")));
 				businessData.setM_CityId(new IdWithName(rs.getInt("b.city"), rs.getString("c.Name")));
 				businessData.setM_AreaId(new IdWithName(rs.getInt("b.area"), rs.getString("a.Name")));
-				
+			}
+			
+			ResultSet rs1 = stmt.executeQuery("SELECT * "
+					   + "FROM Businesses B, line L "
+					   + "WHERE B.id ='" + businessId + "' and "
+					   + "B.id =  L.Business_id");
+			
+			while(rs1.next()) 
+			{
 				LineData lineData= new LineData();
-				DateFormat formatter;
-				formatter = new SimpleDateFormat("yyyy-mm-dd");
-				String dateStr = (rs.getString("L.Line_Start_Date"));
-				Date startDate = formatter.parse(dateStr);
-				lineData.setM_LineName(rs.getString("L.name"));
-				lineData.setDescription(rs.getString("L.Description"));
-				lineData.setDj(rs.getString("L.DJ"));
-				lineData.setMinAge(rs.getInt("L.Min_Age"));
-				lineData.setStartDate(startDate);
-				
+				lineData.setM_LineName(rs1.getString("L.name"));
+				lineData.setDescription(rs1.getString("L.Description"));
+				lineData.setDj(rs1.getString("L.DJ"));
+				lineData.setMinAge(rs1.getInt("L.Min_Age"));
+				lineData.setStartDate(rs1.getDate("L.Line_Start_Date"));
+			
 				businessData.getM_Lines().add(lineData);
-				
-			}		
+			}			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -1335,7 +1332,7 @@ public class DAL {
 		return auctionList;		
 	}
 
-	public static ArrayList<IdWithName> getAuctionMusicStyle() {
+	public static ArrayList<IdWithName> getMusicStyleData() {
 
 		ArrayList<IdWithName> musicStyleList = new ArrayList<>();
 
@@ -1525,6 +1522,37 @@ public class DAL {
 		try {
 			stmt.executeUpdate(sql);
 			stmt.executeUpdate(sql1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			isSucceed = false;
+			e.printStackTrace();
+		}
+		finally
+		{
+			disconnectFromDBServer();
+		}		
+		
+		return isSucceed;
+	}
+
+	public static boolean addNewLine(LineData lineData) throws ParseException {
+		boolean isSucceed = true;
+		DateFormat df = new SimpleDateFormat("dd-MMM-yy HH:mm:ss a");
+		String date1= df.format(lineData.getStartDate());
+		Date date2= df.parse(date1);
+		java.sql.Date sqlStartDate = new java.sql.Date(date2.getTime());
+		
+		String date3= df.format(lineData.getEndDate());
+		Date date4= df.parse(date3);
+		java.sql.Date sqlEndDate = new java.sql.Date(date4.getTime());
+		
+		connectToDBServer();
+		
+		String sql= "INSERT INTO businesses(Business_id, PR_id, Name, Day_In_Week, Line_Start_Date, Line_End_Date, Min_Age, Description, Entrance_Fee, DJ, Opening_Hour) "
+				+ "VALUES ('"+ lineData.getBusiness().getId()+ "','" + lineData.getPr().getId() +"','"+ lineData.getM_LineName() +"','" + lineData.getM_DayInWeek()+"','"+ sqlStartDate +"','"+ sqlEndDate +"','"+ lineData.getMinAge() +"','"+ lineData.getDescription()+"','"+ lineData.getEntranceFee() +"','"+ lineData.getOpeningHour() +"')";
+		try {
+			stmt.executeUpdate(sql);
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			isSucceed = false;

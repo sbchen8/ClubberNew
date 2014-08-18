@@ -11,15 +11,19 @@ public class Constants {
 	 public static final String DB_DATA_ADD_MESSAGE="GetDBData-AddMessage";
 	 public static final String DB_DATA_MAIN_LINES = "GetDBData-WelcomeLines";
 	 public static final String DB_DATA_AUCTION_BY_ID = "GetDBData-GetAuctionById";
-	 
- 	// PrProfile fields
+	 public static String DB_DATA_ALL_BUSINESSES= "DBDataAllBusinesses";
+	 public static String DB_DATA_GET_BUSINESS_AREAS_DATA= "DBDataGetBusinessAreasData";
+	 public static String DB_DATA_GET_BUSINESS_CITIES_DATA= "DBDataGetBusinessCitiesData";
+	 public static String DB_DATA_GET_BUSINESSES_TYPE_DATA= "DBDataGetBusinessesTypeData";
 	 public static final String DB_DATA_USER_PROFILE= "DBDataUserProfile";
-	 public static final String USER_DATA= "userData";
 	 public static final String DB_DATA_PR_PROFILE_REVIEW = "DBDataPrProfileReview";
-		 
-	 // CustomerProfile fields
 	 public static final String DB_DATA_CLIENT_PROFILE_REVIEW = "DBDataClientProfileReview";
-	 public static final String DB_DATA_RECOMENDED_LINES = "DBDataRecomendedLines";
+	 public static final String DB_DATA_RECOMENDED_LINES = "DBDataRecomendedLines";	
+	 public static final String DB_DATA_GET_BUSINESS_DATA = "DBDataGetBusinessData";
+	 public static final String DB_DATA_GET_MUSIC_STYLE_DATA = "DBDataGetMusicStyleData";
+
+	 // PrProfile fields
+	 public static final String USER_DATA= "userData";
 		 
 	 //Session data:
 	 public static final String AUCTION_TO_DISPLAY_ID= "AuctionToDisplayId";
@@ -84,9 +88,7 @@ public class Constants {
 	 public static String SEARCH_BY_MY_LINES= "searchByMyLines";
 	 public static String DB_DATA_ALL_AUCTIONS = "DBDataAllAuctions";
 	 
-	 // business profile fields
-	 public static final String DB_DATA_GET_BUSINESS_DATA = "DBDataGetBusinessData";
-	 
+	 // business profile fields	 
 	 public static String BUSINESS_ID= "id";
 	 public static String BUSINESS_NAME= "name";
 	 public static String BUSINESS_TYPE_ID= "BusinessTypeId";
@@ -103,10 +105,20 @@ public class Constants {
 	 public static String BUSINESS_PHOTO= "photo";
 	 //business photo
 
-	 
-	 // all businesses fields
-	 public static String DB_DATA_ALL_BUSINESSES= "DBDataAllBusinesses";
-	 public static String DB_DATA_GET_BUSINESS_AREAS_DATA= "DBDataGetBusinessAreasData";
-	 public static String DB_DATA_GET_BUSINESS_CITIES_DATA= "DBDataGetBusinessCitiesData";
-	 public static String DB_DATA_GET_BUSINESSES_TYPE_DATA= "DBDataGetBusinessesTypeData";
+	 //line fileds
+	 public static String LINE_ID= "id";
+	 public static String LINE_NAME= "name";
+	 public static String LINE_BUSINEES_ID= "businessId";
+	 public static String LINE_BUSINEES_NAME= "businessName";
+	 public static String LINE_MUSIC_STYLE_NAME= "musicStyle";
+	 public static String LINE_DAY_IN_WEEK= "dayInWeek";
+	 public static String LINE_START_DATE= "startDate";
+	 public static String LINE_END_DATE= "endDate";
+	 public static String LINE_MIN_AGE= "minAge";
+	 public static String LINE_DESCRIPTION= "description";
+	 public static String LINE_ETRANCEFEE= "etranceFee";
+	 public static String LINE_DJ= "DJ";
+	 public static String LINE_PHOTO= "photo";
+
 }
+
