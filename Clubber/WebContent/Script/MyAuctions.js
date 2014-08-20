@@ -12,10 +12,10 @@ function formattedDate(date) {
 }
 
 
-function loadDataFromDB(data, areaName)
+function loadDataFromDB(data, areaName) 
 	{
 		console.log("adding auctions to "+ areaName);
-		var counterDescription= " äöòåú äú÷áìå  ";
+		var counterDescription= " ×¤× ×™×•×ª ××™×—×¦× ×™×  ";
 		var description;
 		
 		for (var item in data) {
@@ -28,10 +28,10 @@ function loadDataFromDB(data, areaName)
 				description= data[item].description;
 			}
 			
-			$(' <div id=' +data[item].id+' class="my-auction-container" title="ìçõ ëàï ëãé ìøàåú àú ôøèé äîëøæ" onclick="auctionClicked('+data[item].id + ')"> <div class="my-auction-title">'+data[item].eventType.Name+ ' - '+ formattedDate(data[item].eventDate) +'</div>'
+			$(' <div class="bg" style="padding-top: 0;"><div id=' +data[item].id+' class="my-auction-container" title="×”×¦×¢×•×ª ××™×—×¦× ×™×" onclick="auctionClicked('+data[item].id + ')" > <div class="my-auction-title"><h3>'+data[item].eventType.Name+ '</h3>  <span  style="float: left; verticle-align: top">'+ formattedDate(data[item].eventDate) +'</span></div>'
 					+ '<div class="my-auction-description">'+description+'</div>'
 					+ '<div class="my-auction-offer-number">'+data[item].offerNumber+counterDescription +'</div>'
-					+'</div>').appendTo($(areaName)) ;
+					+'</div></div>').appendTo($(areaName)) ;
 		}
 	}
 

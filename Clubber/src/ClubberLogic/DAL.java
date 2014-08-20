@@ -36,7 +36,7 @@ public class DAL {
 		try 
 		{
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/clubber_db?useUnicode=true&characterEncoding=UTF8", "root", "a");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/clubber_db?useUnicode=true&characterEncoding=UTF8", "root", "qwe123");
 			stmt= conn.createStatement();	
 		} 
 		catch (SQLException e) {
@@ -68,7 +68,7 @@ public class DAL {
 		try {
 			
 			ResultSet rs = stmt.executeQuery("select auc.*, event_type.Name as event_type_name, COALESCE(counter,0) as counter from event_type,"
-					+ " Auction auc left join (Select auction_id, count(id) as counter from  offers) offers1 on offers1.auction_id = auc.id where auc.Event_Type = event_type.id order by auc.Event_Date");
+					+ " auction auc left join (Select auction_id, count(id) as counter from  offers) offers1 on offers1.auction_id = auc.id where auc.Event_Type = event_type.id order by auc.Event_Date");
 			
 			while (rs.next())
 			{
@@ -888,7 +888,7 @@ public class DAL {
 			try 
 			{
 				ResultSet rs = stmt.executeQuery("select * "
-												+ "from line L, Businesses B, areas a, city c, streets s, business_type t "
+												+ "from line L, businesses B, areas a, city c, streets s, business_type t "
 												+ "where L.Business_id = B.id AND L.Line_End_Date >= '"+parsedDate+"' And"
 											    +" B.Area_id = a.id and "
 											    + "B.city_id = c.id and "

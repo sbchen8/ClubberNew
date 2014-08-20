@@ -16,7 +16,7 @@ input{
 		   width:26px; 
 		   height:30px; 
 		   background-image:url('images/star.jpg');
-		   background-repeat:no-repeat; 
+		   background-repeat:no-repeat; windows-1255
 		   float:right;
 		}
 
@@ -57,7 +57,7 @@ input{
 							
 							<label id="birthdateLabel">תאריך לידה</label> 
 							<input name="birthdate" id="birthdate" class="datepicker" disabled> 
-							<br><br> 
+							<br><br>         
 							
 							<label id="phonenumberLabel">טלפון</label> 
 							<input type="text" name="phoneNumber" id="phoneNumber" required disabled > 
@@ -72,7 +72,7 @@ input{
 							<br>
 
 							<label id="verifyPasswordLabel">אימות סיסמה</label> 
-							<input type="password" name="verifyPassword" id="verifyPassword" required disabled> 
+							<input type="password"         name="verifyPassword" id="verifyPassword" required disabled> 
 							<br>
 
 							<button id="editUserDel" type="button">ערוך</button>
@@ -167,7 +167,7 @@ input{
 	$("#userDetails").validate({
 		rules : {
 			email : {
-				email : true
+				email : true        
 			},
 
 			verifyPassword : {
